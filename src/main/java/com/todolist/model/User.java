@@ -50,7 +50,9 @@ public class User {
 	@JoinColumn(name = "role_id")
 	private Role role;
 
-
+	@ManyToOne
+	@JoinColumn(name = "id_task")
+	private Task task;
 
 
 	@Override
