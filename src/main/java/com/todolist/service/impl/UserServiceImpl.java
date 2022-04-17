@@ -34,7 +34,12 @@ public class UserServiceImpl implements UserService {
 	public List<User> userList() {
 		return userRepository.userList();
 	}
-	
+
+	@Override
+	public User findByUsernam(String username) {
+		return userRepository.findByUsername(username);
+	}
+
 	@Override
 	public Page<User> findAll(Pageable pageable) {
 		return userRepository.findAll(new PageRequest(pageable.getPageNumber() - 1, 5));

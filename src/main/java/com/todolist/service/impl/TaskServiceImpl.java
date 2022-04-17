@@ -3,6 +3,7 @@ package com.todolist.service.impl;
 import com.todolist.model.Task;
 import com.todolist.model.User;
 import com.todolist.repository.TaskRepository;
+import com.todolist.repository.UserRepository;
 import com.todolist.service.TaskService;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -10,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +25,11 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private TaskRepository taskRepository;
 
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
-    public List<Task> userList() {
+    public List<Task> taskList() {
         return taskRepository.taskList();
     }
 
@@ -42,6 +47,14 @@ public class TaskServiceImpl implements TaskService {
     public String addTask(Task task) {
         String message = null;
         JSONObject jsonObject = new JSONObject();
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+        System.out.println("User id: " + userRepository.findByUsername(currentPrincipalName).getUserId());
+
+        task.setUserId(userRepository.findByUsername(currentPrincipalName).getUserId());
+
         try {
             if(task.getTaskId() == null) {
                 message = "Added";

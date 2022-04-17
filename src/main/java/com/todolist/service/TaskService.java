@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TaskService {
 
-    List<Task> userList();
+    List<Task> taskList();
 
     Page<Task> findAll(Pageable pageable);
 

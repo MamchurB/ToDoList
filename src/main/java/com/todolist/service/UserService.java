@@ -10,7 +10,9 @@ import com.todolist.model.User;
 
 public interface UserService {
 	List<User> userList();
-	
+
+	User findByUsernam(String username);
+
 	Page<User> findAll(Pageable pageable);
 	
 	User findOne(Long id);

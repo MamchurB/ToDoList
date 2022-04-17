@@ -10,18 +10,21 @@ $(function() {
 		});
 		saveRequestedData(frm, data, "user");
 	});
-	
-	$("#submitAddressForm").submit(function(e) {
+
+});
+$(function() {
+	$("#submitTaskForm").submit(function(e) {
 		e.preventDefault();
-		var frm = $("#submitAddressForm");
+		var frm = $("#submitTaskForm");
 		var data = {};
 		$.each(this, function(i, v){
 			var input = $(v);
 			data[input.attr("name")] = input.val();
 			delete data["undefined"];
 		});
-		saveRequestedData(frm, data, "address");
+		saveRequestedData(frm, data, "task");
 	});
+
 });
 
 function saveRequestedData(frm, data, type) {

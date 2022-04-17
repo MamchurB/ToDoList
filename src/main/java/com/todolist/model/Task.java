@@ -24,21 +24,27 @@ public class Task {
     @Column(name = "id_task")
     private Long taskId;
 
-    @NotNull
-    @Column(name = "user_name")
-    private String userName;
 
     @NotNull
     @Column(name = "is_executed")
-    private Boolean isExecuted;
+    private Integer taskExecuted;
 
     @NotNull
     @Column(name = "dedline")
-    private Date email;
+    private Date dedline;
 
     @NotNull
     @Column(name = "description")
     private String description;
+
+    @NotNull
+    @Column(name = "task_type")
+    private String taskType;
+
+    @NotNull
+    @Column(name = "user_id")
+    private Long userId;
+
 
     @OneToMany(targetEntity = User.class, mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> user;
@@ -67,6 +73,23 @@ public class Task {
         hashCode = hashCode + (null == this.getTaskId() ? 0 : this.getTaskId().hashCode() * 31);
         return hashCode;
     }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getTaskType() {
+        return taskType;
+    }
+
+    public void setTaskType(String taskType) {
+        this.taskType = taskType;
+    }
+
     public String getTaskName() {
         return taskName;
     }
@@ -83,28 +106,20 @@ public class Task {
         this.taskId = taskId;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getTaskExecuted() {
+        return taskExecuted;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setTaskExecuted(Integer taskExecuted) {
+        this.taskExecuted = taskExecuted;
     }
 
-    public Boolean getExecuted() {
-        return isExecuted;
+    public Date getDedline() {
+        return dedline;
     }
 
-    public void setExecuted(Boolean executed) {
-        isExecuted = executed;
-    }
-
-    public Date getEmail() {
-        return email;
-    }
-
-    public void setEmail(Date email) {
-        this.email = email;
+    public void setDedline(Date dedline) {
+        this.dedline = dedline;
     }
 
     public String getDescription() {

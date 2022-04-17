@@ -2,12 +2,14 @@ $(function() {
 	$("#userList").click(function() {
 		fetchList("user");
 	});
-	
-	$("#addressList").click(function() {
-		fetchList("address");
-	});
-});
 
+});
+$(function() {
+	$("#taskList").click(function() {
+		fetchList("task");
+	});
+
+});
 var pageConstant = "?page=1";
 
 function addForm(type) {

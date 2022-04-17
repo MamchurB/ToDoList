@@ -57,7 +57,7 @@
 		    		<div class="menu-container">
 		    			<ul class="nav navbar-nav">
 		    				<li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span> Menu 1</a></li>
-							<li><a href="javascript:void(0);" id="List2"><span class="glyphicon glyphicon-user"></span> Menu 2</a></li>
+							<li><a href="javascript:void(0);" id="taskList"><span class="glyphicon glyphicon-user"></span> Menu 2</a></li>
 							<li><a href="javascript:void(0);" id="List3"><span class="glyphicon glyphicon-user"></span> Menu 3</a></li>
 							<li><a href="javascript:void(0);" id="List4"><span class="glyphicon glyphicon-user"></span> Menu 4</a></li>
 		    			</ul>

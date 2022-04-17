@@ -43,10 +43,6 @@ public class UserController {
 
 	@GetMapping("/registration")
 	public String registration(Model model) {
-//		User user = new User();
-//		Role roleUser = new Role();
-//		roleUser.setName("user");
-//		user.setRole(roleUser);
 		model.addAttribute("userForm", new User());
 
 		return "registration";

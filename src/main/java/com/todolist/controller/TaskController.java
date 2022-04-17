@@ -18,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/task")
@@ -32,26 +33,30 @@ public class TaskController {
 
 
     @GetMapping("/edit/{id}")
-    public String userOne(@PathVariable Long id, Model model) {
+    public String taskOne(@PathVariable Long id, Model model) {
         model.addAttribute("isNew", false);
-        model.addAttribute("userForm", taskService.findOne(id));
-        return "user/form";
+        model.addAttribute("taskForm", taskService.findOne(id));
+        return "task/form";
+    }
+    @GetMapping("/form")
+    public String taskForm(Model model) {
+        model.addAttribute("isNew", true);
+        model.addAttribute("taskForm", new Task());
+        return "task/form";
     }
 
     @GetMapping(value = "/delete/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody String userDelete(@PathVariable Long id) {
+    public @ResponseBody String taskDelete(@PathVariable Long id) {
         return taskService.deleteTask(id);
     }
 
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public @ResponseBody String userAdd(@Valid @RequestBody Task task, BindingResult result) {
-        if(result.hasErrors()) {
-            return ErrorUtils.customErrors(result.getAllErrors());
-        } else {
+    public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
+
             return taskService.addTask(task);
-        }
+
     }
 
     @GetMapping("/list/{id}")
@@ -61,11 +66,12 @@ public class TaskController {
 
     @GetMapping("/list")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public String userList(Model model, Pageable pageable) {
+    public String taskList(Model model, Pageable pageable) {
         Page<Task> pages = taskService.findAll(pageable);
-        model.addAttribute("users", pages.getContent());
+        model.addAttribute("tasks", pages.getContent());
+
         MethodUtils.pageModel(model, pages);
-        return "/user/list";
+        return "/task/list";
     }
 
 
