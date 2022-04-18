@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 
@@ -28,9 +30,18 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EntityManager entityManager;
+
+
     @Override
     public List<Task> taskList() {
         return taskRepository.taskList();
+    }
+
+    @Override
+    public Page<Task> findTaskByUserId(Pageable pageable, String nameUser) {
+        return taskRepository.findTaskByUserId(userRepository.findByUsername(nameUser).getUserId(), new PageRequest(pageable.getPageNumber() - 1, 5));
     }
 
     @Override

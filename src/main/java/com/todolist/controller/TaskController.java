@@ -12,12 +12,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -31,6 +34,9 @@ public class TaskController {
         this.taskService = taskService;
     }
 
+//  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    User customUser = (User)authentication.getPrincipal();
+//    Long userId = customUser.getUserId();
 
     @GetMapping("/edit/{id}")
     public String taskOne(@PathVariable Long id, Model model) {
@@ -55,7 +61,7 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
 
-            return taskService.addTask(task);
+        return taskService.addTask(task);
 
     }
 
@@ -66,8 +72,10 @@ public class TaskController {
 
     @GetMapping("/list")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    public String taskList(Model model, Pageable pageable) {
-        Page<Task> pages = taskService.findAll(pageable);
+    public String taskList(Model model, Pageable pageable, Principal principal) {
+        System.out.println("Поточний юзер " + principal.getName());
+
+        Page<Task> pages = taskService.findTaskByUserId(pageable, principal.getName());
         model.addAttribute("tasks", pages.getContent());
 
         MethodUtils.pageModel(model, pages);

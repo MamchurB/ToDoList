@@ -12,6 +12,8 @@ public interface TaskService {
 
     List<Task> taskList();
 
+    Page<Task> findTaskByUserId(Pageable pageable, String nameUser);
+
     Page<Task> findAll(Pageable pageable);
 
     Task findOne(Long id);
