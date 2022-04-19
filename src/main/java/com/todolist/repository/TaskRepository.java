@@ -14,10 +14,6 @@ import java.util.List;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    User customUser = (User)authentication.getPrincipal();
-//    Long userId = customUser.getUserId();
-
     @Query("FROM Task")
     List<Task> taskList();
 

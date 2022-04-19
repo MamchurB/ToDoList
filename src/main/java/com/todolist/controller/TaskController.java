@@ -3,6 +3,7 @@ package com.todolist.controller;
 import com.todolist.model.Task;
 import com.todolist.model.User;
 import com.todolist.repository.RoleRepository;
+import com.todolist.service.MenuService;
 import com.todolist.service.TaskService;
 import com.todolist.service.UserService;
 import com.todolist.utils.ErrorUtils;
@@ -33,10 +34,6 @@ public class TaskController {
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
-
-//  Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    User customUser = (User)authentication.getPrincipal();
-//    Long userId = customUser.getUserId();
 
     @GetMapping("/edit/{id}")
     public String taskOne(@PathVariable Long id, Model model) {

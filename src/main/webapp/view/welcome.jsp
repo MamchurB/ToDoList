@@ -56,16 +56,20 @@
 		    	<div class="menu navbar navbar-default">
 		    		<div class="menu-container">
 		    			<ul class="nav navbar-nav">
-		    				<li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span> Menu 1</a></li>
+							<c:forEach items="${listMenu}" var="menu">
+								<li><a href="#" id = ${menu.getPath()}><span class="glyphicon glyphicon-user"></span> ${menu. getNameMenu()}</a></li>
+							</c:forEach>
+		    				<!--<li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span> Menu 1</a></li>
 							<li><a href="javascript:void(0);" id="taskList"><span class="glyphicon glyphicon-user"></span> Menu 2</a></li>
 							<li><a href="javascript:void(0);" id="List3"><span class="glyphicon glyphicon-user"></span> Menu 3</a></li>
-							<li><a href="javascript:void(0);" id="List4"><span class="glyphicon glyphicon-user"></span> Menu 4</a></li>
+							<li><a href="javascript:void(0);" id="List4"><span class="glyphicon glyphicon-user"></span> Menu 4</a></li>-->
 		    			</ul>
 		    		</div>
 		    	</div>
 		    	<div class="container-fluid">
 		    		<div class="inner-jsp panel-body" style="margin-left: 170px;">
 		    			<c:forEach begin="0" end="2" varStatus="loop">
+
 		    				<div class="col-md-12">
 		    					<h2>${heading}</h2>
 		    					<p class="text-justify">${description}</p>
