@@ -11,8 +11,18 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 		<link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">
-		
-		<script type="text/javascript" src="${path}/webjars/jquery/3.2.0/jquery.min.js"></script>
+
+		<link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css"
+			  th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>
+		<link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css"
+			  th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
+				th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>
+		    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+		            th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
+		<script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
+				th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
+
 		<script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 		<title>Welcome</title>
@@ -56,13 +66,17 @@
 		    	<div class="menu navbar navbar-default">
 		    		<div class="menu-container">
 		    			<ul class="nav navbar-nav">
-							<c:forEach items="${listMenu}" var="menu">
-								<li><a href="#" id = ${menu.getPath()}><span class="glyphicon glyphicon-user"></span> ${menu. getNameMenu()}</a></li>
-							</c:forEach>
-		    				<!--<li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span> Menu 1</a></li>
-							<li><a href="javascript:void(0);" id="taskList"><span class="glyphicon glyphicon-user"></span> Menu 2</a></li>
-							<li><a href="javascript:void(0);" id="List3"><span class="glyphicon glyphicon-user"></span> Menu 3</a></li>
-							<li><a href="javascript:void(0);" id="List4"><span class="glyphicon glyphicon-user"></span> Menu 4</a></li>-->
+<%--							<c:forEach items="${listMenu}" var="menu">--%>
+<%--								<li><a href="#" id = ${menu.getPath()}><span class="glyphicon glyphicon-user"></span> ${menu. getNameMenu()}</a></li>--%>
+<%--							</c:forEach>--%>
+							<li><a href="javascript:void(0);" id="taskList"><span class="glyphicon glyphicon-user"></span> Things </a></li>
+							<li><a href="javascript:void(0);" id="List3"><span class="glyphicon glyphicon-user"></span> ASAP List </a></li>
+							<li><a href="javascript:void(0);" id="List4"><span class="glyphicon glyphicon-user"></span> Project </a></li>
+                            <li><a href="javascript:void(0);" id="calendarList"><span class="glyphicon glyphicon-user"></span> Calendar </a></li>
+                            <li><a href="javascript:void(0);" id="List7"><span class="glyphicon glyphicon-user"></span> Someday-Maybe List </a></li>
+                            <li><a href="javascript:void(0);" id="List8"><span class="glyphicon glyphicon-user"></span> Notes </a></li>
+                            <li><a href="javascript:void(0);" id="List9"><span class="glyphicon glyphicon-user"></span> Waiting-For List </a></li>
+                            <li><a href="javascript:void(0);" id="userList"><span class="glyphicon glyphicon-user"></span> Users </a></li>
 		    			</ul>
 		    		</div>
 		    	</div>

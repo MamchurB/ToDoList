@@ -10,6 +10,12 @@ $(function() {
 	});
 
 });
+$(function() {
+	$("#calendarList").click(function() {
+		modifyData("calendar");
+	});
+
+});
 var pageConstant = "?page=1";
 
 function addForm(type) {
