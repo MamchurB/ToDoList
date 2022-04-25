@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label class="col-md-2 control-label">Task Name : </label>
                 <div class="col-md-4">
-                    <form:input class="form-control" path="taskName" placeholder="Enter Task Name" required="true"/>
+                    <form:input class="form-control" path="title" placeholder="Enter Task Name" required="true"/>
                 </div>
 
             </div>
@@ -28,9 +28,13 @@
                     <form:input class="form-control" path="taskExecuted" placeholder="Enter Exucuted" required="true"/>
                 </div>
 
-                <label class="col-md-2 control-label">Dedline : </label>
+                <label class="col-md-2 control-label">Start : </label>
                 <div class="col-md-4">
-                    <form:input type = "date" class="form-control" path="dedline" placeholder="Enter Dedline" required="true"/>
+                    <form:input type = "date" class="form-control" path="start" placeholder="Enter start task" required="true"/>
+                </div>
+                <label class="col-md-2 control-label">End : </label>
+                <div class="col-md-4">
+                    <form:input type = "date" class="form-control" path="end" placeholder="Enter end task" required="true"/>
                 </div>
 
                 <label class="col-md-2 control-label">Description : </label>

@@ -16,6 +16,8 @@ public interface TaskService {
 
     Page<Task> findAll(Pageable pageable);
 
+    List<Task> findAll();
+
     Task findOne(Long id);
 
     String addTask(Task user);

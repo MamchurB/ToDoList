@@ -11,10 +11,13 @@ class Event {
 	@Id 
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	private String title; 
+
+	private String title;
+
 	private String description;
-	private LocalDateTime start; 
+
+	private LocalDateTime start;
+
 	private LocalDateTime finish;
 	
 	public Event(Long id, String title, String description, LocalDateTime start, LocalDateTime finish) {

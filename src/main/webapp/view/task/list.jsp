@@ -22,11 +22,10 @@
             <thead>
             <tr>
                 <th>Name Task</th>
-                <th>Task Id</th>
                 <th>Is Executed</th>
-                <th>Dedline</th>
+                <th>Start Task</th>
+                <th>End Task</th>
                 <th>Description</th>
-                <th>Task Type</th>
             </tr>
             </thead>
             <tbody>
@@ -34,12 +33,11 @@
                 <c:when test="${tasks.size() > 0}">
                     <c:forEach items="${tasks}" var="task">
                         <tr>
-                            <td>${task.taskName}</td>
-                            <td>${task.taskId}</td>
+                            <td>${task.title}</td>
                             <td>${task.taskExecuted}</td>
-                            <td>${task.dedline}</td>
+                            <td>${task.start}</td>
+                            <td>${task.end}</td>
                             <td>${task.description}</td>
-                            <td>${task.taskType}</td>
                             <td><a href="javascript:void(0);" onclick="editForm('task', '${task.taskId}')"><span class="glyphicon glyphicon-edit"></span></a></td>
                             <td><a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><span class="glyphicon glyphicon-trash"></span></a></td>
                         </tr>

@@ -1,5 +1,6 @@
 package com.todolist.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.todolist.utils.ConstantUtils;
 import com.todolist.validator.Validate;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -7,6 +8,7 @@ import org.springframework.util.ClassUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -16,8 +18,8 @@ import java.util.Set;
 public class Task {
 
     @NotNull
-    @Column(name = "name_task")
-    private String taskName;
+    @Column(name = "title")
+    private String title;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,9 +31,13 @@ public class Task {
     @Column(name = "is_executed")
     private Integer taskExecuted;
 
-    @NotNull
-    @Column(name = "dedline")
-    private Date dedline;
+    @Column(nullable = true, name = "start")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date start;
+
+    @Column(nullable = true, name = "end")
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private Date end;
 
     @NotNull
     @Column(name = "description")
@@ -90,13 +96,10 @@ public class Task {
         this.taskType = taskType;
     }
 
-    public String getTaskName() {
-        return taskName;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTaskName(String taskName) {
-        this.taskName = taskName;
-    }
 
     public Long getTaskId() {
         return taskId;
@@ -114,12 +117,20 @@ public class Task {
         this.taskExecuted = taskExecuted;
     }
 
-    public Date getDedline() {
-        return dedline;
+    public Date getEnd() {
+        return end;
     }
 
-    public void setDedline(Date dedline) {
-        this.dedline = dedline;
+    public void setEnd(Date end) {
+        this.end = end;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
     }
 
     public String getDescription() {

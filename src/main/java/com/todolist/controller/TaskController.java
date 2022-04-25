@@ -79,5 +79,13 @@ public class TaskController {
         return "/task/list";
     }
 
+    @GetMapping("/refresh")
+    public String refreshCache(Model model, Pageable pageable) {
+        Page<Task> pages = taskService.findAll(pageable);
+        model.addAttribute("tasks", pages.getContent());
+        MethodUtils.pageModel(model, pages);
+        return "/task/list";
+    }
+
 
 }

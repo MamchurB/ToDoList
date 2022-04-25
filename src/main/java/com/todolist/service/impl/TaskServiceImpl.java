@@ -47,6 +47,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findAll() {
+        return taskRepository.findAll();
+    }
+
+    @Override
     public Task findOne(Long id) {
         return taskRepository.findOne(id);
     }
@@ -71,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
             }
             jsonObject.put("status", "success");
             jsonObject.put("title", message+" Confirmation");
-            jsonObject.put("message", taskRepository.save(task).getTaskName()+" "+message+" successfully.");
+            jsonObject.put("message", taskRepository.save(task).getTitle()+" "+message+" successfully.");
         } catch (JSONException e) {
             e.printStackTrace();
         }
