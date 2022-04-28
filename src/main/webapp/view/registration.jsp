@@ -5,113 +5,109 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <html>
-<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>Registration</title>
-    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-    <style type="text/css">
-        body {
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            height: 100vh;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BusyMan - Sign Up</title>
+    <link rel="stylesheet" href="${path}/css/style.css">
 </head>
 <body>
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-                                <form:form method="POST" modelAttribute="userForm">
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
-
-                                <form class="mx-1 mx-md-4" method="POST" action="${path}/user/registration">
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label">Your Full Name</label><br>
-                                            <form:input type="text" path="fullName" placeholder="Full Name"
-                                                        autofocus="true"></form:input>
-
-
-                                        </div>
-
-                                        <div class="d-flex flex-row align-items-center mb-4">
-                                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                            <div class="form-outline flex-fill mb-0">
-                                                <label class="form-label">Your User Name</label><br>
-                                                <form:input type="text" path="userName" placeholder="User Name"
-                                                            autofocus="true"></form:input>
-                                                <form:errors path="userName"></form:errors>
-                                                    ${usernameError}
-
-                                            </div>
-
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" >Your Email</label><br>
-                                            <form:input type="text" path="email" placeholder="Email"
-                                                        autofocus="true"></form:input>
-                                            <form:errors path="email"></form:errors>
-                                                ${usernameError}
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" >Your Mobile</label><br>
-                                            <form:input type="text" path="mobile" placeholder="Mobile"
-                                                        autofocus="true"></form:input>
-                                            <form:errors path="mobile"></form:errors>
-                                                ${usernameError}
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label">Password</label><br>
-                                            <form:input type="text" path="password" placeholder="Password"
-                                                        autofocus="true"></form:input>
-                                            <form:errors path="password"></form:errors>
-                                                ${passwordError}
-
-                                        </div>
-                                    </div>
-
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" >Repeat your password</label><br>
-                                            <form:input type="text" path="passwordConfirm" placeholder="Password"
-                                                        autofocus="true"></form:input>
-                                            <form:errors path="passwordConfirm"></form:errors>
-                                                ${usernameError}
-
-                                        </div>
-                                    </div>
-
-
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="submit" class="btn btn-primary btn-lg">Register</button>
-                                    </div>
-
-                                </form>
-                                </form:form>
-                            </div>
+<div class="wrapper">
+    <header class="header">
+        <div class="container">
+            <div class="header__body">
+                <a href="${path}" class="header__logo">Busy Man</a>
+                <nav class="header__menu">
+                    <ul class="header__list">
+                        <li><a href="${path}" class="header__link">Home</a></li>
+                        <li><a href="" class="header__link">About us</a></li>
+                        <li><a href="" class="header__link">Contacts</a></li>
+                    </ul>
+                </nav>
+                <div class="header__burger">
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <div class="cover__row">
+                <div class="cover__column cover__column_image cover__column_image-register">
+                    <div class="cover__image">
+                        <img src="${path}/images/main.png" alt="ToDoGuy">
+                    </div>
+                </div>
+                <div class="cover__column cover__column_input cover__column_input-register">
+                    <div class="cover__login-form login-form register-form">
+                        <div class="login-form__header">
+                            Register a new account
                         </div>
+                        <div class="login-form__bottom register-form__bottom">
+                        <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+                        <form:form method="POST" modelAttribute="userForm">
+                            <form  method="POST" action="${path}/user/registration">
+                                <div class="login-form__input input">
+                            <form:input type="text" path="fullName" placeholder="Enter fullname"
+                                        autofocus="true"></form:input>
+<%--                                    <input type="text" placeholder="Enter fullname">--%>
+                                </div>
+                                <div class="login-form__input input">
+                            <form:input type="text" path="userName" placeholder="User Name"
+                                        autofocus="true"></form:input>
+                                </div>
+                                <div class="login-form__input input">
+                            <form:input type="text" path="email" placeholder="Email"
+                                        autofocus="true"></form:input>
+                                </div>
+                                <div class="login-form__input input">
+                            <form:input type="text" path="mobile" placeholder="Mobile"
+                                        autofocus="true"></form:input>
+                                </div>
+                                <div class="login-form__input input">
+                            <form:input type="password" path="password" placeholder="Password"
+                                        autofocus="true"></form:input>
+                                </div>
+                                <div class="login-form__input input">
+                            <form:input type="password" path="passwordConfirm" placeholder="repeat PASSWORD"
+                                        autofocus="true"></form:input>
+                                </div>
+                                <div class="login-form__line">
+                                    <label class="login-form__checkbox checkbox">
+                                        <input type="checkbox">
+                                        <span>REMEMBER ME</span>
+                                    </label>
+                                    <button class="login-form__button button" type="submit">Login</button>
+                                </div>
+                            </form>
+                        </form:form>
+                            <div class="login-form__text"><a href="index.html">Do you have an account? SIGN IN</a></div>
+                        </div>
+                        <span class="login-form__label register-form__label">YOUR PERSONAL TO DO LIST!<br>BE
+                        PRODUCTIVE!</span>
                     </div>
                 </div>
             </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container container_footer">
+            <div class="footer__social-wrapper">
+                <div class="footer__social">
+                    <div class="footer__facebook"><a href="#"><img src="${path}/images/facebook.svg" alt="facebook"></a></div>
+                    <div class="footer__inst"><a href="#"><img src="${path}/images/inst.svg" alt="inst"></a> </div>
+                    <div class="footer__youtube"><a href="#"><img src="${path}/images/youtube.svg" alt="youtube"></a></div>
+                    <div class="footer__viber"><a href="#"><img src="${path}/images/viber.svg" alt="viber"></a></div>
+                    <div class="footer__telegram"><a href="#"><img src="${path}/images/telega.svg" alt="telega"></a></div>
+                </div>
+            </div>
+            <div class="footer__corp">
+                "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="${path}/js/burger.js"></script>
 </body>
 </html>
