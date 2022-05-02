@@ -5,10 +5,9 @@
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BusyMan - Sign In</title>
-	<link rel="stylesheet" href="${path}/css/style.css">
-
+	<link rel="stylesheet" href="/todolist/css/style.css">
 </head>
 <body>
 <div class="wrapper">
@@ -46,12 +45,14 @@
 							<form method="POST" action="${path}/user/login" >
 								<c:if test="${error != null}">
 									<div>
-										<strong>${error}</strong>
+										<strong style="width:90%; margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 18px; margin-bottom: 10px;  display:block"
+										>${error}</strong>
 									</div>
 								</c:if>
 								<c:if test="${message != null}">
-									<div>
-										<strong>${message}</strong>
+									<div >
+										<strong style="width:90%; margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 18px; margin-bottom: 10px; display:block"
+												>${message}</strong>
 									</div>
 								</c:if>
 								<div class="login-form__input input">
@@ -94,7 +95,6 @@
 		</div>
 	</footer>
 </div>
-<script src="${path}/js/ibg.js"></script>
 <script src="${path}/js/burger.js"></script>
 </body>
 </html>

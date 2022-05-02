@@ -26,18 +26,16 @@ public class Task {
     @Column(name = "id_task")
     private Long taskId;
 
-
-    @NotNull
     @Column(name = "is_executed")
     private Integer taskExecuted;
 
     @Column(nullable = true, name = "start")
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date start;
+    private String start;
 
     @Column(nullable = true, name = "end")
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date end;
+    private String end;
 
     @NotNull
     @Column(name = "description")
@@ -117,19 +115,19 @@ public class Task {
         this.taskExecuted = taskExecuted;
     }
 
-    public Date getEnd() {
+    public String getEnd() {
         return end;
     }
 
-    public void setEnd(Date end) {
+    public void setEnd(String end) {
         this.end = end;
     }
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 

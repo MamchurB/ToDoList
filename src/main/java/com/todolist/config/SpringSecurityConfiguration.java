@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import com.todolist.service.impl.CustomAuthenticationProviderService;
 
 @Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -26,10 +26,10 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers("/webjars/**").permitAll()
-			.anyRequest().authenticated().and()
-			.formLogin().loginPage("/user/login").permitAll().and()
-			.logout().deleteCookies("remember-me").permitAll().and()
-			.rememberMe().tokenValiditySeconds(180);
+				.anyRequest().authenticated().and()
+				.formLogin().loginPage("/user/login").permitAll().and()
+				.logout().deleteCookies("remember-me").permitAll().and()
+				.rememberMe().tokenValiditySeconds(180);
 	}
 
 }

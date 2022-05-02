@@ -6,9 +6,8 @@
 
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Registration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration</title>
     <title>BusyMan - Sign Up</title>
     <link rel="stylesheet" href="${path}/css/style.css">
 </head>
@@ -82,7 +81,7 @@
                                 </div>
                             </form>
                         </form:form>
-                            <div class="login-form__text"><a href="index.html">Do you have an account? SIGN IN</a></div>
+                            <div class="login-form__text"><a href="${path}/user/login">Do you have an account? SIGN IN</a></div>
                         </div>
                         <span class="login-form__label register-form__label">YOUR PERSONAL TO DO LIST!<br>BE
                         PRODUCTIVE!</span>

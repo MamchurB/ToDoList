@@ -8,6 +8,8 @@ import com.todolist.service.TaskService;
 import com.todolist.service.UserService;
 import com.todolist.utils.ErrorUtils;
 import com.todolist.utils.MethodUtils;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -54,12 +57,34 @@ public class TaskController {
         return taskService.deleteTask(id);
     }
 
+    @GetMapping(value = "/executed/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public @ResponseBody String taskExecuted(@PathVariable Long id)  {
+        System.out.println("Спрацював контроллер");
+        Task task = taskService.findOne(id);
+
+        if(task.getTaskExecuted().equals(0)){
+            task.setTaskExecuted(1);
+            System.out.println(task.getTaskExecuted());
+        }
+        else
+            task.setTaskExecuted(0);
+        taskService.addTask(task);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("message", "Task changed successfully.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
-
+        System.out.println("Таска з іменем:" + task.getTitle());
         return taskService.addTask(task);
-
     }
 
     @GetMapping("/list/{id}")

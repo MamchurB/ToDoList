@@ -10,7 +10,7 @@ class BadDateFormatException extends RuntimeException {
   private static final long serialVersionUID = 1L;
 
 	public BadDateFormatException(String dateString) {
-        super(dateString);
+        //super(dateString);
     }
 }
 

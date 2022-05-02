@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -47,6 +50,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findTasksByStart(String date, Long userId) {
+        return taskRepository.findTasksByStart(date, userId);
+    }
+
+    @Override
     public List<Task> findAll() {
         return taskRepository.findAll();
     }
@@ -57,6 +65,30 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public HashMap<String, Object> getBestCategory() {
+        HashMap<String, Object> bestProductMap = new HashMap<>();
+
+        List<Task> BestCategoryList = taskRepository.findAll();
+
+        List<String> label = new ArrayList<>();
+        List<String> percent = new ArrayList<>();
+        label.add("Completed");
+        label.add("Uncompleted");
+        int executedCount = taskRepository.findTasksByTaskExecuted(0).size();
+        int unactedCount = taskRepository.findTasksByTaskExecuted(1).size();
+
+        percent.add(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
+        percent.add(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
+
+        System.out.println(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
+        System.out.println(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
+
+        bestProductMap.put("bcLabels", label.toString());
+        bestProductMap.put("bcPercents", percent.toString());
+        return bestProductMap;
+    }
+
+    @Override
     public String addTask(Task task) {
         String message = null;
         JSONObject jsonObject = new JSONObject();
@@ -64,10 +96,9 @@ public class TaskServiceImpl implements TaskService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
-        System.out.println("User id: " + userRepository.findByUsername(currentPrincipalName).getUserId());
-
         task.setUserId(userRepository.findByUsername(currentPrincipalName).getUserId());
-
+        if(task.getTaskExecuted() == null)
+            task.setTaskExecuted(0);
         try {
             if(task.getTaskId() == null) {
                 message = "Added";

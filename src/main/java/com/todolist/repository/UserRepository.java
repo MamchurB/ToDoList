@@ -15,4 +15,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
 	
 	@Query("FROM User")
 	List<User> userList();
+
+	Long findUserByUserName(String userName);
 }

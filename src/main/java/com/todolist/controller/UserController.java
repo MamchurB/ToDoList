@@ -1,5 +1,7 @@
 package com.todolist.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.todolist.model.Role;
@@ -9,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,17 +39,11 @@ public class UserController {
 	
 	@RequestMapping("/login")
 	public String login(Model model, String error, String logout) {
-		System.out.println(error);
-		System.out.println(logout);
 		if (error != null){
-			model.addAttribute("error", "Your username and password is invalid.");
-			System.out.println("Your username and password is invalid.");
+			model.addAttribute("error", "Your username or password is invalid.");
 		}
-
-
 		if (logout != null){
 			model.addAttribute("message", "You have been logged out successfully.");
-			System.out.println("You have been logged out successfully.");
 		}
 
 		return "login";
@@ -74,7 +73,14 @@ public class UserController {
 
 		return "login";
 	}
-	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if (auth != null){
+			new SecurityContextLogoutHandler().logout(request, response, auth);
+		}
+		return "redirect:/login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
+	}
 	@GetMapping("/form")
 	public String userForm(Model model) {
 		model.addAttribute("isNew", true);
