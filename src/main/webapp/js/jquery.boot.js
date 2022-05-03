@@ -48,28 +48,17 @@ function modifyData(suffix) {
 	});
 }
 function executedTask(type, id) {
-	// toastr.warning("<div>Are you sure you want to executed this?</div>" +
-	// 	"<div style = 'margin-top:5px;' class='btn-group pull-right'>" +
-	// 	"<button style = 'padding:2px 5px' type='button' id='confirmationYes' class='btn btn-xs btn-default'><i class='glyphicon glyphicon-ok'></i> Yes </button> &nbsp &nbsp &nbsp" +
-	// 	"<button style = 'padding:2px 5px' type='button' class='btn btn-xs btn-default clear'><i class='glyphicon glyphicon-remove'></i> No</button>" +
-	// 	"</div>", "ExecuteConfirmation", {
-	// 	allowHtml:true,
-	// 	closeButton:true,
-	// 	onShown: function() {
-	// 		$("#confirmationYes").click(function() {
-				$.ajax({
-					type : "GET",
-					url : "/todolist/"+type+"/executed/"+id,
-					success : function(data) {
-						fetchList(type);
-						toastr.success(data.message, "Notification", {
-							closeButton:true
-						});
-					}
-				});
-	// 		});
-	// 	}
-	// });
+	$.ajax({
+		type : "GET",
+		url : "/todolist/"+type+"/executed/"+id,
+		success : function(data) {
+			fetchList(type);
+			toastr.success(data.message, "Notification", {
+				closeButton:true
+			});
+		}
+	});
+	location.reload();
 }
 function deleteData(type, id) {
 	toastr.warning("<div>Are you sure you want to delete this?</div>" +
@@ -89,6 +78,7 @@ function deleteData(type, id) {
 						toastr.success(data.message, "Delete Confirmation", {
 							closeButton:true
 						});
+						location.reload();
 					}
 				});
 			});

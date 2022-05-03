@@ -65,7 +65,30 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public String taskExecuted(Long id) {
+        Task task = taskRepository.findOne(id);
+
+        if(task.getTaskExecuted().equals(0)){
+            task.setTaskExecuted(1);
+            System.out.println(task.getTaskExecuted());
+        }
+        else
+            task.setTaskExecuted(0);
+        taskRepository.save(task);
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("message", "Task changed successfully.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+
+    @Override
     public HashMap<String, Object> getBestCategory() {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+
         HashMap<String, Object> bestProductMap = new HashMap<>();
 
         List<Task> BestCategoryList = taskRepository.findAll();
@@ -74,14 +97,21 @@ public class TaskServiceImpl implements TaskService {
         List<String> percent = new ArrayList<>();
         label.add("Completed");
         label.add("Uncompleted");
-        int executedCount = taskRepository.findTasksByTaskExecuted(0).size();
-        int unactedCount = taskRepository.findTasksByTaskExecuted(1).size();
+        int executedCount = taskRepository.findTasksByTaskExecutedAndUserId(0, userRepository.findByUsername(username).getUserId()).size();
+        int unactedCount = taskRepository.findTasksByTaskExecutedAndUserId(1, userRepository.findByUsername(username).getUserId()).size();
+        Integer sumExecutedUnacted = executedCount + unactedCount;
 
-        percent.add(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
-        percent.add(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
+        if(!sumExecutedUnacted.equals(0)){
+            percent.add(String.valueOf(executedCount * 100 / sumExecutedUnacted));
+            percent.add(String.valueOf(unactedCount * 100 / sumExecutedUnacted));
+        }else{
+            percent.add(String.valueOf(50));
+            percent.add(String.valueOf(50));
+        }
 
-        System.out.println(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
-        System.out.println(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
+
+//        System.out.println(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
+//        System.out.println(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
 
         bestProductMap.put("bcLabels", label.toString());
         bestProductMap.put("bcPercents", percent.toString());

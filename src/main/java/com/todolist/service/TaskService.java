@@ -19,6 +19,7 @@ public interface TaskService {
     Page<Task> findTaskByUserId(Pageable pageable, String nameUser);
     HashMap<String, Object> getBestCategory();
 
+
     //List<Task> findTasksByTaskExecuted(Integer executed);
 
     Page<Task> findAll(Pageable pageable);
@@ -26,6 +27,8 @@ public interface TaskService {
     List<Task> findAll();
 
     Task findOne(Long id);
+
+    String taskExecuted(Long id);
 
     String addTask(Task user);
 
