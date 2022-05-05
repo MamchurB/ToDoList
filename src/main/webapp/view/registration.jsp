@@ -17,13 +17,6 @@
         <div class="container">
             <div class="header__body">
                 <a href="${path}" class="header__logo">Busy Man</a>
-                <nav class="header__menu">
-                    <ul class="header__list">
-                        <li><a href="${path}" class="header__link">Home</a></li>
-                        <li><a href="" class="header__link">About us</a></li>
-                        <li><a href="" class="header__link">Contacts</a></li>
-                    </ul>
-                </nav>
                 <div class="header__burger">
                     <span></span>
                 </div>
@@ -73,11 +66,7 @@
                                         autofocus="true"></form:input>
                                 </div>
                                 <div class="login-form__line">
-                                    <label class="login-form__checkbox checkbox">
-                                        <input type="checkbox">
-                                        <span>REMEMBER ME</span>
-                                    </label>
-                                    <button class="login-form__button button" type="submit">Login</button>
+                                    <button class="login-form__button button" type="submit">Register</button>
                                 </div>
                             </form>
                         </form:form>
@@ -107,6 +96,6 @@
         </div>
     </footer>
 </div>
-<script src="${path}/js/burger.js"></script>
+<script src="${path}/js/auto_margin.js"></script>
 </body>
 </html>

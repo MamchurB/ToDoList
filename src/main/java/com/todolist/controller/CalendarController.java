@@ -29,10 +29,10 @@ class CalendarController {
     @GetMapping ("/calendar")
     public String calendar(Model model) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        //Set pretty printing of json
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
         model.addAttribute("events", objectMapper.writeValueAsString(taskService.findAll()));
-        return "calendar/calendar";
+        System.out.println("Calendar");
+        return "calendar";
     }
 
     @RequestMapping(value="/eventlist", method=RequestMethod.GET)

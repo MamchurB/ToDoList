@@ -2,6 +2,7 @@
          pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -9,8 +10,8 @@
     <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-<%--    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">--%>
-<%--    <link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">--%>
+    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/todolist/css/style.css">
 
     <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css"
@@ -39,8 +40,7 @@
                 <nav class="header__menu">
                     <ul class="header__list">
                         <li><a href="${path}" class="header__link">Home</a></li>
-                        <li><a href="" class="header__link">About us</a></li>
-                        <li><a href="" class="header__link">Contacts</a></li>
+                        <li><a href="${path}/user/about-us" class="header__link">About us</a></li>
                         <li><a href="${path}/user/logout" class="header__link">Log out</a></li>
                     </ul>
                 </nav>
@@ -53,8 +53,7 @@
     </header>
     <main class="page">
         <div class="creator__wrapper">
-
-            <form action="${path}/task/add" method="post" class="creator" id="submitTaskForm">
+            <form action="${path}/task/add" method="post" class="creator" id="submitAddTask" >
                 <div class="creator__header">
                     Creating a new task:
                     <span class="creator__close"></span>
@@ -94,17 +93,67 @@
                 </div>
             </form>
         </div>
+
+<%--        <div class="changer__wrapper">--%>
+<%--            <form:form method="post" class="creator" action="${path}/task/edit" commandName="taskForm" id="submitEditTask">--%>
+<%--&lt;%&ndash;            <form action="${path}/task/edit" method="post" class="creator" id="submitEditTask">&ndash;%&gt;--%>
+<%--                <div class="creator__header">--%>
+<%--                    Changing current task ${taskForm}:--%>
+<%--                    <span class="creator__close"></span>--%>
+<%--                </div>--%>
+<%--                <form:hidden path="taskId"/>--%>
+<%--                <form:hidden path="taskExecuted"/>--%>
+<%--                <div class="creator__body">--%>
+<%--                    <div class="creator__text"> New name:</div>--%>
+<%--                    <div class="creator__input input">--%>
+<%--                        <form:input path="title" type="text" placeholder="TASK NAME"/>--%>
+<%--&lt;%&ndash;                        <input name="title" type="text" placeholder="TASK NAME">&ndash;%&gt;--%>
+<%--                    </div>--%>
+<%--                    <div id="changer__owner_text" class="creator__text creator__input_owner">New owner:</div>--%>
+<%--                    <div id="changer__owner" class="creator__input input creator__input_owner">--%>
+<%--                        <input class="input__owner" type="text" placeholder="TASK OWNER">--%>
+<%--                    </div>--%>
+<%--                    <div class="creator__text">New type:</div>--%>
+<%--                    <div class="creator__select">--%>
+<%--                        <form:select path="taskType" id="changer__select">--%>
+<%--                            <form:option value="asap"> ASAP LIST</form:option>--%>
+<%--                            <form:option value="someday">SOMEDAY-MAYBE LIST</form:option>--%>
+<%--                            <form:option value="notes">NOTES</form:option>--%>
+<%--                            <form:option value="waiting-for">WAITING-FOR LIST</form:option>--%>
+<%--                        </form:select>--%>
+<%--                    </div>--%>
+<%--                    <div class="creator__text creator__input_dates dates__invisible_changer">New STARTING DATE:</div>--%>
+<%--                    <div class="creator__input input creator__input_dates dates__invisible_changer">--%>
+<%--                        <form:input type="datetime-local" class="form-control" path="start" placeholder="STARTING DATE" required="true"/>--%>
+<%--&lt;%&ndash;                        <input name="start" type="datetime-local" placeholder="STARTING DATE">&ndash;%&gt;--%>
+<%--                    </div>--%>
+<%--                    <div class="creator__text creator__input_dates dates__invisible_changer">New ENDING DATE:</div>--%>
+<%--                    <div class="creator__input input creator__input_dates dates__invisible_changer">--%>
+<%--                        <form:input type="datetime-local" path="end" placeholder="ENDING DATE" required="true"/>--%>
+
+<%--&lt;%&ndash;                        <input name="end" type="datetime-local" placeholder="ENDING DATE">&ndash;%&gt;--%>
+<%--                    </div>--%>
+<%--                    <div class="creator__text">New Description:</div>--%>
+<%--                    <div class="creator__textarea">--%>
+
+<%--                        <form:textarea type="text" path="description" placeholder="ENTER DESCRIPTION" required="true"/>--%>
+<%--&lt;%&ndash;                        <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>&ndash;%&gt;--%>
+<%--                    </div>--%>
+<%--                    <div class="creator__button_wrapper"><button class="changer__button button">Change</button></div>--%>
+<%--                </div>--%>
+<%--            </form:form>--%>
+<%--        </div>--%>
+
         <div class="sider">
             <ul class="sider__list">
-
                 <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
                 <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
                 <li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
-                <li><a class="sider__link" id = "calendarList" href="javascript:void(0);" >Calendar</a></li>
+                <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
                 <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
                 <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
                 <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-                <li><a class="sider__link" id = "userList" href="javascript:void(0);" >Users</a></li>
+                <li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
             </ul>
             <div class="sider__element"></div>
         </div>
@@ -129,7 +178,7 @@
 
                                         <c:if test="${task.getTaskExecuted() == 0}">
                                             <label class="element__checkbox checkbox-2">
-                                                <input onclick="executedTask('task', '${task.taskId}')" class="checkbox" type="checkbox">
+                                                <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
                                                 <span></span>
                                             </label>
                                             <div class="element__info">
@@ -142,7 +191,7 @@
                                             </div>
                                             <div class="element__settings">
                                                 <div class="element__gear">
-                                                    <a href=""><img src="./images/settings.svg" alt="gear"></a>
+                                                    <a href="javascript:void(0);" onclick=" editForm('task', '${task.taskId}')"><img src="./images/settings.svg" alt="gear"></a>
                                                 </div>
                                                 <div class="element__delete">
                                                     <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="./images/delete.svg" alt="trash bin"></a>
@@ -164,13 +213,13 @@
                                                 </div>
                                             </div>
                                             <div class="element__settings">
-                                            <div class="element__gear">
-                                                <a href=""><img src="./images/settings.svg" alt="gear"></a>
+                                                <div class="element__gear">
+                                                    <a href="${path}\task\edit\ ${task.taskId}" ><img src="./images/settings.svg" alt="gear"></a>
+                                                </div>
+                                                <div class="element__delete">
+                                                    <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="./images/delete.svg" alt="trash bin"></a>
+                                                </div>
                                             </div>
-                                            <div class="element__delete">
-                                                <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="./images/delete.svg" alt="trash bin"></a>
-                                            </div>
-                                        </div>
                                         </c:if>
 
 

@@ -1,6 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+        th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
 <script type="text/javascript" src="${path}/js/jquery.save.js"></script>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -11,7 +14,7 @@
             </c:choose> Task
         </strong>
     </div>
-    <form:form method="post" class="form-horizontal" action="${path}/task/add" commandName="taskForm" id="submitTaskForm">
+    <form:form method="post" class="form-horizontal" action="${path}/task/edit" commandName="taskForm" id="submitTaskForm">
         <form:hidden path="taskId"/>
         <div class="panel-body">
             <div class="form-group">
@@ -49,11 +52,11 @@
             </div>
         </div>
         <div class="panel-footer">
-            <form:button value="Save" class="btn btn-xs btn-default">
+            <form:button onclick="location.href='${path}';" value="Save" class="btn btn-xs btn-default">
                 <span class="glyphicon glyphicon-floppy-disk"></span>
                 <c:choose>
                     <c:when test="${isNew}"> Save</c:when>
-                    <c:otherwise> Update</c:otherwise>
+                    <c:otherwise>  Update</c:otherwise>
                 </c:choose>
             </form:button>
         </div>

@@ -55,6 +55,10 @@ public class UserController {
 
 		return "registration";
 	}
+	@GetMapping("/about-us")
+	public String aboutUs(Model model) {
+		return "about-us";
+	}
 
 	@PostMapping("/registration")
 	public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
@@ -81,6 +85,8 @@ public class UserController {
 		}
 		return "redirect:/login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
+
+
 	@GetMapping("/form")
 	public String userForm(Model model) {
 		model.addAttribute("isNew", true);
@@ -124,7 +130,7 @@ public class UserController {
 		Page<User> pages = userService.findAll(pageable);
 		model.addAttribute("users", pages.getContent());
 		MethodUtils.pageModel(model, pages);
-		return "/user/list";
+		return "/user";
 	}
 	
 	@GetMapping("/refresh")

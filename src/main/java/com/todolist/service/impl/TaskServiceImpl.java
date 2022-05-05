@@ -75,6 +75,8 @@ public class TaskServiceImpl implements TaskService {
         else
             task.setTaskExecuted(0);
         taskRepository.save(task);
+
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("message", "Task changed successfully.");
@@ -109,10 +111,6 @@ public class TaskServiceImpl implements TaskService {
             percent.add(String.valueOf(50));
         }
 
-
-//        System.out.println(String.valueOf(executedCount * 100 / (executedCount + unactedCount)));
-//        System.out.println(String.valueOf(unactedCount * 100 / (executedCount + unactedCount)));
-
         bestProductMap.put("bcLabels", label.toString());
         bestProductMap.put("bcPercents", percent.toString());
         return bestProductMap;
@@ -122,7 +120,6 @@ public class TaskServiceImpl implements TaskService {
     public String addTask(Task task) {
         String message = null;
         JSONObject jsonObject = new JSONObject();
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
 
@@ -143,6 +140,7 @@ public class TaskServiceImpl implements TaskService {
         }
         return jsonObject.toString();
     }
+
 
     @Override
     public String deleteTask(Long id) {

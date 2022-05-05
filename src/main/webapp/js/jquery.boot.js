@@ -12,6 +12,7 @@ $(function() {
 });
 $(function() {
 	$("#calendarList").click(function() {
+		console.log("calendarList");
 		modifyData("calendar");
 	});
 
@@ -39,11 +40,26 @@ function list(type, page) {
 }
 
 function modifyData(suffix) {
+	console.log("/todolist/"+suffix);
 	$.ajax({
 		type : "GET",
 		url : "/todolist/"+suffix,
 		success : function(data) {
 			$(".inner-jsp").html(data);
+		}
+	});
+}
+
+function editTask(type, id) {
+	console.log("/todolist/" + type+ "/edit/" + id);
+	$.ajax({
+		type : "GET",
+		url : "/todolist/" + type+ "/edit/" + id,
+		success : function(data) {
+			toastr.success(data.message, "Notification", {
+				closeButton:true
+			});
+			// window.location.reload(true);
 		}
 	});
 }
@@ -56,10 +72,12 @@ function executedTask(type, id) {
 			toastr.success(data.message, "Notification", {
 				closeButton:true
 			});
+			window.location.reload(true);
 		}
 	});
-	location.reload();
 }
+
+
 function deleteData(type, id) {
 	toastr.warning("<div>Are you sure you want to delete this?</div>" +
 			"<div style = 'margin-top:5px;' class='btn-group pull-right'>" +
@@ -78,7 +96,7 @@ function deleteData(type, id) {
 						toastr.success(data.message, "Delete Confirmation", {
 							closeButton:true
 						});
-						location.reload();
+						window.location.reload(true);
 					}
 				});
 			});

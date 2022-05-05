@@ -38,7 +38,7 @@ public class CustomAuthenticationProviderService implements AuthenticationProvid
 						new org.springframework.security.core.userdetails.User(username, password, grantedAuthorities), password, grantedAuthorities);
 			}
 		} else {
-			//throw new UsernameNotFoundException("User name "+username+" not found");
+			throw new UsernameNotFoundException("User name " + username + " not found");
 		}
 		return authenticationToken;
 	}

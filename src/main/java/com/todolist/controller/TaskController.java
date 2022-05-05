@@ -1,12 +1,7 @@
 package com.todolist.controller;
 
 import com.todolist.model.Task;
-import com.todolist.model.User;
-import com.todolist.repository.RoleRepository;
-import com.todolist.service.MenuService;
 import com.todolist.service.TaskService;
-import com.todolist.service.UserService;
-import com.todolist.utils.ErrorUtils;
 import com.todolist.utils.MethodUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -14,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,8 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 @RequestMapping("/task")
@@ -38,12 +30,8 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/edit/{id}")
-    public String taskOne(@PathVariable Long id, Model model) {
-        model.addAttribute("isNew", false);
-        model.addAttribute("taskForm", taskService.findOne(id));
-        return "task/form";
-    }
+    private Long editTaskId;
+
     @GetMapping("/form")
     public String taskForm(Model model) {
         model.addAttribute("isNew", true);
@@ -61,10 +49,63 @@ public class TaskController {
        return taskService.taskExecuted(id);
     }
 
+    @GetMapping(value = "/fillTaskForm/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String taskFill(@PathVariable Long id, Model model)  {
+        model.addAttribute("taskForm", taskService.findOne(editTaskId));
+        JSONObject jsonObject = new JSONObject();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
 
+        try {
+
+            jsonObject.put("status", "success");
+            jsonObject.put("title", "Updated" +" Confirmation");
+            jsonObject.put("message", "Updated"+" successfully.");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject.toString();
+    }
+    @GetMapping("/edit/{id}")
+    public String taskOne(@PathVariable Long id, Model model) {
+        System.out.println("Edit Data");
+        model.addAttribute("isNew", false);
+        model.addAttribute("taskForm", taskService.findOne(id));
+        return "task/form";
+    }
+
+    @PostMapping(value="/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    public String taskEdit(@RequestBody Task task, BindingResult result) {
+        System.out.println("taskEdit Зайшло");
+
+        System.out.println(task.getTaskExecuted());
+        System.out.println(task.getTaskId());
+
+        return taskService.addTask(task);
+    }
+
+//    @GetMapping (value = "/edit/{id}")
+//    public @ResponseBody String taskEditId(@PathVariable Long id, Model model) {
+//        System.out.println("TaskOne Зайшло");
+//        model.addAttribute("taskForm", taskService.findOne(id));
+//        editTaskId = id;
+//
+//        JSONObject jsonObject = new JSONObject();
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String currentPrincipalName = authentication.getName();
+//
+//        try {
+//
+//            jsonObject.put("status", "success");
+//            jsonObject.put("title", "Updated" +" Confirmation");
+//            jsonObject.put("message", "Updated"+" successfully.");
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return jsonObject.toString();
+//    }
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
-        System.out.println("Таска з іменем:" + task.getTitle());
         return taskService.addTask(task);
     }
 

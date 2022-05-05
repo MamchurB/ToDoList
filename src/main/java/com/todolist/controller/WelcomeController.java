@@ -49,11 +49,10 @@ public class WelcomeController {
 
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
-
+		model.addAttribute("taskForm", new Task());
 		model.addAttribute("taskToday", taskService.findTasksByStart(date, userService.findByUsernam(username).getUserId()));
 		model.addAttribute("today", dateNow);
-		model.addAttribute("listMenu", menuService.findAll());
-
+         model.addAttribute("idUser", 0);
 		model.addAttribute("bc",taskService.getBestCategory());
 		return "welcome";
 	}

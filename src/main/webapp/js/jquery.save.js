@@ -13,6 +13,21 @@ $(function() {
 
 });
 $(function() {
+	$("#submitAddTask").submit(function(e) {
+		e.preventDefault();
+		var frm = $("#submitAddTask");
+		var data = {};
+		$.each(this, function(i, v){
+			var input = $(v);
+			data[input.attr("name")] = input.val();
+			console.log(data[input.attr("name")]);
+			delete data["undefined"];
+		});
+		saveRequestedData(frm, data, "task");
+	});
+
+});
+$(function() {
 	$("#submitTaskForm").submit(function(e) {
 		e.preventDefault();
 		var frm = $("#submitTaskForm");
@@ -20,6 +35,21 @@ $(function() {
 		$.each(this, function(i, v){
 			var input = $(v);
 			data[input.attr("name")] = input.val();
+			delete data["undefined"];
+		});
+		saveRequestedData(frm, data, "task");
+	});
+
+});
+$(function() {
+	$("#submitEditTask").submit(function(e) {
+		e.preventDefault();
+		var frm = $("#submitEditTask");
+		var data = {};
+		$.each(this, function(i, v){
+			var input = $(v);
+			data[input.attr("name")] = input.val();
+			console.log(data[input.attr("name")]);
 			delete data["undefined"];
 		});
 		saveRequestedData(frm, data, "task");
@@ -42,6 +72,7 @@ $(function() {
 });
 
 function saveRequestedData(frm, data, type) {
+	console.log(frm.attr("action"));
 	$.ajax({
 		contentType:"application/json; charset=utf-8",
 		type:frm.attr("method"),
@@ -49,18 +80,17 @@ function saveRequestedData(frm, data, type) {
 		dataType:'json',
 		data:JSON.stringify(data),
 		success:function(data) {
-			if(data.status == "success") {
-				toastr.success(data.message, data.title, {
-					closeButton:true
-				});
-				refresh(type);
-				//fetchList(type);
-			} else {
-				toastr.error(data.message, data.title, {
-					allowHtml:true,
-					closeButton:true
-				});
-			}
+			// if(data.status == "success") {
+			// 	toastr.success(data.message, data.title, {
+			// 		closeButton:true
+			// 	});
+			// 	refresh(type);
+			// } else {
+			// 	toastr.error(data.message, data.title, {
+			// 		allowHtml:true,
+			// 		closeButton:true
+			// 	});
+			// }
 		}
 	});
 }
