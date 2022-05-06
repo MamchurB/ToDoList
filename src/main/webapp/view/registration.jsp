@@ -50,11 +50,11 @@
                                         autofocus="true"></form:input>
                                 </div>
                                 <div class="login-form__input input">
-                            <form:input type="text" path="email" placeholder="Email"
+                            <form:input type="email" path="email" placeholder="Email"
                                         autofocus="true"></form:input>
                                 </div>
                                 <div class="login-form__input input">
-                            <form:input type="text" path="mobile" placeholder="Mobile"
+                            <form:input type="number" path="mobile" placeholder="Mobile"
                                         autofocus="true"></form:input>
                                 </div>
                                 <div class="login-form__input input">

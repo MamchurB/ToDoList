@@ -49,61 +49,22 @@ public class TaskController {
        return taskService.taskExecuted(id);
     }
 
-    @GetMapping(value = "/fillTaskForm/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String taskFill(@PathVariable Long id, Model model)  {
-        model.addAttribute("taskForm", taskService.findOne(editTaskId));
-        JSONObject jsonObject = new JSONObject();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-
-        try {
-
-            jsonObject.put("status", "success");
-            jsonObject.put("title", "Updated" +" Confirmation");
-            jsonObject.put("message", "Updated"+" successfully.");
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return jsonObject.toString();
-    }
     @GetMapping("/edit/{id}")
     public String taskOne(@PathVariable Long id, Model model) {
-        System.out.println("Edit Data");
         model.addAttribute("isNew", false);
-        model.addAttribute("taskForm", taskService.findOne(id));
+        Task task = taskService.findOne(id);
+        task.setStart(task.getStart().substring(0, 10) + "T" + task.getStart().substring(11, 16));
+        task.setEnd(task.getEnd().substring(0, 10) + "T" + task.getStart().substring(11, 16));
+        System.out.println(task.getStart());
+        model.addAttribute("taskForm", task);
         return "task/form";
     }
 
     @PostMapping(value="/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public String taskEdit(@RequestBody Task task, BindingResult result) {
-        System.out.println("taskEdit Зайшло");
-
-        System.out.println(task.getTaskExecuted());
-        System.out.println(task.getTaskId());
-
-        return taskService.addTask(task);
+         return taskService.addTask(task);
     }
 
-//    @GetMapping (value = "/edit/{id}")
-//    public @ResponseBody String taskEditId(@PathVariable Long id, Model model) {
-//        System.out.println("TaskOne Зайшло");
-//        model.addAttribute("taskForm", taskService.findOne(id));
-//        editTaskId = id;
-//
-//        JSONObject jsonObject = new JSONObject();
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//        String currentPrincipalName = authentication.getName();
-//
-//        try {
-//
-//            jsonObject.put("status", "success");
-//            jsonObject.put("title", "Updated" +" Confirmation");
-//            jsonObject.put("message", "Updated"+" successfully.");
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        return jsonObject.toString();
-//    }
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
         return taskService.addTask(task);
@@ -116,11 +77,8 @@ public class TaskController {
 
     @GetMapping("/list")
     public String taskList(Model model, Pageable pageable, Principal principal) {
-        System.out.println("Поточний юзер " + principal.getName());
-
         Page<Task> pages = taskService.findTaskByUserId(pageable, principal.getName());
         model.addAttribute("tasks", pages.getContent());
-
         MethodUtils.pageModel(model, pages);
         return "/task/list";
     }
@@ -132,6 +90,4 @@ public class TaskController {
         MethodUtils.pageModel(model, pages);
         return "/task/list";
     }
-
-
 }

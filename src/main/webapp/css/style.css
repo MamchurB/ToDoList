@@ -1391,3 +1391,6 @@ body.locked {
     left: 25px; }
   .statistic__header::after {
     right: 25px; } }
+.container__calendar{
+ padding:50px 0px;
+}

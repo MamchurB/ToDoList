@@ -29,15 +29,14 @@ public class Task {
     @Column(name = "is_executed")
     private Integer taskExecuted;
 
-    @Column(nullable = true, name = "start")
+    @Column(name = "start")
     @JsonFormat(pattern="yyyy-MM-dd")
     private String start;
 
-    @Column(nullable = true, name = "end")
+    @Column( name = "end")
     @JsonFormat(pattern="yyyy-MM-dd")
     private String end;
 
-    @NotNull
     @Column(name = "description")
     private String description;
 
@@ -48,6 +47,10 @@ public class Task {
     @NotNull
     @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "owner")
+    private String owner;
+
 
 
     @OneToMany(targetEntity = User.class, mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -77,7 +80,13 @@ public class Task {
         hashCode = hashCode + (null == this.getTaskId() ? 0 : this.getTaskId().hashCode() * 31);
         return hashCode;
     }
+    public String getOwner() {
+        return owner;
+    }
 
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     public void setTitle(String title) {
         this.title = title;
     }

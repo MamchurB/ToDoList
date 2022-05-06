@@ -3,39 +3,6 @@ let creator = document.querySelector('.creator__wrapper');
 let creator__button = document.querySelector('.creator__button');
 let creators__close = document.querySelectorAll('.creator__close');
 
-// let changer__button = document.querySelector('.changer__button');
-// let changer = document.querySelector('.changer__wrapper');
-// let elements__gear = document.querySelectorAll('.element__gear');
-
-// for (let element__gear of elements__gear) {
-//    element__gear.onclick = function () {
-//       changer.classList.add('active');
-//       back.classList.add('locked');
-//       if (changer__select.value == "waiting-for") {
-//          console.log(1);
-//          changer__owner.classList.remove('creator__input_owner');
-//          changer__owner_text.classList.remove('creator__input_owner');
-//          for (let changer__date of changer__dates) {
-//             changer__date.classList.remove('creator__input_dates');
-//          }
-//       }
-//       else {
-//          console.log(0);
-//          changer__owner.classList.add('creator__input_owner');
-//          changer__owner_text.classList.add('creator__input_owner');
-//          for (let changer__date of changer__dates) {
-//             changer__date.classList.add('creator__input_dates');
-//          }
-//       }
-//    }
-// }
-
-// changer__button.onclick = function () {
-//    changer.classList.remove('active');
-//    back.classList.remove('locked');
-// }
-
-
 task__add.onclick = function () {
    creator.classList.add('active');
    back.classList.add('locked');

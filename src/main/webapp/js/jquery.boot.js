@@ -72,7 +72,6 @@ function executedTask(type, id) {
 			toastr.success(data.message, "Notification", {
 				closeButton:true
 			});
-			window.location.reload(true);
 		}
 	});
 }

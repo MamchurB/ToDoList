@@ -1,69 +1,8 @@
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
-<%--<html xmlns="http://www.w3.org/1999/xhtml"--%>
-<%--      >--%>
-<%--<head>--%>
-<%--    <meta charset='utf-8' content="Cory Sanoy" name="Author" />--%>
-<%--    <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">--%>
-
-<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">--%>
-<%--    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">--%>
-<%--    <link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">--%>
-<%--    <link rel="stylesheet" href="/todolist/css/style.css">--%>
-
-<%--    <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css"--%>
-<%--          th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>--%>
-<%--    <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css"--%>
-<%--          th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>--%>
-<%--    <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"--%>
-<%--            th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>--%>
-<%--    <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"--%>
-<%--            th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>--%>
-<%--    <script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"--%>
-<%--            th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>--%>
-
-<%--    <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>--%>
-<%--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>--%>
-
-
-<%--    <script>--%>
-<%--        var tasks = ${events};--%>
-<%--        $(document).ready(function() {--%>
-<%--            $('#calendar').fullCalendar({--%>
-<%--                header: {--%>
-<%--                    left: 'prev,next today',--%>
-<%--                    center: 'title',--%>
-<%--                    right: 'month,agendaWeek,agendaDay'--%>
-<%--                },--%>
-<%--                defaultDate: '2022-06-01',--%>
-<%--                editable: true,--%>
-<%--                eventLimit: true,--%>
-<%--                events: tasks,--%>
-<%--            });--%>
-
-<%--        });--%>
-
-<%--    </script>--%>
-
-<%--    <style>--%>
-<%--        body {--%>
-<%--            margin: 40px 10px;--%>
-<%--            padding: 0;--%>
-<%--            font-family: "Lucida Grande",Helvetica,Arial,Verdana,sans-serif;--%>
-<%--            font-size: 14px;--%>
-<%--        }--%>
-<%--        #calendar {--%>
-<%--            max-width: 900px;--%>
-<%--            margin: 0 auto;--%>
-<%--        }--%>
-<%--    </style>--%>
-<%--</head>--%>
-<%--<body>--%>
-<%--<div id='calendar' th:id="calendar"></div>--%>
-<%--</body>--%>
-<%--</html>--%>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 
 <head>
@@ -72,8 +11,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusyMan - Calendar</title>
 
-    <link rel="stylesheet" href="/todolist/css/style.css">
-    <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">--%>
+
+
+    <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
         <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -84,15 +24,7 @@
               th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>
         <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css"
               th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
-                th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>
-        <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
-                th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
-        <script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
-                th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
-
-        <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <link rel="stylesheet" href="/todolist/css/style.css">
 </head>
 
 <body class="calendar__body">
@@ -100,12 +32,12 @@
     <header class="header">
         <div class="container">
             <div class="header__body">
-                <a href="main.html" class="header__logo">Busy Man</a>
+                <a href="/todolist" class="header__logo">Busy Man</a>
                 <nav class="header__menu">
                     <ul class="header__list">
-                        <li><a href="main.html" class="header__link">Home</a></li>
-                        <li><a href="" class="header__link">About us</a></li>
-                        <li><a href="" class="header__link">Contacts</a></li>
+                        <li><a href="/todolist" class="header__link">Home</a></li>
+                        <li><a href="/todolist/user/about-us" class="header__link">About us</a></li>
+                        <li><a href="/todolist/user/logout" class="header__link">Log out</a></li>
                     </ul>
                 </nav>
                 <div class="header__burger">
@@ -117,19 +49,18 @@
     <main class="page">
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link" href="">Things</a></li>
-                <li><a class="sider__link" href="">ASAP List</a></li>
-                <li><a class="sider__link" href="project.html">Projects</a></li>
-                <li class="sider__active"><a class="sider__link" href="calendar.html">Calendar</a></li>
-                <li><a class="sider__link" href="">SOmeday-Maybe List</a></li>
-                <li><a class="sider__link" href="">NOtes</a></li>
-                <li><a class="sider__link" href="waiting-for.html">Waiting-For List</a></li>
-                <li><a class="sider__link" href="">Users</a></li>
+                <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
+                <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
+                <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
+                <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
+                <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
+                <li><a class="sider__link" href="/todolist/user/list?page=1" id = "userList"  >Users</a></li>
             </ul>
             <div class="sider__element"></div>
         </div>
-        <div class="container">
-
+        <div class="container container__calendar">
             <div id='calendar' th:id="calendar"></div>
         </div>
     </main>
@@ -150,7 +81,15 @@
         </div>
     </footer>
 </div>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
+        th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>
+<script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+        th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
+<script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
+        th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
 
+<%--    <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>--%>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
    <script>
       var tasks = ${ events };
       $(document).ready(function () {
@@ -171,7 +110,6 @@
 <%--<div id='calendar' th:id="calendar"></div>--%>
 <script src="./js/burger.js"></script>
 <script src="./js/sider.js"></script>
-
 
 </body>
 

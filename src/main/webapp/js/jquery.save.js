@@ -3,6 +3,7 @@ $(function() {
 		e.preventDefault();
 		var frm = $("#submitUserForm");
 		var data = {};
+		console.log("submitUserForm");
 		$.each(this, function(i, v){
 			var input = $(v);
 			data[input.attr("name")] = input.val();
@@ -23,6 +24,7 @@ $(function() {
 			console.log(data[input.attr("name")]);
 			delete data["undefined"];
 		});
+		// window.location.reload(true);
 		saveRequestedData(frm, data, "task");
 	});
 

@@ -16,13 +16,14 @@
 <div class="wrapper">
 	<header class="header">
 		<div class="container">
+
 			<div class="header__body">
-				<a href="main.html" class="header__logo">Busy Man</a>
+				<a href="/todolist" class="header__logo">Busy Man</a>
 				<nav class="header__menu">
 					<ul class="header__list">
-						<li><a href="main.html" class="header__link">Home</a></li>
-						<li><a href="about-us.html" class="header__link">About us</a></li>
-						<li><a href="index.html" class="header__link">Log out</a></li>
+						<li><a href="${path}" class="header__link">Home</a></li>
+						<li><a href="${path}/user/about-us" class="header__link">About us</a></li>
+						<li><a href="${path}/user/logout" class="header__link">Log out</a></li>
 					</ul>
 				</nav>
 				<div class="header__burger">
@@ -32,16 +33,51 @@
 		</div>
 	</header>
 	<main class="page">
+		<div class="creator__wrapper">
+			<form action="${path}/user/add" method="post" class="creator" id="submitUserForm">
+				<div class="creator__header">
+					Creating a new user:
+					<span class="creator__close"></span>
+				</div>
+				<div class="creator__body">
+					<div class="creator__text">Full Name:</div>
+					<div class="creator__input input">
+						<input name="fullName" type="text" placeholder="Enter Full Name">
+					</div>
+
+					<div class="creator__text">User Name:</div>
+					<div class="creator__input input">
+						<input name="userName" type="text" placeholder="Enter User Name">
+					</div>
+
+					<div class="creator__text">Password:</div>
+					<div class="creator__input input">
+						<input name="password" type="text" placeholder="Enter Password">
+					</div>
+
+					<div class="creator__text">Email:</div>
+					<div class="creator__input input">
+						<input name="email" type="email" placeholder="Enter Email">
+					</div>
+
+					<div class="creator__text">Mobile:</div>
+					<div class="creator__input input">
+						<input name="mobile" type="number" placeholder="Enter Mobile">
+					</div>
+					<div class="creator__button_wrapper"><button class="creator__button button">Create</button></div>
+				</div>
+			</form>
+		</div>
 		<div class="sider">
 			<ul class="sider__list">
-				<li><a class="sider__link" href="">Things</a></li>
-				<li><a class="sider__link" href="">ASAP List</a></li>
-				<li><a class="sider__link" href="project.html">Projects</a></li>
-				<li><a class="sider__link" href="calendar.html">Calendar</a></li>
-				<li><a class="sider__link" href="">SOmeday-Maybe List</a></li>
-				<li><a class="sider__link" href="">NOtes</a></li>
-				<li><a class="sider__link" href="waiting-for.html">Waiting-For List</a></li>
-				<li class="sider__active"><a class="sider__link" href="users.html">Users</a></li>
+				<li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
+				<li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
+				<li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
+				<li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
+				<li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
+				<li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
+				<li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
+				<li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
 			</ul>
 			<div class="sider__element"></div>
 		</div>
@@ -54,10 +90,10 @@
 							User List
 						</div>
 						<div class="users__icons">
-							<a class="users__icon" href="#">
+							<a class="users__icon users__icon_add" href="#">
 								<img src="../images/add.svg" alt="add ico">
 							</a>
-							<a class="users__icon" href="#">
+							<a onclick="window.location.reload(true);" class="users__icon" href="#">
 								<img src="../images/refresh.svg" alt="refresh ico">
 							</a>
 						</div>
@@ -132,6 +168,7 @@
 </div>
 <script src="../js/burger.js"></script>
 <script src="../js/sider.js"></script>
+<script src="../js/new_user.js"></script>
 </body>
 
 </html>

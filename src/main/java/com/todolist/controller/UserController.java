@@ -110,7 +110,6 @@ public class UserController {
 	}
 	
 	@PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody String userAdd(@Valid @RequestBody User user, BindingResult result) {
 		if(result.hasErrors()) {
 			return ErrorUtils.customErrors(result.getAllErrors());

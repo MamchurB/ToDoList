@@ -67,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public String taskExecuted(Long id) {
         Task task = taskRepository.findOne(id);
-
+        System.out.println("taskExecuted");
         if(task.getTaskExecuted().equals(0)){
             task.setTaskExecuted(1);
             System.out.println(task.getTaskExecuted());
@@ -100,7 +100,7 @@ public class TaskServiceImpl implements TaskService {
         label.add("Completed");
         label.add("Uncompleted");
         int executedCount = taskRepository.findTasksByTaskExecutedAndUserId(0, userRepository.findByUsername(username).getUserId()).size();
-        int unactedCount = taskRepository.findTasksByTaskExecutedAndUserId(1, userRepository.findByUsername(username).getUserId()).size();
+        int unactedCount = 100 - executedCount;
         Integer sumExecutedUnacted = executedCount + unactedCount;
 
         if(!sumExecutedUnacted.equals(0)){
