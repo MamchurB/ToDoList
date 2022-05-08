@@ -32,11 +32,17 @@ public class TaskController {
 
     private Long editTaskId;
 
+    @GetMapping("/waiting_for")
+    public String waitingForList(Model model) {
+
+        model.addAttribute("tasks", taskService.findTaskByTaskType("waiting-for"));
+        return "waiting-for";
+    }
     @GetMapping("/form")
     public String taskForm(Model model) {
         model.addAttribute("isNew", true);
         model.addAttribute("taskForm", new Task());
-        return "task/form";
+        return "form";
     }
 
     @GetMapping(value = "/delete/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
@@ -46,6 +52,7 @@ public class TaskController {
 
     @GetMapping(value = "/executed/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String taskExecuted(@PathVariable Long id)  {
+        System.out.println("TaskExecuted");
        return taskService.taskExecuted(id);
     }
 
@@ -57,7 +64,7 @@ public class TaskController {
         task.setEnd(task.getEnd().substring(0, 10) + "T" + task.getStart().substring(11, 16));
         System.out.println(task.getStart());
         model.addAttribute("taskForm", task);
-        return "task/form";
+        return "form";
     }
 
     @PostMapping(value="/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)

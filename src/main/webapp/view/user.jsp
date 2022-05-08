@@ -3,13 +3,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BusyMan - Users</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
+			th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
 	<link rel="stylesheet" href="../css/style.css">
+	<script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
 </head>
 
 <body class="calendar__body">
@@ -59,7 +64,14 @@
 					<div class="creator__input input">
 						<input name="email" type="email" placeholder="Enter Email">
 					</div>
+					<div class="creator__text">Role:</div>
 
+					<div class="creator__select">
+						<select name="roleId" id="creator__select">
+							<option value = 1 > admin </option>
+							<option value = 2 > user </option>
+						</select>
+					</div>
 					<div class="creator__text">Mobile:</div>
 					<div class="creator__input input">
 						<input name="mobile" type="number" placeholder="Enter Mobile">
@@ -76,8 +88,8 @@
 				<li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
 				<li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
 				<li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-				<li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-				<li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
+				<li><a class="sider__link" id = "List5" href="${path}/task/waiting_for" >Waiting-For List</a></li>
+				<li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
 			</ul>
 			<div class="sider__element"></div>
 		</div>
@@ -124,10 +136,10 @@
 								<td class="table__mail">${user.email}</td>
 								<td>${user.mobile}</td>
 								<td>${user.role.name}</td>
-								<td class="table__settings"><a href="#"><span class="element__gear table__gear"><img
+								<td class="table__settings"><a href="${path}\user\edit\ ${user.userId}"><span class="element__gear table__gear"><img
 										src="../images/settings.svg" alt="gear"></span></a>
 								</td>
-								<td class="table__settings"><a href="#"><span class="element__delete table__delete"><img
+								<td class="table__settings"><a onclick = "deleteData('user', '${user.userId}');"><span class="element__delete table__delete"><img
 										src="../images/delete.svg" alt="trash bin"></span></a>
 								</td>
 							</tr>
@@ -169,6 +181,9 @@
 <script src="../js/burger.js"></script>
 <script src="../js/sider.js"></script>
 <script src="../js/new_user.js"></script>
+<script src="../js/jquery.boot.js"></script>
+<script type="text/javascript" src="../js/jquery.save.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </body>
 
 </html>

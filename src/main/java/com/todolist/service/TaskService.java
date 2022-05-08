@@ -21,6 +21,7 @@ public interface TaskService {
 
 
     //List<Task> findTasksByTaskExecuted(Integer executed);
+    List<Task> findTaskByTaskType(String taskType);
 
     Page<Task> findAll(Pageable pageable);
 

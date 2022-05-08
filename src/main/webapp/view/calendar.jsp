@@ -32,10 +32,10 @@
     <header class="header">
         <div class="container">
             <div class="header__body">
-                <a href="/todolist" class="header__logo">Busy Man</a>
+                <a href="/todolist/" class="header__logo">Busy Man</a>
                 <nav class="header__menu">
                     <ul class="header__list">
-                        <li><a href="/todolist" class="header__link">Home</a></li>
+                        <li><a href="/todolist/" class="header__link">Home</a></li>
                         <li><a href="/todolist/user/about-us" class="header__link">About us</a></li>
                         <li><a href="/todolist/user/logout" class="header__link">Log out</a></li>
                     </ul>
@@ -55,8 +55,8 @@
                 <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
                 <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
                 <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-                <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-                <li><a class="sider__link" href="/todolist/user/list?page=1" id = "userList"  >Users</a></li>
+                <li><a class="sider__link" id = "List5" href="${path}/task/waiting_for" >Waiting-For List</a></li>
+                <li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
             </ul>
             <div class="sider__element"></div>
         </div>

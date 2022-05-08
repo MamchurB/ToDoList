@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import com.todolist.model.Role;
+import com.todolist.model.Task;
 import com.todolist.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,6 +24,8 @@ import com.todolist.model.User;
 import com.todolist.service.UserService;
 import com.todolist.utils.ErrorUtils;
 import com.todolist.utils.MethodUtils;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/user")
@@ -97,25 +100,28 @@ public class UserController {
 	
 	@GetMapping("/edit/{id}")
 	public String userOne(@PathVariable Long id, Model model) {
+		System.out.println("Edit User Зайшло");
 		model.addAttribute("isNew", false);
 		model.addAttribute("userForm", userService.findOne(id));
 		model.addAttribute("roles", userService.roleList());
-		return "user/form";
+		return "/userForm";
 	}
 	
 	@GetMapping(value = "/delete/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody String userDelete(@PathVariable Long id) {
 		return userService.deleteUser(id);
 	}
-	
-	@PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody String userAdd(@Valid @RequestBody User user, BindingResult result) {
-		if(result.hasErrors()) {
-			return ErrorUtils.customErrors(result.getAllErrors());
-		} else {
-			return userService.addUser(user);
-		}
+
+	@PostMapping(value="/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	public String taskEdit(@RequestBody User user, BindingResult result) {
+		return userService.addUser(user);
+	}
+
+	@PostMapping(value="/add")
+	public String userAdd(@RequestBody User user, Model model) {
+		userService.addUser(user);
+		model.addAttribute("users", userService.userList());
+		return "/user";
 	}
 	
 	@GetMapping("/list/{id}")
@@ -124,11 +130,9 @@ public class UserController {
 	}
 	
 	@GetMapping("/list")
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	public String userList(Model model, Pageable pageable) {
-		Page<User> pages = userService.findAll(pageable);
-		model.addAttribute("users", pages.getContent());
-		MethodUtils.pageModel(model, pages);
+	public String userList(Model model) {
+		List<User> user = userService.userList();
+		model.addAttribute("users", user);
 		return "/user";
 	}
 	

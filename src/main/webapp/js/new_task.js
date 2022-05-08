@@ -15,7 +15,6 @@ creator__button.onclick = function () {
 for (let creator__close of creators__close) {
    creator__close.onclick = function () {
       creator.classList.remove('active');
-      // changer.classList.remove('active');
    }
 }
 
@@ -40,25 +39,3 @@ creator__select.onchange = function () {
       }
    }
 }
-
-
-// let changer__select = document.getElementById('changer__select');
-// let changer__owner = document.getElementById('changer__owner');
-// let changer__owner_text = document.getElementById('changer__owner_text');
-// let changer__dates = document.querySelectorAll('.dates__invisible_changer');
-// changer__select.onchange = changer__select.onload= function () {
-//    if (changer__select.value == "waiting-for") {
-//       changer__owner.classList.remove('creator__input_owner');
-//       changer__owner_text.classList.remove('creator__input_owner');
-//       for (let changer__date of changer__dates) {
-//          changer__date.classList.remove('creator__input_dates');
-//       }
-//    }
-//    else {
-//       changer__owner.classList.add('creator__input_owner');
-//       changer__owner_text.classList.add('creator__input_owner');
-//       for (let changer__date of changer__dates) {
-//          changer__date.classList.add('creator__input_dates');
-//       }
-//    }
-//}

@@ -101,8 +101,8 @@
                 <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
                 <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
                 <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-                <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-                <li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
+                <li><a class="sider__link" id = "List5" href="${path}/task/waiting_for" >Waiting-For List</a></li>
+                <li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
             </ul>
             <div class="sider__element"></div>
         </div>
@@ -140,7 +140,7 @@
                                             </div>
                                             <div class="element__settings">
                                                 <div class="element__gear">
-                                                    <a href="${path}\task\edit\ ${task.taskId}")"><img src="./images/settings.svg" alt="gear"></a>
+                                                    <a href="${path}\task\edit\ ${task.taskId}"><img src="./images/settings.svg" alt="gear"></a>
                                                 </div>
                                                 <div class="element__delete">
                                                     <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="./images/delete.svg" alt="trash bin"></a>

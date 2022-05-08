@@ -21,6 +21,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findTaskByUserId(Long userId, Pageable pageable);
 
+    List<Task> findTaskByTaskType(String taskType);
+
     List<Task> findTasksByTaskExecutedAndUserId(Integer executed, Long userId);
 
     @Query("FROM Task t WHERE date_format(t.start, '%Y-%m-%d')  = :date AND t.userId = :userId")

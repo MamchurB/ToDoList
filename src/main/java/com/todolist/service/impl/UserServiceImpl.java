@@ -52,18 +52,18 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public String addUser(User user) {
-		String message = null;
+		String message = "Added";
 		JSONObject jsonObject = new JSONObject();
 		try {
-			if(user.getId() == null) {
-				message = "Added";
-			} else {
-				message = "Updated";
-			}
+			System.out.println(user.getPassword());
+			System.out.println(user.getFullName());
+
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
 			user.setRole(roleRepository.findOne(user.getRoleId()));
+//			user.setRole(roleRepository.findOne(2L));
 			jsonObject.put("status", "success");
 			jsonObject.put("title", message+" Confirmation");
+			jsonObject.put("message", message+" successfully.");
 			jsonObject.put("message", userRepository.save(user).getFullName()+" "+message+" successfully.");
 		} catch (JSONException e) {
 			e.printStackTrace();

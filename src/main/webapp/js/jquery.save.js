@@ -1,5 +1,6 @@
 $(function() {
 	$("#submitUserForm").submit(function(e) {
+		console.log("submitUserForm");
 		e.preventDefault();
 		var frm = $("#submitUserForm");
 		var data = {};
@@ -21,13 +22,11 @@ $(function() {
 		$.each(this, function(i, v){
 			var input = $(v);
 			data[input.attr("name")] = input.val();
-			console.log(data[input.attr("name")]);
 			delete data["undefined"];
 		});
-		// window.location.reload(true);
+
 		saveRequestedData(frm, data, "task");
 	});
-
 });
 $(function() {
 	$("#submitTaskForm").submit(function(e) {
@@ -82,6 +81,7 @@ function saveRequestedData(frm, data, type) {
 		dataType:'json',
 		data:JSON.stringify(data),
 		success:function(data) {
+			window.location.reload(true);
 			// if(data.status == "success") {
 			// 	toastr.success(data.message, data.title, {
 			// 		closeButton:true

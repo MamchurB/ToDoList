@@ -50,24 +50,12 @@ function modifyData(suffix) {
 	});
 }
 
-function editTask(type, id) {
-	console.log("/todolist/" + type+ "/edit/" + id);
-	$.ajax({
-		type : "GET",
-		url : "/todolist/" + type+ "/edit/" + id,
-		success : function(data) {
-			toastr.success(data.message, "Notification", {
-				closeButton:true
-			});
-			// window.location.reload(true);
-		}
-	});
-}
 function executedTask(type, id) {
 	$.ajax({
 		type : "GET",
 		url : "/todolist/"+type+"/executed/"+id,
 		success : function(data) {
+			console.log("/todolist/"+type+"/executed/"+id);
 			fetchList(type);
 			toastr.success(data.message, "Notification", {
 				closeButton:true
@@ -78,6 +66,7 @@ function executedTask(type, id) {
 
 
 function deleteData(type, id) {
+	console.log("/todolist/"+type+"/delete/"+id);
 	toastr.warning("<div>Are you sure you want to delete this?</div>" +
 			"<div style = 'margin-top:5px;' class='btn-group pull-right'>" +
 			"<button style = 'padding:2px 5px' type='button' id='confirmationYes' class='btn btn-xs btn-default'><i class='glyphicon glyphicon-ok'></i> Yes </button> &nbsp &nbsp &nbsp" +
@@ -85,6 +74,7 @@ function deleteData(type, id) {
 			"</div>", "Delete Confirmation", {
 		allowHtml:true,
 		closeButton:true,
+
 		onShown: function() {
 			$("#confirmationYes").click(function() {
 				$.ajax({

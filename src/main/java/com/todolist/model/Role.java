@@ -45,6 +45,9 @@ public class Role {
 		hashCode = hashCode + (null == this.getId() ? 0 : this.getId().hashCode() * 31);
 		return hashCode;
 	}
+
+
+
 	public Long getId() {
 		return roleId;
 	}

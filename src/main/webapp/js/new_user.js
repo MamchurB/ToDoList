@@ -18,7 +18,6 @@ creator__button.onclick = function () {
 for (let creator__close of creators__close) {
    creator__close.onclick = function () {
       creator.classList.remove('active');
-      changer.classList.remove('active');
    }
 }
 

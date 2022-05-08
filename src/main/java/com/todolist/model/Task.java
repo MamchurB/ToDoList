@@ -23,7 +23,7 @@ public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_task")
+    @Column(nullable = false, name = "id_task")
     private Long taskId;
 
     @Column(name = "is_executed")
