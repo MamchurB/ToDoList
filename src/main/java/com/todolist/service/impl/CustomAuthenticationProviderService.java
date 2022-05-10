@@ -9,20 +9,29 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.todolist.model.User;
 import com.todolist.repository.UserRepository;
 
+import javax.annotation.Resource;
+
 @Service
-public class CustomAuthenticationProviderService implements AuthenticationProvider {
+public class CustomAuthenticationProviderService implements AuthenticationProvider, UserDetailsService {
 	
 	@Autowired
 	private UserRepository userRepository;
-	
+
+	@Resource
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		UsernamePasswordAuthenticationToken authenticationToken = null;
@@ -55,5 +64,16 @@ public class CustomAuthenticationProviderService implements AuthenticationProvid
 	@Override
 	public boolean supports(Class<?> authentication) {
 		return authentication.equals(UsernamePasswordAuthenticationToken.class);
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		User user = userRepository.findByUsername(username);
+		if (user != null && user.getId() != null) {
+			return new org.springframework.security.core.userdetails.User
+					(username, passwordEncoder.encode(user.getPassword()), AuthorityUtils.NO_AUTHORITIES);
+		}
+
+		return null;
 	}
 }

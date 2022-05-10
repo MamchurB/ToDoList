@@ -92,6 +92,14 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
    <script>
       var tasks = ${ events };
+
+      let arr2 = tasks.map(x => {return {title:x.title, start: new Date(x.start),
+          end: new Date(x.end)}})
+
+      var res = tasks.map(o =>
+          new Date(o.start)
+      );
+      console.log(res);
       $(document).ready(function () {
          $('#calendar').fullCalendar({
             header: {
@@ -99,12 +107,14 @@
                center: 'title',
                right: 'month,agendaWeek,agendaDay'
             },
+             format:'YYYY-MM-DDTHH:mm',
             defaultDate: '2022-06-01',
             editable: true,
             eventLimit: true,
-            events: tasks,
+            events: arr2,
          });
       });
+
    </script>
 
 <%--<div id='calendar' th:id="calendar"></div>--%>

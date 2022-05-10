@@ -61,30 +61,41 @@
                             <form:input class="input" path="title" placeholder="Enter Task Name" required="true"/>
                         </div>
 
-                        <div class="creator__text">Owner:</div>
-                        <div class="creator__input input">
-                            <form:input class="input" path="owner" placeholder="Enter owner" required="true"/>
+                        <div class="creator__text">Task Type:</div>
+                        <div class="creator__select">
+                            <form:select path="taskType"  id="creator__select">
+                                <form:option value="asap"> ASAP LIST</form:option>
+                                <form:option value="someday">SOMEDAY-MAYBE LIST</form:option>
+                                <form:option value="notes">NOTES</form:option>
+                                <form:option value="waiting-for">WAITING-FOR LIST</form:option>
+                            </form:select>
                         </div>
+                        <c:if test="${forms.contains('owner')}">
+                            <div class="creator__text">Owner:</div>
+                            <div class="creator__input input">
+                                <form:input class="input" path="owner" placeholder="Enter owner" required="true"/>
+                            </div>
+                        </c:if>
 
-                        <div class="creator__text">Start:</div>
-                        <div class="creator__input input">
-                            <form:input type = "datetime-local" class="input" path="start" placeholder="Enter start task" required="true"/>
-                        </div>
+                        <c:if test="${forms.contains('start')}">
+                            <div class="creator__text">Start:</div>
+                            <div class="creator__input input">
+                                <form:input type = "datetime-local" class="input" path="start" placeholder="Enter start task" required="true"/>
+                            </div>
+                        </c:if>
 
-                        <div class="creator__text">End:</div>
-                        <div class="creator__input input">
-                            <form:input type = "datetime-local" class="input" path="end" placeholder="Enter end task" required="true"/>
-                        </div>
-
+                        <c:if test="${forms.contains('end')}">
+                            <div class="creator__text">End:</div>
+                            <div class="creator__input input">
+                                <form:input type = "datetime-local" class="input" path="end" placeholder="Enter end task" required="true"/>
+                            </div>
+                        </c:if>
                         <div class="creator__text">Description:</div>
                         <div class="creator__input input">
                             <form:input class="input" path="description" placeholder="Enter description" required="true"/>
                         </div>
 
-                        <div class="creator__text">Task Type:</div>
-                        <div class="creator__input input">
-                            <form:input class="input" path="taskType" placeholder="Enter Task Type" required="true"/>
-                        </div>
+
                         <form:button onclick="location.href='${path}'" value="Save" >
                         <div class="creator__button_wrapper"><button onclick="location.href='${path}'" class="creator__button button">Change</button></div>
                         </form:button>

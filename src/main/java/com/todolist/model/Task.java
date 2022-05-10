@@ -51,7 +51,8 @@ public class Task {
     @Column(name = "owner")
     private String owner;
 
-
+    @Column(name = "parent_task_id")
+    private Integer parentTaskId;
 
     @OneToMany(targetEntity = User.class, mappedBy = "task", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<User> user;
@@ -80,6 +81,8 @@ public class Task {
         hashCode = hashCode + (null == this.getTaskId() ? 0 : this.getTaskId().hashCode() * 31);
         return hashCode;
     }
+
+
     public String getOwner() {
         return owner;
     }
@@ -152,5 +155,11 @@ public class Task {
         this.description = description;
     }
 
+    public Integer getParentTaskId() {
+        return parentTaskId;
+    }
 
+    public void setParentTaskId(Integer parentTaskId) {
+        this.parentTaskId = parentTaskId;
+    }
 }

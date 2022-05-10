@@ -50,12 +50,19 @@
                     <div class="creator__input input">
                         <input name="title" type="text" placeholder="TASK NAME">
                     </div>
-
-                    <input name="taskType" type="hidden" value="waiting-for">
-
                     <div id="input__owner_text" class="creator__text creator__input_owner">Task owner:</div>
                     <div id="input__owner" class="creator__input input creator__input_owner">
                         <input name ="owner" class="input__owner" type="text" placeholder="TASK OWNER">
+                    </div>
+                    <div class="creator__text">Select type:</div>
+                    <div class="creator__select">
+                        <select name="taskType" id="creator__select">
+                            <option value="asap"> ASAP LIST</option>
+                            <option value="someday">SOMEDAY-MAYBE LIST</option>
+                            <option value="notes">NOTES</option>
+                            <option value="waiting-for">WAITING-FOR LIST</option>
+                        </select>
+
                     </div>
                     <div class="creator__text creator__input_dates dates__invisible">STARTING DATE:</div>
                     <div class="creator__input input creator__input_dates dates__invisible">
@@ -92,82 +99,74 @@
                 <div class="tasks__deadline">
                     Your WAITING-FOR LIST:
                 </div>
-                    <form action="${path}/task/executed"  class="tasks__elements">
-                        <c:forEach items="${tasks}" var="task">
-                    <div class="tasks__element element">
-                        <c:if test="${task.getTaskExecuted() == 0}">
-                            <label class="element__checkbox checkbox-2">
-                                <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
-                                <span></span>
-                            </label>
-                            <div class="element__info element__owner">
-                                <div class="element__task-name">
-                                    TASK OWNER:
+                <form action="${path}/task/executed"  class="tasks__elements">
+                    <c:forEach items="${tasks}" var="task">
+                        <div class="tasks__element element">
+                            <c:if test="${task.getTaskExecuted() == 0}">
+                                <label class="element__checkbox checkbox-2">
+                                    <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="element__info element__info_waiting">
+                                    <div class="element__task-name">
+                                            ${task.getTitle()}
+                                    </div>
+                                    <div class="element__date">
+                                            ${task.getStart()}
+                                    </div>
                                 </div>
-                                <div class="element__date">
-                                        ${task.getOwner()}
-                                </div>
-                            </div>
-                            <div class="element__info element__info_waiting">
-                                <div class="element__task-name">
-                                        ${task.getTitle()}
-                                </div>
-                                <div class="element__date">
-                                        ${task.getEnd()}
-                                </div>
-                            </div>
 
-                            <div class="element__settings">
-                                <div class="element__gear">
-                                    <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                                <div class="element__settings">
+                                    <div class="element__gear">
+                                        <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                                    </div>
+                                    <div class="element__delete">
+                                        <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
+                                    </div>
                                 </div>
-                                <div class="element__delete">
-                                    <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
-                                </div>
-                            </div>
-                        </c:if>
+                            </c:if>
 
-                        <c:if test="${task.getTaskExecuted() == 1}">
-                        <label class="element__checkbox checkbox-2">
-                            <input onclick="executedTask('task', '${task.taskId}');" checked type="checkbox" class="checkbox">
-                            <span></span>
-                        </label>
-                        <div class="element__info element__owner">
-                            <div class="element__task-name">
-                                TASK OWNER:
-                            </div>
-                            <div class="element__date">
-                                ${task.getOwner()}
-                            </div>
+                            <c:if test="${task.getTaskExecuted() == 1}">
+                                <label class="element__checkbox checkbox-2">
+                                    <input onclick="executedTask('task', '${task.taskId}');" checked type="checkbox" class="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="element__info element__owner">
+                                    <div class="element__task-name">
+                                        TASK OWNER:
+                                    </div>
+                                    <div class="element__date">
+                                            ${task.getOwner()}
+                                    </div>
+                                </div>
+                                <div class="element__info element__info_waiting">
+                                    <div class="element__task-name">
+                                            ${task.getTitle()}
+                                    </div>
+                                    <div class="element__date">
+                                            ${task.getStart()}
+                                    </div>
+                                </div>
+                                <div class="element__settings">
+                                    <div class="element__gear">
+                                        <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                                    </div>
+                                    <div class="element__delete">
+                                        <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
+                                    </div>
+                                </div>
+                            </c:if>
+
+
                         </div>
-                        <div class="element__info element__info_waiting">
-                            <div class="element__task-name">
-                                    ${task.getTitle()}
-                            </div>
-                            <div class="element__date">
-                                    ${task.getEnd()}
-                            </div>
-                        </div>
-                        <div class="element__settings">
-                            <div class="element__gear">
-                                <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
-                            </div>
-                            <div class="element__delete">
-                                <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
-                            </div>
-                        </div>
-                        </c:if>
-
-
-                    </div>
 
                     </c:forEach>
-                        <div class="task__add">
-                            <div class="task__add_inner">
-                                <span class="task__plus"></span>
-                                <span class="task__add-text">Create A New Task</span>
-                            </div>
+                    <div class="task__add">
+                        <div class="task__add_inner">
+                            <span class="task__plus"></span>
+                            <span class="task__add-text">Create A New Task</span>
                         </div>
+                    </div>
                 </form>
             </div>
 

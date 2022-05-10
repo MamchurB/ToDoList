@@ -51,6 +51,7 @@ function modifyData(suffix) {
 }
 
 function executedTask(type, id) {
+	console.log("/todolist/"+type+"/executed/"+id);
 	$.ajax({
 		type : "GET",
 		url : "/todolist/"+type+"/executed/"+id,
@@ -60,6 +61,7 @@ function executedTask(type, id) {
 			toastr.success(data.message, "Notification", {
 				closeButton:true
 			});
+			window.location.reload(true);
 		}
 	});
 }

@@ -86,7 +86,7 @@ public class UserController {
 		if (auth != null){
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		return "redirect:/user/login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
 	}
 
 
@@ -99,6 +99,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userOne(@PathVariable Long id, Model model) {
 		System.out.println("Edit User Зайшло");
 		model.addAttribute("isNew", false);
@@ -108,16 +109,19 @@ public class UserController {
 	}
 	
 	@GetMapping(value = "/delete/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public @ResponseBody String userDelete(@PathVariable Long id) {
 		return userService.deleteUser(id);
 	}
 
 	@PostMapping(value="/edit", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String taskEdit(@RequestBody User user, BindingResult result) {
 		return userService.addUser(user);
 	}
 
 	@PostMapping(value="/add")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userAdd(@RequestBody User user, Model model) {
 		userService.addUser(user);
 		model.addAttribute("users", userService.userList());
@@ -125,11 +129,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/list/{id}")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public User findOne(@PathVariable Long id) {
 		return userService.findOne(id);
 	}
 	
 	@GetMapping("/list")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userList(Model model) {
 		List<User> user = userService.userList();
 		model.addAttribute("users", user);

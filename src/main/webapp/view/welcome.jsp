@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
@@ -97,13 +98,15 @@
             <ul class="sider__list">
                 <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
                 <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
-                <li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
+                <li><a class="sider__link" id = "List2" href="${path}/task/project" >Projects</a></li>
                 <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
-                <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
+                <li><a class="sider__link" id = "List3" href="${path}/task/someday_maybe" >SOmeday-Maybe List</a></li>
                 <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
                 <li><a class="sider__link" id = "List5" href="${path}/task/waiting_for" >Waiting-For List</a></li>
-                <li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
-            </ul>
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
+                </security:authorize>
+                 </ul>
             <div class="sider__element"></div>
         </div>
         <div class="container container__main">

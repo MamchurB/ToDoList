@@ -4,8 +4,7 @@ for (let check of checkbox) {
    let checkboxParentOfParent = checkboxParent.parentElement;
    if (check.checked == true) checkboxParentOfParent.classList.toggle('line-through');
    check.addEventListener('change', (event) => {
-      checkboxParentOfParent.classList.toggle('line-through');
-      let checkClosest = check.closest(`.element__list`);
+      let checkClosest = check.closest('.element');
       if (checkClosest != null) {
          checkClosest.classList.toggle('line-through');
       }

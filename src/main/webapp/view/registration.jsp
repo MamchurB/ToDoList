@@ -48,6 +48,8 @@
                                 <div class="login-form__input input">
                             <form:input type="text" path="userName" placeholder="User Name"
                                         autofocus="true"></form:input>
+                                    <form:errors path="userName"></form:errors>
+                                        ${usernameError}
                                 </div>
                                 <div class="login-form__input input">
                             <form:input type="email" path="email" placeholder="Email"
@@ -56,14 +58,23 @@
                                 <div class="login-form__input input">
                             <form:input type="number" path="mobile" placeholder="Mobile"
                                         autofocus="true"></form:input>
+                                    <form:errors path="mobile"></form:errors>
+                                        ${usernameError}
                                 </div>
                                 <div class="login-form__input input">
                             <form:input type="password" path="password" placeholder="Password"
                                         autofocus="true"></form:input>
+
                                 </div>
+                                <strong style = "width:90%;margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 14px;margin-bottom: 5px;display:block;">
+                                    <form:errors path="password"></form:errors>
+                                        ${passwordError}
+                                </strong>
+
                                 <div class="login-form__input input">
                             <form:input type="password" path="passwordConfirm" placeholder="repeat PASSWORD"
                                         autofocus="true"></form:input>
+
                                 </div>
                                 <div class="login-form__line">
                                     <button class="login-form__button button" type="submit">Register</button>

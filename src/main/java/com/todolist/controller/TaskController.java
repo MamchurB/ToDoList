@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/task")
@@ -32,11 +36,21 @@ public class TaskController {
 
     private Long editTaskId;
 
+    @GetMapping("/someday_maybe")
+    public String somedayMaybeList(Model model) {
+        model.addAttribute("tasks", taskService.findTaskByTaskType("someday-maybe"));
+        return "someday-maybe";
+    }
     @GetMapping("/waiting_for")
     public String waitingForList(Model model) {
-
         model.addAttribute("tasks", taskService.findTaskByTaskType("waiting-for"));
         return "waiting-for";
+    }
+
+    @GetMapping("/project")
+    public String projectList(Model model) {
+        model.addAttribute("tasks", taskService.findTaskByTaskType("project"));
+        return "project";
     }
     @GetMapping("/form")
     public String taskForm(Model model) {
@@ -52,7 +66,17 @@ public class TaskController {
 
     @GetMapping(value = "/executed/{id}", produces= MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String taskExecuted(@PathVariable Long id)  {
-        System.out.println("TaskExecuted");
+        Task task = taskService.findOne(id);
+        if(task.getTaskType().equals("project")){
+            if(task.getParentTaskId() == null){
+                List<Task> tasks = taskService.findTasksByParentTaskId( (int)(long) id);
+                for (Task subTask: tasks) {
+                    System.out.println(subTask.getTitle());
+                    taskService.taskExecuted(subTask.getTaskId());
+//                    subTask.setTaskExecuted(1);
+                }
+            }
+        }
        return taskService.taskExecuted(id);
     }
 
@@ -60,10 +84,18 @@ public class TaskController {
     public String taskOne(@PathVariable Long id, Model model) {
         model.addAttribute("isNew", false);
         Task task = taskService.findOne(id);
-        task.setStart(task.getStart().substring(0, 10) + "T" + task.getStart().substring(11, 16));
-        task.setEnd(task.getEnd().substring(0, 10) + "T" + task.getStart().substring(11, 16));
-        System.out.println(task.getStart());
+        if(task.getStart() != null && task.getEnd() != null) {
+            task.setStart(task.getStart().substring(0, 10) + "T" + task.getStart().substring(11, 16));
+            task.setEnd(task.getEnd().substring(0, 10) + "T" + task.getStart().substring(11, 16));
+        }
         model.addAttribute("taskForm", task);
+
+        if(task.getTaskType().equals("waiting-for"))
+            model.addAttribute("forms", Arrays.asList("owner", "start", "end"));
+        else if(task.getTaskType().equals("project"))
+            model.addAttribute("forms", Arrays.asList("start", "end"));
+        else if(task.getTaskType().equals("someday-maybe") || task.getTaskType().equals("notes"))
+            model.addAttribute("forms", Collections.emptyList());
         return "form";
     }
 
@@ -74,6 +106,11 @@ public class TaskController {
 
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
+        return taskService.addTask(task);
+    }
+    @PostMapping(value="/add/id", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody String taskAddId(@PathVariable Long id, @Valid @RequestBody Task task) {
+        task.setParentTaskId((int)(long)id);
         return taskService.addTask(task);
     }
 

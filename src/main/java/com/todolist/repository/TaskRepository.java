@@ -25,6 +25,8 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     List<Task> findTasksByTaskExecutedAndUserId(Integer executed, Long userId);
 
+    List<Task> findTasksByParentTaskId(Integer taskId);
+
     @Query("FROM Task t WHERE date_format(t.start, '%Y-%m-%d')  = :date AND t.userId = :userId")
     List<Task> findTasksByStart(@Param("date") String date, @Param("userId") Long userId);
 }

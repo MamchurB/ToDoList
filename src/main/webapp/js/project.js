@@ -11,6 +11,6 @@ let parentOfTriangle;
 for (let element__triangle of elements__triangle) {
    element__triangle.onclick = function () {
       element__triangle.classList.toggle('active');
-      parentOfTriangle = element__triangle.parentElement.classList.toggle('active');
+      parentOfTriangle = element__triangle.parentElement.parentElement.classList.toggle('active');
    }
 }

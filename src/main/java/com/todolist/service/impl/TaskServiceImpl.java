@@ -122,6 +122,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<Task> findTasksByParentTaskId(Integer taskId) {
+        return  taskRepository.findTasksByParentTaskId(taskId);
+    }
+
+    @Override
     public String addTask(Task task) {
         String message = null;
         JSONObject jsonObject = new JSONObject();
