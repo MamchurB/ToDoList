@@ -51,12 +51,25 @@ function modifyData(suffix) {
 }
 
 function executedTask(type, id) {
-	console.log("/todolist/"+type+"/executed/"+id);
 	$.ajax({
 		type : "GET",
 		url : "/todolist/"+type+"/executed/"+id,
 		success : function(data) {
-			console.log("/todolist/"+type+"/executed/"+id);
+			fetchList(type);
+			toastr.success(data.message, "Notification", {
+				closeButton:true
+			});
+			// window.location.reload(true);
+		}
+	});
+}
+function addingTask(type, id) {
+	console.log("/todolist/"+type+"/adding_sub_task/"+id);
+	$.ajax({
+		type : "GET",
+		url : "/todolist/"+type+"/adding_sub_task/"+id,
+		success : function(data) {
+			console.log("/todolist/"+type+"/addTask/"+id);
 			fetchList(type);
 			toastr.success(data.message, "Notification", {
 				closeButton:true
@@ -68,7 +81,6 @@ function executedTask(type, id) {
 
 
 function deleteData(type, id) {
-	console.log("/todolist/"+type+"/delete/"+id);
 	toastr.warning("<div>Are you sure you want to delete this?</div>" +
 			"<div style = 'margin-top:5px;' class='btn-group pull-right'>" +
 			"<button style = 'padding:2px 5px' type='button' id='confirmationYes' class='btn btn-xs btn-default'><i class='glyphicon glyphicon-ok'></i> Yes </button> &nbsp &nbsp &nbsp" +
@@ -83,11 +95,12 @@ function deleteData(type, id) {
 					type : "GET",
 					url : "/todolist/"+type+"/delete/"+id,
 					success : function(data) {
+						console.log("/todolist/"+type+"/delete/"+id);
 						fetchList(type);
 						toastr.success(data.message, "Delete Confirmation", {
 							closeButton:true
 						});
-						window.location.reload(true);
+						 window.location.reload(true);
 					}
 				});
 			});

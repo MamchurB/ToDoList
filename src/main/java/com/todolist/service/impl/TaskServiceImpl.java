@@ -117,8 +117,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> findTaskByTaskType(String taskType) {
-        return taskRepository.findTaskByTaskType(taskType);
+    public List<Task> findTaskByTaskTypeAndUserId(String taskType, Long id) {
+        return taskRepository.findTaskByTaskTypeAndUserId(taskType, id);
     }
 
     @Override
@@ -162,5 +162,10 @@ public class TaskServiceImpl implements TaskService {
             e.printStackTrace();
         }
         return jsonObject.toString();
+    }
+
+    @Override
+    public List<Task> findTasksByUserId(Long userId) {
+        return taskRepository.findTasksByUserId(userId);
     }
 }

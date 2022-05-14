@@ -55,7 +55,7 @@ public class WelcomeController {
 		List<Role> role = new ArrayList<>();
 		role.add(roleRepository.findOne(1L));
 		role.add(roleRepository.findOne(2L));
-
+		MethodUtils.taskEditPage = "welcome";
 		model.addAttribute("taskForm", new Task());
 		model.addAttribute("roles", role);
 		model.addAttribute("taskToday", taskService.findTasksByStart(date, userService.findByUsernam(username).getUserId()));

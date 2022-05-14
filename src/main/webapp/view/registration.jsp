@@ -40,27 +40,42 @@
                         <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
                         <form:form method="POST" modelAttribute="userForm">
                             <form  method="POST" action="${path}/user/registration">
+                                <div>
+                                    <strong style = "width:90%;margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 14px;margin-bottom: 5px;display:block;">
+                                    <form:errors path="fullName"></form:errors>
+                                        ${userFullNameError}
+                                    </strong>
+                                </div>
                                 <div class="login-form__input input">
+
                             <form:input type="text" path="fullName" placeholder="Enter fullname"
                                         autofocus="true"></form:input>
-<%--                                    <input type="text" placeholder="Enter fullname">--%>
                                 </div>
+                                <strong style = "width:90%;margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 14px;margin-bottom: 5px;display:block;">
+                                    <form:errors path="userName"></form:errors>
+                                        ${userError}
+                                </strong>
                                 <div class="login-form__input input">
                             <form:input type="text" path="userName" placeholder="User Name"
                                         autofocus="true"></form:input>
-                                    <form:errors path="userName"></form:errors>
-                                        ${usernameError}
                                 </div>
+                                <strong style = "width:90%;margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 14px;margin-bottom: 5px;display:block;">
+                                    <form:errors path="email"></form:errors>
+                                        ${userEmailError}
+                                </strong>
                                 <div class="login-form__input input">
                             <form:input type="email" path="email" placeholder="Email"
                                         autofocus="true"></form:input>
                                 </div>
+                                <strong style = "width:90%;margin: 0 auto;color: #623e5a;font-weight: 500;font-size: 14px;margin-bottom: 5px;display:block;">
+                                    <form:errors path="mobile"></form:errors>
+                                        ${userMobileError}
+                                </strong>
                                 <div class="login-form__input input">
                             <form:input type="number" path="mobile" placeholder="Mobile"
                                         autofocus="true"></form:input>
-                                    <form:errors path="mobile"></form:errors>
-                                        ${usernameError}
                                 </div>
+
                                 <div class="login-form__input input">
                             <form:input type="password" path="password" placeholder="Password"
                                         autofocus="true"></form:input>

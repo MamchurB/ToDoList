@@ -42,6 +42,21 @@ $(function() {
 	});
 
 });
+
+$(function() {
+	$("#submitSubTaskForm").submit(function(e) {
+		e.preventDefault();
+		var frm = $("#submitTaskForm");
+		var data = {};
+		$.each(this, function(i, v){
+			var input = $(v);
+			data[input.attr("name")] = input.val();
+			delete data["undefined"];
+		});
+		saveRequestedData(frm, data, "task");
+	});
+
+});
 $(function() {
 	$("#submitEditTask").submit(function(e) {
 		e.preventDefault();
@@ -82,17 +97,6 @@ function saveRequestedData(frm, data, type) {
 		data:JSON.stringify(data),
 		success:function(data) {
 			window.location.reload(true);
-			// if(data.status == "success") {
-			// 	toastr.success(data.message, data.title, {
-			// 		closeButton:true
-			// 	});
-			// 	refresh(type);
-			// } else {
-			// 	toastr.error(data.message, data.title, {
-			// 		allowHtml:true,
-			// 		closeButton:true
-			// 	});
-			// }
 		}
 	});
 }

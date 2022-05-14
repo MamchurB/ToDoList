@@ -96,17 +96,18 @@
         </div>
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
-                <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
-                <li><a class="sider__link" id = "List2" href="${path}/task/project" >Projects</a></li>
-                <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
-                <li><a class="sider__link" id = "List3" href="${path}/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-                <li><a class="sider__link" id = "List5" href="${path}/task/waiting_for" >Waiting-For List</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+                <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+                <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+
                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                    <li><a class="sider__link" href="${path}/user/list" id = "userList"  >Users</a></li>
+                    <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
                 </security:authorize>
-                 </ul>
+            </ul>
             <div class="sider__element"></div>
         </div>
         <div class="container container__main">
@@ -193,7 +194,7 @@
                                 <div>
                                     <input type="hidden" id="bcLabels" value="${bc.bcLabels}"/>
                                     <input type="hidden" id="bcPercents" value="${bc.bcPercents}"/>
-                                    <canvas style="padding-bottom: 10px;" id="myPieChart" width="80%" height="80%"></canvas>
+                                    <canvas style="max-width: 100%; padding-bottom: 10px;" id="myPieChart" width="80%" height="80%"></canvas>
 
                                 </div>
                             </div>

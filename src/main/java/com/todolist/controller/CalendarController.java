@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.todolist.model.Event;
 import com.todolist.repository.EventJpaRepository;
 import com.todolist.service.TaskService;
+import com.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,23 +29,17 @@ class CalendarController {
     @Autowired
     private TaskService taskService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping ("/calendar")
     public String calendar(Model model) throws JsonProcessingException {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        model.addAttribute("events", objectMapper.writeValueAsString(taskService.findAll()));
-        System.out.println("Calendar");
+        model.addAttribute("events", objectMapper.writeValueAsString(taskService.findTasksByUserId(userService.findByUsernam(username).getUserId())));
         return "calendar";
     }
 
-    @RequestMapping(value="/eventlist", method=RequestMethod.GET)
-    public String events(HttpServletRequest request, Model model) {
-        List<Event> listEven = eventRepository.findAll();
-        System.out.println("Всі події");
-        for (Event e: listEven) {
-            System.out.println(e.getDescription());
-        }
-        model.addAttribute("events", eventRepository.findAll());
-        return "events";
-    }
 }

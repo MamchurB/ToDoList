@@ -1,7 +1,7 @@
-let task__add = document.querySelector('.task__add_inner');
 let creator = document.querySelector('.creator__wrapper');
 let creator__button = document.querySelector('.creator__button');
 let creators__close = document.querySelectorAll('.creator__close');
+let task__add = document.querySelector('.task__add_inner');
 
 task__add.onclick = function () {
    creator.classList.add('active');
@@ -15,6 +15,7 @@ creator__button.onclick = function () {
 for (let creator__close of creators__close) {
    creator__close.onclick = function () {
       creator.classList.remove('active');
+      back.classList.remove('locked');
    }
 }
 
@@ -24,7 +25,7 @@ let input__owner = document.getElementById('input__owner');
 let input__owner_text = document.getElementById('input__owner_text');
 let input__dates = document.querySelectorAll('.dates__invisible');
 creator__select.onchange = function () {
-   if (creator__select.value == "waiting-for") {
+   if (creator__select.value == "waiting-for" || creator__select.value == "project") {
       input__owner.classList.remove('creator__input_owner');
       input__owner_text.classList.remove('creator__input_owner');
       for (let input__date of input__dates) {

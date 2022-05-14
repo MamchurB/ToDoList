@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 
@@ -40,52 +41,78 @@
   </header>
   <main class="page">
     <div class="creator__wrapper">
+  <form class="creator" action="${path}/task/add" method="post" id="submitTaskForm">
+  <div class="creator__header">
+    Creating a new task:
+    <span class="creator__close"></span>
+  </div>
+  <div class="creator__body">
+    <div class="creator__text">Name:</div>
+    <div class="creator__input input">
+      <input name="title" type="text" placeholder="TASK NAME">
+    </div>
 
-      <form action="${path}/task/add" method="post" class="creator" id="submitTaskForm">
-        <div class="creator__header">
-          Creating a new task:
-          <span class="creator__close"></span>
+    <input name="taskType" type="hidden" value="project">
+    <div class="creator__text">STARTING DATE:</div>
+    <div class="creator__input input">
+      <input name="start" type="datetime-local" placeholder="STARTING DATE">
+    </div>
+    <div class="creator__text">ENDING DATE:</div>
+    <div class="creator__input input">
+      <input name="end" type="datetime-local" placeholder="ENDING DATE">
+    </div>
+    <div class="creator__text">Description:</div>
+    <div class="creator__textarea">
+      <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
+    </div>
+    <div class="creator__button_wrapper"><button class="creator__button button">Create</button></div>
+  </div>
+  </form>
+    </div>
+    <div class="add__wrapper" >
+      <form class="creator" action="${path}/task/adding_sub_task" method="post">
+      <div class="creator__header">
+        Adding a new task:
+        <span class="add__close"></span>
+      </div>
+      <div class="creator__body">
+        <div class="creator__text">Name:</div>
+        <div class="creator__input input">
+          <input name="title" type="text" placeholder="TASK NAME">
         </div>
-        <div class="creator__body">
-          <div class="creator__text">Name:</div>
-          <div class="creator__input input">
-            <input name="title" type="text" placeholder="TASK NAME">
-          </div>
-          <div class="creator__text">Select type:</div>
-          <div class="creator__select">
-            <select name="taskType" id="creator__select">
-              <option value="asap"> ASAP LIST</option>
-              <option value="someday">SOMEDAY-MAYBE LIST</option>
-              <option value="notes">NOTES</option>
-              <option value="waiting-for">WAITING-FOR LIST</option>
-            </select>
-          </div>
-          <div class="creator__text creator__input_dates dates__invisible">STARTING DATE:</div>
-          <div class="creator__input input creator__input_dates dates__invisible">
-            <input name="start" type="datetime-local" placeholder="STARTING DATE">
-          </div>
-          <div class="creator__text creator__input_dates dates__invisible">ENDING DATE:</div>
-          <div class="creator__input input creator__input_dates dates__invisible">
-            <input name="end" type="datetime-local" placeholder="ENDING DATE">
-          </div>
-          <div class="creator__text">Description:</div>
-          <div class="creator__textarea">
-            <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
-          </div>
-          <div class="creator__button_wrapper"><button class="creator__button button">Create</button></div>
+
+        <input name="taskType" type="hidden" value="project">
+        <input name="taskParentId" type="hidden" value="${id}">
+        <div class="creator__text">STARTING DATE:</div>
+        <div class="creator__input input">
+          <input name="start" type="datetime-local" placeholder="STARTING DATE">
         </div>
+        <div class="creator__text">ENDING DATE:</div>
+        <div class="creator__input input">
+          <input name="end" type="datetime-local" placeholder="ENDING DATE">
+        </div>
+        <div class="creator__text">Description:</div>
+        <div class="creator__textarea">
+          <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
+        </div>
+        <div class="creator__button_wrapper"><button class="add__button button">Create</button></div>
+      </div>
       </form>
     </div>
+
     <div class="sider">
       <ul class="sider__list">
-        <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
-        <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
-        <li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
-        <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
-        <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
-        <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-        <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-        <li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
+        <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
+        <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+        <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+        <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+        <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+        <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+        <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+
+        <security:authorize access="hasRole('ROLE_ADMIN')">
+          <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+        </security:authorize>
       </ul>
       <div class="sider__element"></div>
     </div>
@@ -97,16 +124,15 @@
         <form action="${path}/task/executed"  class="tasks__elements">
           <c:forEach var="task" items="${tasks}" varStatus="loop">
             <c:if test="${task.parentTaskId == null}">
-
-            <c:if test="${task.getTaskExecuted() == 0}">
+              <c:if test="${task.getTaskExecuted() == 0}">
             <ul class="element__list">
-              <div class="project__element element">
+              <div class="project__element project__parent element">
                 <span class="element__triangle"></span>
                 <label class="element__checkbox checkbox-2">
                   <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
                   <span></span>
                 </label>
-                <div class="element__info element__info_waiting">
+                <div class="element__info">
                   <div class="element__task-name">
                     ${task.title}
                   </div>
@@ -121,20 +147,24 @@
                   <div class="element__delete">
                     <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
                   </div>
-                  <div href="\todolist\task\add\ ${task.taskId}" class="element__add add">
+<%--                  <c:set var="id" scope="session" value="${task.taskId}"/>--%>
+<%--                  <div  class="element__add add">--%>
+<%--                  </div>--%>
+                  <div>
+                    <a  onclick="addingTask('task', ${task.taskId})"> <div class="element__add "></div></a>
                   </div>
                 </div>
               </div>
               </c:if>
               <c:if test="${task.getTaskExecuted() == 1}">
               <ul class="element__list">
-                <div class="project__element element">
+                <div class="project__element project__parent element">
                   <span class="element__triangle"></span>
                   <label class="element__checkbox checkbox-2">
                     <input onclick="executedTask('task', '${task.taskId}');" checked class="checkbox" type="checkbox">
                     <span></span>
                   </label>
-                  <div class="element__info element__info_waiting">
+                  <div class="element__info">
                     <div class="element__task-name">
                         ${task.title}
                     </div>
@@ -149,7 +179,7 @@
                     <div class="element__delete">
                       <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
                     </div>
-                    <div href="\todolist\task\add\ ${task.taskId}" class="element__add add">
+                    <div  class="element__add add">
                     </div>
                   </div>
                 </div>
@@ -158,7 +188,7 @@
               <c:forEach var="subTask" items="${tasks}" varStatus="loop">
               <c:if test="${task.taskId == subTask.getParentTaskId()}">
 
-                <c:if test="${task.getTaskExecuted() == 0}">
+                <c:if test="${subTask.getTaskExecuted() == 0}">
               <li>
                 <div class="project__element element">
                   <span class="element__triangle"></span>
@@ -166,7 +196,7 @@
                     <input onclick="executedTask('task', '${subTask.taskId}');" class="checkbox" type="checkbox">
                     <span></span>
                   </label>
-                  <div class="element__info element__info_waiting">
+                  <div class="element__info">
                     <div class="element__task-name">
                       ${subTask.title}
                     </div>
@@ -174,18 +204,18 @@
                         ${subTask.start}
                     </div>
                   </div>
-                  <div class="element__settings">
-                    <div class="element__gear">
-                      <a href=""><img src="../images/settings.svg" alt="gear"></a>
+                    <div class="element__settings">
+                        <div class="element__gear">
+                            <a href="\todolist\task\edit\ ${subTask.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                        </div>
+                        <div class="element__delete">
+                            <a href="javascript:void(0);" onclick="deleteData('task', '${subTask.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
+                        </div>
                     </div>
-                    <div class="element__delete">
-                      <a href=""><img src="../images/delete.svg" alt="trash bin"></a>
-                    </div>
-                  </div>
                 </div>
               </li>
               </c:if>
-                <c:if test="${task.getTaskExecuted() == 1}">
+                <c:if test="${subTask.getTaskExecuted() == 1}">
                   <li>
                     <div class="project__element element">
                       <span class="element__triangle"></span>
@@ -193,7 +223,7 @@
                         <input onclick="executedTask('task', '${subTask.taskId}');" checked class="checkbox" type="checkbox">
                         <span></span>
                       </label>
-                      <div class="element__info element__info_waiting">
+                      <div class="element__info">
                         <div class="element__task-name">
                             ${subTask.title}
                         </div>
@@ -201,14 +231,14 @@
                             ${subTask.start}
                         </div>
                       </div>
-                      <div class="element__settings">
-                        <div class="element__gear">
-                          <a href=""><img src="../images/settings.svg" alt="gear"></a>
+                        <div class="element__settings">
+                            <div class="element__gear">
+                                <a href="\todolist\task\edit\ ${subTask.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                            </div>
+                            <div class="element__delete">
+                                <a href="javascript:void(0);" onclick="deleteData('task', '${subTask.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
+                            </div>
                         </div>
-                        <div class="element__delete">
-                          <a href=""><img src="../images/delete.svg" alt="trash bin"></a>
-                        </div>
-                      </div>
                     </div>
                   </li>
                 </c:if>
@@ -248,10 +278,12 @@
 </div>
 <script src="../js/burger.js"></script>
 <script src="../js/project.js"></script>
-<script src="../js/new_task.js"></script>
+<script src="../js/auto_checkBox.js"></script>
+<script src="../js/new_project.js"></script>
 <script src="../js/project_adder.js"></script>
 <script src="../js/line_through.js"></script>
 <script src="../js/sider.js"></script>
+
 
 <script type="text/javascript" src="../js/jquery.boot.js"></script>
 <script type="text/javascript" src="../js/jquery.save.js"></script>

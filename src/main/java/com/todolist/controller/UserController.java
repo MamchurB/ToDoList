@@ -65,11 +65,32 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-		userForm.setRole(roleRepository.findOne(2L));
+		List<User> users = userService.userList();
+		User user = userService.findByUsernam(userForm.getUserName());
+
+	    userForm.setRole(roleRepository.findOne(2L));
 		userForm.setRoleId(2L);
-		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())){
-			model.addAttribute("passwordError", "Password not equals"
-					+ userForm.getPassword() + " має бути " + userForm.getPasswordConfirm());
+		System.out.println(user.getUserName());
+		System.out.println(userForm.getUserName());
+
+		if( user.getUserName().equals(userForm.getUserName()) || userForm.getUserName().length() == 0){
+			System.out.println("User = " + user);
+			model.addAttribute("userError", "This name already exists");
+		}
+		if (userForm.getFullName().length() < 5 || userForm.getFullName().length() > 30){
+			model.addAttribute("userFullNameError", "Please enter between 5-30 characters and no digits");
+			return "registration";
+		}
+		if (userForm.getEmail().length() < 10 || userForm.getEmail().length() > 100){
+			model.addAttribute("userEmailError", "Please enter between 10-100 characters and valid input");
+			return "registration";
+		}
+		if (userForm.getMobile().length() != 10){
+			model.addAttribute("userMobileError", "Please enter atleast 10 digits");
+			return "registration";
+		}
+		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())  || userForm.getPassword().length() == 0){
+			model.addAttribute("passwordError", "Password not equals");
 			return "registration";
 		}
 		if (bindingResult.hasErrors()) {
@@ -86,7 +107,7 @@ public class UserController {
 		if (auth != null){
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
-		return "redirect:/user/login"; //You can redirect wherever you want, but generally it's a good practice to show login screen again.
+		return "redirect:/user/login";
 	}
 
 

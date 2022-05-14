@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 
 <head>
@@ -36,14 +37,17 @@
 	<main class="page">
 		<div class="sider">
 			<ul class="sider__list">
-				<li><a class="sider__link" href="">Things</a></li>
-				<li><a class="sider__link" href="">ASAP List</a></li>
-				<li><a class="sider__link" href="project.html">Projects</a></li>
-				<li class="sider__active"><a class="sider__link" href="calendar.html">Calendar</a></li>
-				<li><a class="sider__link" href="">SOmeday-Maybe List</a></li>
-				<li><a class="sider__link" href="">NOtes</a></li>
-				<li><a class="sider__link" href="waiting-for.html">Waiting-For List</a></li>
-				<li><a class="sider__link" href="users.html">Users</a></li>
+				<li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
+				<li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+				<li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+				<li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+				<li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+				<li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+				<li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+
+				<security:authorize access="hasRole('ROLE_ADMIN')">
+					<li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+				</security:authorize>
 			</ul>
 			<div class="sider__element"></div>
 		</div>

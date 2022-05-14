@@ -21,7 +21,7 @@ public interface TaskService {
 
 
     //List<Task> findTasksByTaskExecuted(Integer executed);
-    List<Task> findTaskByTaskType(String taskType);
+    List<Task> findTaskByTaskTypeAndUserId(String taskType, Long id);
 
     List<Task> findTasksByParentTaskId(Integer taskId);
 
@@ -37,4 +37,5 @@ public interface TaskService {
 
     String deleteTask(Long id);
 
+    List<Task> findTasksByUserId(Long userId);
 }

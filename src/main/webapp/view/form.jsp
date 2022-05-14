@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <html lang="en">
 
 <head>
@@ -19,12 +20,12 @@
     <header class="header">
         <div class="container">
             <div class="header__body">
-                <a href="main.html" class="header__logo">Busy Man</a>
+                <a href="${path}" class="header__logo">Busy Man</a>
                 <nav class="header__menu">
                     <ul class="header__list">
-                        <li><a href="main.html" class="header__link">Home</a></li>
-                        <li><a href="about-us.html" class="header__link">About us</a></li>
-                        <li><a href="index.html" class="header__link">Log out</a></li>
+                        <li><a href="${path}" class="header__link">Home</a></li>
+                        <li><a href="/todolist/user/about-us" class="header__link">About us</a></li>
+                        <li><a href="/todolist/user/logout" class="header__link">Log out</a></li>
                     </ul>
                 </nav>
                 <div class="header__burger">
@@ -36,14 +37,17 @@
     <main class="page">
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link" href="">Things</a></li>
-                <li><a class="sider__link" href="">ASAP List</a></li>
-                <li><a class="sider__link" href="project.html">Projects</a></li>
-                <li class="sider__active"><a class="sider__link" href="calendar.html">Calendar</a></li>
-                <li><a class="sider__link" href="">SOmeday-Maybe List</a></li>
-                <li><a class="sider__link" href="">NOtes</a></li>
-                <li><a class="sider__link" href="waiting-for.html">Waiting-For List</a></li>
-                <li><a class="sider__link" href="users.html">Users</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+                <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+                <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+                </security:authorize>
             </ul>
             <div class="sider__element"></div>
         </div>
@@ -52,7 +56,7 @@
                 <div class="creator__header">
                         Editing Task:
                 </div>
-                <form:form method="post" class="form-horizontal" action="${path}/task/edit" commandName="taskForm" id="submitTaskForm">
+                <form:form method="post" class="form-horizontal" action="${path}/task/edit" commandName="taskForm" >
                     <form:hidden path="taskId"/>
                     <form:hidden path="taskExecuted"/>
                     <div class="creator__body">
@@ -66,6 +70,7 @@
                             <form:select path="taskType"  id="creator__select">
                                 <form:option value="asap"> ASAP LIST</form:option>
                                 <form:option value="someday">SOMEDAY-MAYBE LIST</form:option>
+                                <form:option value="project">PROJECT</form:option>
                                 <form:option value="notes">NOTES</form:option>
                                 <form:option value="waiting-for">WAITING-FOR LIST</form:option>
                             </form:select>
@@ -94,13 +99,7 @@
                         <div class="creator__input input">
                             <form:input class="input" path="description" placeholder="Enter description" required="true"/>
                         </div>
-
-
-                        <form:button onclick="location.href='${path}'" value="Save" >
-                        <div class="creator__button_wrapper"><button onclick="location.href='${path}'" class="creator__button button">Change</button></div>
-                        </form:button>
-<%--                        <div onclick="location.href='${path}'" class="creator__button_wrapper"><button class="creator__button button">Change</button></div>--%>
-
+                        <div class="creator__button_wrapper"><button class="creator__button button">Change</button></div>
                     </div>
 
                 </form:form>

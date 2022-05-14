@@ -21,11 +21,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     Page<Task> findTaskByUserId(Long userId, Pageable pageable);
 
-    List<Task> findTaskByTaskType(String taskType);
+    List<Task> findTaskByTaskTypeAndUserId(String taskType, Long id);
 
     List<Task> findTasksByTaskExecutedAndUserId(Integer executed, Long userId);
 
     List<Task> findTasksByParentTaskId(Integer taskId);
+
+    List<Task> findTasksByUserId(Long userId);
 
     @Query("FROM Task t WHERE date_format(t.start, '%Y-%m-%d')  = :date AND t.userId = :userId")
     List<Task> findTasksByStart(@Param("date") String date, @Param("userId") Long userId);

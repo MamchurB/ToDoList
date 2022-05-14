@@ -132,8 +132,7 @@ body {
 .container__project {
   padding: 0 40px; }
 
-.container__calendar,
-.container__form {
+.container__calendar {
   padding: 50px 0px; }
 
 .page {
@@ -621,12 +620,23 @@ body {
   .element {
     padding: 10px 0; } }
 
+/*-------------------------CHANGER--------------------------------*/
+.container__form {
+  width: 90%;
+  margin: 0 auto;
+  padding: 50px 0px; }
+
+@media (max-width: 767.98px) {
+  .container__form {
+    padding: 50px 10px; } }
+
 /*--------------------------CREATOR--------------------------------*/
 .page {
   position: relative; }
 
 .creator__wrapper,
-.changer__wrapper {
+.changer__wrapper,
+.add__wrapper {
   display: none;
   position: fixed;
   top: 50%;
@@ -652,27 +662,6 @@ body {
 .creator__input_owner, .creator__input_dates {
   display: none;
   pointer-events: none; }
-.creator__close {
-  position: relative;
-  cursor: pointer;
-  height: 30px;
-  width: 30px; }
-.creator__close::after, .creator__close::before {
-  content: "";
-  position: absolute;
-  top: 15px;
-  left: 0;
-  height: 2px;
-  width: 100%;
-  background: #e09fb8; }
-.creator__close::before {
-  -webkit-transform: rotate(-45deg);
-  -ms-transform: rotate(-45deg);
-  transform: rotate(-45deg); }
-.creator__close::after {
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
-  transform: rotate(45deg); }
 .creator__header {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -764,8 +753,36 @@ body {
   content: "";
   background: #ffb6d2; }
 
+.creator__close,
+.add__close {
+  position: relative;
+  cursor: pointer;
+  height: 30px;
+  width: 30px; }
+.creator__close::after, .creator__close::before,
+.add__close::after,
+.add__close::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background: #e09fb8; }
+.creator__close::before,
+.add__close::before {
+  -webkit-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  transform: rotate(-45deg); }
+.creator__close::after,
+.add__close::after {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg); }
+
 .creator__wrapper.active,
-.changer__wrapper.active {
+.changer__wrapper.active,
+.add__wrapper.active {
   display: block;
   z-index: 100000; }
 

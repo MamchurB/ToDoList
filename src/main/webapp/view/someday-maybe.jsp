@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html lang="en">
 
@@ -10,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusyMan - Waiting For List</title>
+    <title>BusyMan - Someday-Maybe List</title>
     <link rel="stylesheet" href="../css/style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -82,14 +83,17 @@
         </div>
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link" href="javascript:void(0);" id = "taskList"  >Things</a></li>
-                <li><a class="sider__link" id = "List1" href="javascript:void(0);" >ASAP List</a></li>
-                <li><a class="sider__link" id = "List2" href="javascript:void(0);" >Projects</a></li>
-                <li><a class="sider__link"  href="${path}/calendar" id = "calendarList" >Calendar</a></li>
-                <li><a class="sider__link" id = "List3" href="javascript:void(0);" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link" id = "List4" href="javascript:void(0);" >NOtes</a></li>
-                <li><a class="sider__link" id = "List5" href="${path}/task/list?page=1" >Waiting-For List</a></li>
-                <li><a class="sider__link" href="${path}/user/list?page=1" id = "userList"  >Users</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+                <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+                <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+
+                <security:authorize access="hasRole('ROLE_ADMIN')">
+                    <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+                </security:authorize>
             </ul>
             <div class="sider__element"></div>
         </div>
@@ -97,7 +101,7 @@
 
             <div class="main__tasks tasks tasks_waiting">
                 <div class="tasks__deadline">
-                    Your WAITING-FOR LIST:
+                    Your SOMEDAY-MAYBE LIST:
                 </div>
                 <form action="${path}/task/executed"  class="tasks__elements">
                     <c:forEach items="${tasks}" var="task">
@@ -111,9 +115,9 @@
                                     <div class="element__task-name">
                                             ${task.getTitle()}
                                     </div>
-                                    <div class="element__date">
-                                            ${task.getStart()}
-                                    </div>
+<%--                                    <div class="element__date">--%>
+<%--                                            ${task.getStart()}--%>
+<%--                                    </div>--%>
                                 </div>
 
                                 <div class="element__settings">
