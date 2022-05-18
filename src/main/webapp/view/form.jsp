@@ -37,12 +37,11 @@
     <main class="page">
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
                 <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
                 <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
                 <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
                 <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -62,42 +61,36 @@
                     <div class="creator__body">
                         <div class="creator__text">Task Name:</div>
                         <div class="creator__input input">
-                            <form:input class="input" path="title" placeholder="Enter Task Name" required="true"/>
+                            <form:input class="input" path="title" placeholder="Enter Task Name" />
                         </div>
 
                         <div class="creator__text">Task Type:</div>
                         <div class="creator__select">
                             <form:select path="taskType"  id="creator__select">
-                                <form:option value="asap"> ASAP LIST</form:option>
-                                <form:option value="someday">SOMEDAY-MAYBE LIST</form:option>
+                                <form:option value="simple"> SIMPLE LIST</form:option>
+                                <form:option value="someday-maybe">SOMEDAY-MAYBE LIST</form:option>
                                 <form:option value="project">PROJECT</form:option>
                                 <form:option value="notes">NOTES</form:option>
                                 <form:option value="waiting-for">WAITING-FOR LIST</form:option>
                             </form:select>
                         </div>
-                        <c:if test="${forms.contains('owner')}">
-                            <div class="creator__text">Owner:</div>
-                            <div class="creator__input input">
-                                <form:input class="input" path="owner" placeholder="Enter owner" required="true"/>
+                            <div id="input__owner_text" class="creator__text">Owner:</div>
+                            <div id="input__owner" class="creator__input input">
+                                <form:input class="input" path="owner" placeholder="Enter owner" />
                             </div>
-                        </c:if>
 
-                        <c:if test="${forms.contains('start')}">
-                            <div class="creator__text">Start:</div>
-                            <div class="creator__input input">
-                                <form:input type = "datetime-local" class="input" path="start" placeholder="Enter start task" required="true"/>
+                            <div  class="creator__text dates__invisible">Start:</div>
+                            <div class="creator__input input dates__invisible">
+                                <form:input id="startDate"  type = "datetime-local" class="input" path="start" placeholder="Enter start task" />
                             </div>
-                        </c:if>
 
-                        <c:if test="${forms.contains('end')}">
-                            <div class="creator__text">End:</div>
-                            <div class="creator__input input">
-                                <form:input type = "datetime-local" class="input" path="end" placeholder="Enter end task" required="true"/>
+                            <div class="creator__text dates__invisible">End:</div>
+                            <div class="creator__input input dates__invisible">
+                                <form:input id="endDate" type = "datetime-local" class="input" path="end" placeholder="Enter end task" />
                             </div>
-                        </c:if>
                         <div class="creator__text">Description:</div>
-                        <div class="creator__input input">
-                            <form:input class="input" path="description" placeholder="Enter description" required="true"/>
+                        <div class="creator__textarea">
+                            <form:textarea path="description" type="text" placeholder="ENTER DESCRIPTION" />
                         </div>
                         <div class="creator__button_wrapper"><button class="creator__button button">Change</button></div>
                     </div>
@@ -118,7 +111,7 @@
                 </div>
             </div>
             <div class="footer__corp">
-                "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+                "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
             </div>
         </div>
     </footer>
@@ -128,6 +121,11 @@
 <script type="text/javascript" src="${path}/js/jquery.save.js"></script>
 <script src="/todolist/js/burger.js"></script>
 <script src="/todolist/js/sider.js"></script>
+
+<script src="/todolist/js/edit-select.js"></script>
+
+<script  src="/todolist/js/date-validator.js"></script>
+<script>dateValidate();</script>
 </body>
 
 </html>

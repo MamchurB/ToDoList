@@ -20,12 +20,12 @@
 	<header class="header">
 		<div class="container">
 			<div class="header__body">
-				<a href="main.html" class="header__logo">Busy Man</a>
+				<a href="${path}" class="header__logo">Busy Man</a>
 				<nav class="header__menu">
 					<ul class="header__list">
-						<li><a href="main.html" class="header__link">Home</a></li>
-						<li><a href="about-us.html" class="header__link">About us</a></li>
-						<li><a href="index.html" class="header__link">Log out</a></li>
+						<li><a href="${path}" class="header__link">Home</a></li>
+						<li><a href="/todolist/user/about-us" class="header__link">About us</a></li>
+						<li><a href="/todolist/user/logout" class="header__link">Log out</a></li>
 					</ul>
 				</nav>
 				<div class="header__burger">
@@ -37,12 +37,11 @@
 	<main class="page">
 		<div class="sider">
 			<ul class="sider__list">
-				<li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-				<li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+				<li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
 				<li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
 				<li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
 				<li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-				<li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+				<li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
 				<li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
 				<security:authorize access="hasRole('ROLE_ADMIN')">
@@ -113,7 +112,7 @@
 				</div>
 			</div>
 			<div class="footer__corp">
-				"Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+				"Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
 			</div>
 		</div>
 	</footer>

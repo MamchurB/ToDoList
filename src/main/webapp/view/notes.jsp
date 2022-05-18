@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html;"
          pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -11,13 +11,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusyMan - Someday-Maybe List</title>
+    <title>BusyMan - Notes</title>
     <link rel="stylesheet" href="../css/style.css">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     <script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
             th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
 </head>
 
 <body class="calendar__body">
@@ -41,17 +41,17 @@
     </header>
     <main class="page">
         <div class="creator__wrapper">
-            <form action="${path}/task/add" method="post" class="creator" id="submitAddTask" >
+            <form action="${path}/task/add" method="post" class="creator" id="submitAddTask">
                 <div class="creator__header">
-                    Creating a new task:
+                    Creating a new note:
                     <span class="creator__close"></span>
                 </div>
+                <input name="taskType" type="hidden" value = "notes">
                 <div class="creator__body">
                     <div class="creator__text">Name:</div>
                     <div class="creator__input input">
-                        <input name="title" type="text" placeholder="TASK NAME">
+                        <input name="title" type="text" placeholder="note NAME">
                     </div>
-                    <input name="taskType" type="hidden" value="someday-maybe">
                     <div class="creator__text">Description:</div>
                     <div class="creator__textarea">
                         <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
@@ -75,69 +75,69 @@
             </ul>
             <div class="sider__element"></div>
         </div>
-        <div class="container">
-
-            <div class="main__tasks tasks tasks_waiting">
-                <div class="tasks__header">
-                    Your SOMEDAY-MAYBE LIST:
+        <div class="notes">
+            <div class="container container__notes">
+                <div class="notes__header">
+                    Your Notes:
                 </div>
-                <form action="${path}/task/executed"  class="tasks__elements">
+                <div class="notes__row">
                     <c:forEach items="${tasks}" var="task">
-                        <div class="tasks__element element">
-                            <c:if test="${task.getTaskExecuted() == 0}">
-                                <label class="element__checkbox checkbox-2">
-                                    <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
-                                    <span></span>
-                                </label>
-                                <div class="element__info">
-                                    <div class="element__task-name">
-                                        <c:out value=" ${task.getTitle()}"/>
+                    <div class="notes__column_wrapper">
+                        <div class="notes__column">
+                            <div class="notes__label">
+                            </div>
+                            <div class="notes__body">
+                                <div class="notes__top notes-top">
+                                    <div class="element__settings notes__settings">
+                                        <div class="element__gear">
+                                            <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                                        </div>
+                                        <div class="element__delete">
+                                            <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
+                                        </div>
                                     </div>
                                 </div>
-
-                                <div class="element__settings">
-                                    <div class="element__gear">
-                                        <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
+                                <div class="notes__textarea">
+                                    <div class="notes__name">
+                                 <span class="notes__info">
+                                    Name:
+                                 </span>
+                                        <span>
+                                            <c:out value="${task.getTitle()}"/>
+                                 </span>
                                     </div>
-                                    <div class="element__delete">
-                                        <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
-                                    </div>
-                                </div>
-                            </c:if>
-
-                            <c:if test="${task.getTaskExecuted() == 1}">
-                                <label class="element__checkbox checkbox-2">
-                                    <input onclick="executedTask('task', '${task.taskId}');" checked type="checkbox" class="checkbox">
-                                    <span></span>
-                                </label>
-                                <div class="element__info">
-                                    <div class="element__task-name">
-                                        <c:out value=" ${task.getTitle()}"/>
+                                    <div class="notes__description">
+                                        <div class="notes__info">
+                                            Description:
+                                        </div>
+                                        <div>
+                                            <c:out value="${task.getDescription()}"/>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="element__settings">
-                                    <div class="element__gear">
-                                        <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
-                                    </div>
-                                    <div class="element__delete">
-                                        <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
-                                    </div>
-                                </div>
-                            </c:if>
-
-
-                        </div>
-
-                    </c:forEach>
-                    <div class="task__add">
-                        <div class="task__add_inner">
-                            <span class="task__plus"></span>
-                            <span class="task__add-text">Create A New Task</span>
+                                <div class="notes__date">${task.getStart()}</div>
+                            </div>
                         </div>
                     </div>
-                </form>
-            </div>
+                    </c:forEach>
+                    <div class="notes__column_wrapper">
+                        <a href="javascript:void(0)" class="notes__new">
+                            <div class="notes__column notes__column_new">
+                                <div class="notes__label notes__label_new">
 
+                                </div>
+                                <div class="notes__body">
+                                    <div class="notes__top notes-top">
+                                    </div>
+                                    <div class="notes__textarea notes__textarea_new">
+                                        ADD NOTE
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <footer class="footer">
@@ -157,13 +157,13 @@
         </div>
     </footer>
 </div>
-<script src="../js/line_through.js"></script>
-<script src="../js/new_task.js"></script>
-<script src="../js/sider.js"></script>
 <script src="../js/burger.js"></script>
+<script src="../js/sider.js"></script>
+<script src="../js/new-note.js"></script>
 
 <script type="text/javascript" src="../js/jquery.boot.js"></script>
 <script type="text/javascript" src="../js/jquery.save.js"></script>
+
 </body>
 
 </html>

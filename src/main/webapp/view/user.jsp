@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-		 pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html;"
+		 pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -83,12 +83,11 @@
 		</div>
 		<div class="sider">
 			<ul class="sider__list">
-				<li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-				<li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+				<li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
 				<li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
 				<li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
 				<li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-				<li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+				<li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
 				<li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
 				<security:authorize access="hasRole('ROLE_ADMIN')">
@@ -134,12 +133,12 @@
 							<c:forEach items="${users}" var="user">
 								<tbody class="table__body">
 							<tr>
-								<td class="table__name">${user.fullName}</td>
-								<td>${user.userId}</td>
-								<td>${user.userName}</td>
-								<td class="table__mail">${user.email}</td>
-								<td>${user.mobile}</td>
-								<td>${user.role.name}</td>
+								<td class="table__name"> <c:out value="${user.fullName}"/></td>
+								<td><c:out value="${user.userId}"/></td>
+								<td><c:out value="${user.userName}"/></td>
+								<td class="table__mail"><c:out value="${user.email}"/></td>
+								<td><c:out value="${user.mobile}"/></td>
+								<td><c:out value="${user.role.name}"/></td>
 								<td class="table__settings"><a href="${path}\user\edit\ ${user.userId}"><span class="element__gear table__gear"><img
 										src="../images/settings.svg" alt="gear"></span></a>
 								</td>
@@ -177,7 +176,7 @@
 				</div>
 			</div>
 			<div class="footer__corp">
-				"Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+				"Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
 			</div>
 		</div>
 	</footer>

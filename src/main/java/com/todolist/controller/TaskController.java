@@ -22,10 +22,12 @@ import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
 @RequestMapping("/task")
@@ -41,6 +43,30 @@ public class TaskController {
 
     private Long addingTaskId;
 
+    @GetMapping("/notes")
+    public String notesList(Model model) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        List<Task> tasks = taskService.findTaskByTaskTypeAndUserId("notes", userService.findByUsernam(username).getUserId());
+        for (Task item : tasks) {
+            System.out.println(item);
+        }
+        model.addAttribute("tasks",
+                taskService.findTaskByTaskTypeAndUserId("notes", userService.findByUsernam(username).getUserId()));
+        MethodUtils.taskEditPage = "notes";
+        return "notes";
+    }
+
+    @GetMapping("/simple")
+    public String simpleList(Model model) {
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        model.addAttribute("tasks",
+                taskService.findTaskByTaskTypeAndUserId("simple", userService.findByUsernam(username).getUserId()));
+        MethodUtils.taskEditPage = "simple";
+        return "simple";
+    }
+
     @GetMapping("/someday_maybe")
     public String somedayMaybeList(Model model) {
          Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -48,7 +74,6 @@ public class TaskController {
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("someday-maybe", userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "someday_maybe";
-        model.addAttribute("taskPage", "someday_maybe" );
         return "someday-maybe";
     }
     @GetMapping("/waiting_for")
@@ -65,18 +90,13 @@ public class TaskController {
     public String projectList(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-
-        List<Task> tasks =
-                taskService.findTaskByTaskTypeAndUserId("project", userService.findByUsernam(username).getUserId());
-        System.out.println(userService.findByUsernam(username).getUserId());
-        for (Task task: tasks) {
-            System.out.println(task);
-        }
         model.addAttribute("tasks",
-                taskService.findTaskByTaskTypeAndUserId("project", userService.findByUsernam(username).getUserId()));
+                taskService.findTaskByTaskTypeAndUserId("project",
+                        userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "project";
         return "project";
     }
+
     @GetMapping("/form")
     public String taskForm(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
@@ -139,18 +159,7 @@ public class TaskController {
     public String taskOne(@PathVariable Long id, Model model) {
         model.addAttribute("isNew", false);
         Task task = taskService.findOne(id);
-        if(task.getStart() != null && task.getEnd() != null) {
-            task.setStart(task.getStart().substring(0, 10) + "T" + task.getStart().substring(11, 16));
-            task.setEnd(task.getEnd().substring(0, 10) + "T" + task.getStart().substring(11, 16));
-        }
         model.addAttribute("taskForm", task);
-
-        if(task.getTaskType().equals("waiting-for"))
-            model.addAttribute("forms", Arrays.asList("owner", "start", "end"));
-        else if(task.getTaskType().equals("project"))
-            model.addAttribute("forms", Arrays.asList("start", "end"));
-        else if(task.getTaskType().equals("someday-maybe") || task.getTaskType().equals("notes"))
-            model.addAttribute("forms", Collections.emptyList());
         return "form";
     }
 
@@ -163,8 +172,12 @@ public class TaskController {
     }
 
     @PostMapping(value="/add", consumes = MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) {
-        System.out.println("Task Add");
+    public @ResponseBody String taskAdd(@Valid @RequestBody Task task, BindingResult result) throws ParseException {
+        if(task.getStart() == null){
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            formatter.format(new Date(System.currentTimeMillis()));
+            task.setStart(formatter.format(new Date(System.currentTimeMillis())));
+        }
         return taskService.addTask(task);
     }
 
@@ -186,6 +199,7 @@ public class TaskController {
     public String taskAddId(@PathVariable Long id) {
         System.out.println("Sub Task Add" + id);
         addingTaskId = id;
+        System.out.println(id);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("message", "Sub Task Add Successfully.");

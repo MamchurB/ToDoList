@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html;"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -39,12 +39,11 @@
     <main class="page">
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
                 <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
                 <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
                 <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
                 <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -62,6 +61,26 @@
                         </div>
                         <div class="about-us__main">
                             <div class="about-us__img">
+                                <img src="../images/max2.png" alt="Max">
+                            </div>
+                            <div class="about-us__info">
+                                <div class="about-us__text">
+                                    <span>Tymchenko Maksym</span> - Student of Uzhhorod National University, Faculty of
+                                    Information
+                                    Technologies,
+                                    specialty "Computer Science".
+                                </div>
+                                <div class="about-us__mail">Email: <span>tymchenko.maksym@student.uzhnu.edu.ua</span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-us__block">
+                        <div class="about-us__title">
+                            Designer
+                        </div>
+                        <div class="about-us__main">
+                            <div class="about-us__img">
                                 <img src="../images/vasyl.jpg" alt="Vasyl">
                             </div>
                             <div class="about-us__info">
@@ -75,6 +94,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="about-us__block">
                         <div class="about-us__title">
                             Back-end developer
@@ -94,25 +114,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="about-us__block">
-                        <div class="about-us__title">
-                            Chief Inspirer
-                        </div>
-                        <div class="about-us__main">
-                            <div class="about-us__img">
-                                <img src="../images/zava.jpg" alt="Zava">
-                            </div>
-                            <div class="about-us__info">
-                                <div class="about-us__text">
-                                    <span>Zavadyak Roman</span> - Student of Uzhhorod National University, Faculty of
-                                    Information
-                                    Technologies,
-                                    specialty "Computer Science".
-                                </div>
-                                <div class="about-us__mail">Email: <span>zavadyak.roman@student.uzhnu.edu.ua</span></div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -129,7 +130,7 @@
                 </div>
             </div>
             <div class="footer__corp">
-                "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+                "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
             </div>
         </div>
     </footer>

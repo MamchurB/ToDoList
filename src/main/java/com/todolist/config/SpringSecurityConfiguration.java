@@ -39,7 +39,7 @@ public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated().and()
 				.formLogin().loginPage("/user/login").permitAll().and()
 				.logout().deleteCookies("remember-me").permitAll().and()
-				.rememberMe().tokenValiditySeconds(180);
+				.rememberMe().tokenValiditySeconds(60);
 	}
 
 

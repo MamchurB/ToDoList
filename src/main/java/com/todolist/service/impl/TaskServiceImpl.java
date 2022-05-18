@@ -104,8 +104,8 @@ public class TaskServiceImpl implements TaskService {
         Integer sumExecutedUnacted = executedCount + unactedCount;
 
         if(!sumExecutedUnacted.equals(0)){
-            percent.add(String.valueOf(executedCount * 100 / sumExecutedUnacted));
             percent.add(String.valueOf(unactedCount * 100 / sumExecutedUnacted));
+            percent.add(String.valueOf(executedCount * 100 / sumExecutedUnacted));
         }else{
             percent.add(String.valueOf(50));
             percent.add(String.valueOf(50));
@@ -134,6 +134,7 @@ public class TaskServiceImpl implements TaskService {
         String currentPrincipalName = authentication.getName();
 
         task.setUserId(userRepository.findByUsername(currentPrincipalName).getUserId());
+
         if(task.getTaskExecuted() == null)
             task.setTaskExecuted(0);
         try {

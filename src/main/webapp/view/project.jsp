@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; "
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -55,11 +55,11 @@
     <input name="taskType" type="hidden" value="project">
     <div class="creator__text">STARTING DATE:</div>
     <div class="creator__input input">
-      <input name="start" type="datetime-local" placeholder="STARTING DATE">
+      <input id="startDate" name="start" type="datetime-local" placeholder="STARTING DATE">
     </div>
     <div class="creator__text">ENDING DATE:</div>
     <div class="creator__input input">
-      <input name="end" type="datetime-local" placeholder="ENDING DATE">
+      <input id="endDate"  name="end" type="datetime-local" placeholder="ENDING DATE">
     </div>
     <div class="creator__text">Description:</div>
     <div class="creator__textarea">
@@ -85,11 +85,11 @@
         <input name="taskParentId" type="hidden" value="${id}">
         <div class="creator__text">STARTING DATE:</div>
         <div class="creator__input input">
-          <input name="start" type="datetime-local" placeholder="STARTING DATE">
+          <input id="startDate-pj" name="start" type="datetime-local" placeholder="STARTING DATE">
         </div>
         <div class="creator__text">ENDING DATE:</div>
         <div class="creator__input input">
-          <input name="end" type="datetime-local" placeholder="ENDING DATE">
+          <input id="endDate-pj" name="end" type="datetime-local" placeholder="ENDING DATE">
         </div>
         <div class="creator__text">Description:</div>
         <div class="creator__textarea">
@@ -101,19 +101,18 @@
     </div>
 
     <div class="sider">
-      <ul class="sider__list">
-        <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-        <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
-        <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
-        <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
-        <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-        <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
-        <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+        <ul class="sider__list">
+            <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
+            <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
+            <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
+            <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
+            <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
+            <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
-        <security:authorize access="hasRole('ROLE_ADMIN')">
-          <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
-        </security:authorize>
-      </ul>
+            <security:authorize access="hasRole('ROLE_ADMIN')">
+                <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+            </security:authorize>
+        </ul>
       <div class="sider__element"></div>
     </div>
     <div class="container container__project">
@@ -134,10 +133,10 @@
                 </label>
                 <div class="element__info">
                   <div class="element__task-name">
-                    ${task.title}
+                    <c:out value="${task.title}"/>
                   </div>
                   <div class="element__date">
-                      ${task.start}
+                    <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
                   </div>
                 </div>
                 <div class="element__settings">
@@ -166,10 +165,10 @@
                   </label>
                   <div class="element__info">
                     <div class="element__task-name">
-                        ${task.title}
+                      <c:out value="${task.title}"/>
                     </div>
                     <div class="element__date">
-                        ${task.start}
+                      <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
                     </div>
                   </div>
                   <div class="element__settings">
@@ -179,8 +178,9 @@
                     <div class="element__delete">
                       <a href="javascript:void(0);" onclick="deleteData('task', '${task.taskId}')"><img src="../images/delete.svg" alt="trash bin"></a>
                     </div>
-                    <div  class="element__add add">
-                    </div>
+                      <div>
+                          <a  onclick="addingTask('task', ${task.taskId})"> <div class="element__add "></div></a>
+                      </div>
                   </div>
                 </div>
                 </c:if>
@@ -198,10 +198,10 @@
                   </label>
                   <div class="element__info">
                     <div class="element__task-name">
-                      ${subTask.title}
+                      <c:out value="${subTask.title}"/>
                     </div>
                     <div class="element__date">
-                        ${subTask.start}
+                          <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
                     </div>
                   </div>
                     <div class="element__settings">
@@ -225,10 +225,10 @@
                       </label>
                       <div class="element__info">
                         <div class="element__task-name">
-                            ${subTask.title}
+                          <c:out value="${subTask.title}"/>
                         </div>
                         <div class="element__date">
-                            ${subTask.start}
+                          <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
                         </div>
                       </div>
                         <div class="element__settings">
@@ -271,11 +271,13 @@
         </div>
       </div>
       <div class="footer__corp">
-        "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+        "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
       </div>
     </div>
   </footer>
 </div>
+<script  src="../js/date-validator.js"></script>
+
 <script src="../js/burger.js"></script>
 <script src="../js/project.js"></script>
 <script src="../js/auto_checkBox.js"></script>
@@ -284,6 +286,7 @@
 <script src="../js/line_through.js"></script>
 <script src="../js/sider.js"></script>
 
+<script>dateValidate();</script>
 
 <script type="text/javascript" src="../js/jquery.boot.js"></script>
 <script type="text/javascript" src="../js/jquery.save.js"></script>

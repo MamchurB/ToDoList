@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BusyMan - Someday-Maybe List</title>
+    <title>BusyMan - Simple List</title>
     <link rel="stylesheet" href="../css/style.css">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
@@ -51,7 +51,17 @@
                     <div class="creator__input input">
                         <input name="title" type="text" placeholder="TASK NAME">
                     </div>
-                    <input name="taskType" type="hidden" value="someday-maybe">
+
+                    <input name="taskType" type="hidden" value="simple">
+
+                    <div class="creator__text dates__invisible">STARTING DATE:</div>
+                    <div class="creator__input input dates__invisible">
+                        <input id="startDate" name="start" type="datetime-local" placeholder="STARTING DATE">
+                    </div>
+                    <div class="creator__text dates__invisible">ENDING DATE:</div>
+                    <div class="creator__input input dates__invisible">
+                        <input id="endDate" name="end" type="datetime-local" placeholder="ENDING DATE">
+                    </div>
                     <div class="creator__text">Description:</div>
                     <div class="creator__textarea">
                         <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
@@ -79,7 +89,7 @@
 
             <div class="main__tasks tasks tasks_waiting">
                 <div class="tasks__header">
-                    Your SOMEDAY-MAYBE LIST:
+                    Your SIMPLE LIST:
                 </div>
                 <form action="${path}/task/executed"  class="tasks__elements">
                     <c:forEach items="${tasks}" var="task">
@@ -92,6 +102,9 @@
                                 <div class="element__info">
                                     <div class="element__task-name">
                                         <c:out value=" ${task.getTitle()}"/>
+                                    </div>
+                                    <div class="element__date">
+                                        <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                     </div>
                                 </div>
 
@@ -110,9 +123,13 @@
                                     <input onclick="executedTask('task', '${task.taskId}');" checked type="checkbox" class="checkbox">
                                     <span></span>
                                 </label>
+
                                 <div class="element__info">
                                     <div class="element__task-name">
                                         <c:out value=" ${task.getTitle()}"/>
+                                    </div>
+                                    <div class="element__date">
+                                        <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                     </div>
                                 </div>
                                 <div class="element__settings">
@@ -161,6 +178,9 @@
 <script src="../js/new_task.js"></script>
 <script src="../js/sider.js"></script>
 <script src="../js/burger.js"></script>
+
+<script  src="../js/date-validator.js"></script>
+<script>dateValidate();</script>
 
 <script type="text/javascript" src="../js/jquery.boot.js"></script>
 <script type="text/javascript" src="../js/jquery.save.js"></script>

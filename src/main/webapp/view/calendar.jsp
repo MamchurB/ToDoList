@@ -50,12 +50,11 @@
     <main class="page">
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
                 <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
                 <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
                 <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
                 <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -80,7 +79,7 @@
                 </div>
             </div>
             <div class="footer__corp">
-                "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+                "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
             </div>
         </div>
     </footer>
@@ -96,14 +95,10 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
    <script>
       var tasks = ${ events };
-
-      let arr2 = tasks.map(x => {return {title:x.title, start: new Date(x.start),
+      var today = new Date();
+      let events = tasks.map(x => {return {title:x.title, start: new Date(x.start),
           end: new Date(x.end)}})
 
-      var res = tasks.map(o =>
-          new Date(o.start)
-      );
-      console.log(res);
       $(document).ready(function () {
          $('#calendar').fullCalendar({
             header: {
@@ -112,16 +107,14 @@
                right: 'month,agendaWeek,agendaDay'
             },
              format:'YYYY-MM-DDTHH:mm',
-            defaultDate: '2022-06-01',
+            defaultDate: today,
             editable: true,
             eventLimit: true,
-            events: arr2,
+            events: events,
          });
       });
 
    </script>
-
-<%--<div id='calendar' th:id="calendar"></div>--%>
 <script src="./js/burger.js"></script>
 <script src="./js/sider.js"></script>
 

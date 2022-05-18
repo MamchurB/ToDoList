@@ -65,17 +65,15 @@ public class UserController {
 
 	@PostMapping("/registration")
 	public String addUser(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-		List<User> users = userService.userList();
+
 		User user = userService.findByUsernam(userForm.getUserName());
 
 	    userForm.setRole(roleRepository.findOne(2L));
 		userForm.setRoleId(2L);
-		System.out.println(user.getUserName());
-		System.out.println(userForm.getUserName());
 
-		if( user.getUserName().equals(userForm.getUserName()) || userForm.getUserName().length() == 0){
-			System.out.println("User = " + user);
+		if( user !=null && (user.getUserName() == null || user.getUserName().equals(userForm.getUserName()) || userForm.getUserName().length() == 0)){
 			model.addAttribute("userError", "This name already exists");
+			return "registration";
 		}
 		if (userForm.getFullName().length() < 5 || userForm.getFullName().length() > 30){
 			model.addAttribute("userFullNameError", "Please enter between 5-30 characters and no digits");
@@ -85,7 +83,7 @@ public class UserController {
 			model.addAttribute("userEmailError", "Please enter between 10-100 characters and valid input");
 			return "registration";
 		}
-		if (userForm.getMobile().length() != 10){
+		if ( userForm.getMobile().length() != 10){
 			model.addAttribute("userMobileError", "Please enter atleast 10 digits");
 			return "registration";
 		}

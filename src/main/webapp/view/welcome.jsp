@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html;"
+         pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -71,20 +71,20 @@
                     <div class="creator__text">Select type:</div>
                     <div class="creator__select">
                         <select name="taskType" id="creator__select">
-                            <option value="asap"> ASAP LIST</option>
+                            <option value="simple"> SIMPLE LIST</option>
                             <option value="someday">SOMEDAY-MAYBE LIST</option>
                             <option value="notes">NOTES</option>
                             <option value="waiting-for">WAITING-FOR LIST</option>
                         </select>
 
                     </div>
-                    <div class="creator__text creator__input_dates dates__invisible">STARTING DATE:</div>
-                    <div class="creator__input input creator__input_dates dates__invisible">
-                        <input name="start" type="datetime-local" placeholder="STARTING DATE">
+                    <div class="creator__text dates__invisible">STARTING DATE:</div>
+                    <div class="creator__input input dates__invisible">
+                        <input id="startDate" name="start" type="datetime-local" placeholder="STARTING DATE">
                     </div>
-                    <div class="creator__text creator__input_dates dates__invisible">ENDING DATE:</div>
-                    <div class="creator__input input creator__input_dates dates__invisible">
-                        <input name="end" type="datetime-local" placeholder="ENDING DATE">
+                    <div class="creator__text dates__invisible">ENDING DATE:</div>
+                    <div class="creator__input input dates__invisible">
+                        <input id="endDate" name="end" type="datetime-local" placeholder="ENDING DATE">
                     </div>
                     <div class="creator__text">Description:</div>
                     <div class="creator__textarea">
@@ -96,12 +96,11 @@
         </div>
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link"  href="javascript:void(0);"  >Things</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >ASAP List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
                 <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
                 <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
                 <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link"  href="javascript:void(0);" >NOtes</a></li>
+                <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
                 <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
 
                 <security:authorize access="hasRole('ROLE_ADMIN')">
@@ -136,10 +135,10 @@
                                             </label>
                                             <div class="element__info">
                                                 <div class="element__task-name">
-                                                        ${task.getTitle()}
+                                                    <c:out value="${task.getTitle()}"/>
                                                 </div>
                                                 <div class="element__date">
-                                                        ${task.getStart()}
+                                                    <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                                 </div>
                                             </div>
                                             <div class="element__settings">
@@ -159,10 +158,10 @@
                                             </label>
                                             <div class="element__info">
                                                 <div class="element__task-name">
-                                                        ${task.getTitle()}
+                                                    <c:out value="${task.getTitle()}"/>
                                                 </div>
                                                 <div class="element__date">
-                                                        ${task.getStart()}
+                                                    <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                                 </div>
                                             </div>
                                             <div class="element__settings">
@@ -216,11 +215,12 @@
                 </div>
             </div>
             <div class="footer__corp">
-                "Busy Man", 2022. All rights reserved. CrEATEd by Bohdan Mamchur and Vasyl Zyzen
+                "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
             </div>
         </div>
     </footer>
 </div>
+<script  src="./js/date-validator.js"></script>
 <script src="./js/new_task.js"></script>
 <script src="./js/burger.js"></script>
 
@@ -231,5 +231,7 @@
 <script src="./js/chart.js/Chart.min.js"></script>
 <script src="./js/sb-admin-charts.js"></script>
 <script type="text/javascript" src="./js/jquery.save.js"></script>
+
+<script>dateValidate();</script>
 </body>
 </html>
