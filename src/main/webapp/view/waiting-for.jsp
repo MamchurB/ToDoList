@@ -97,7 +97,7 @@
                 </div>
                     <form action="${path}/task/executed"  class="tasks__elements">
                         <c:forEach items="${tasks}" var="task">
-                    <div class="tasks__element element">
+                    <div class="tasks__element element" data-title = "${task.getDescription()}" aria-haspopup="true">
                         <c:if test="${task.getTaskExecuted() == 0}">
                             <label class="element__checkbox checkbox-2">
                                 <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
@@ -119,7 +119,6 @@
                                     <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                 </div>
                             </div>
-
                             <div class="element__settings">
                                 <div class="element__gear">
                                     <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>
@@ -135,22 +134,22 @@
                             <input onclick="executedTask('task', '${task.taskId}');" checked type="checkbox" class="checkbox">
                             <span></span>
                         </label>
-                        <div class="element__info element__owner">
-                            <div class="element__task-name">
-                                TASK OWNER:
+                            <div class="element__info element__owner">
+                                <div class="element__task-name">
+                                    TASK OWNER:
+                                </div>
+                                <div class="element__date">
+                                    <c:out value="${task.getOwner()}"/>
+                                </div>
                             </div>
-                            <div class="element__date">
-                                <c:out value="${task.getOwner()}"/>
+                            <div class="element__info element__info_waiting">
+                                <div class="element__task-name">
+                                    <c:out value="${task.getTitle()}"/>
+                                </div>
+                                <div class="element__date">
+                                    <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="element__info element__info_waiting">
-                            <div class="element__task-name">
-                                <c:out value="${task.getTitle()}"/>
-                            </div>
-                            <div class="element__date">
-                                <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
-                            </div>
-                        </div>
                         <div class="element__settings">
                             <div class="element__gear">
                                 <a href="\todolist\task\edit\ ${task.taskId}"><img src="../images/settings.svg" alt="gear"></a>

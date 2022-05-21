@@ -2,6 +2,7 @@ package com.todolist.service.impl;
 
 import java.util.List;
 
+import com.todolist.repository.ConfirmationTokenRepository;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,10 @@ import com.todolist.service.UserService;
 
 @Service
 public class UserServiceImpl implements UserService {
-	
+
+	@Autowired
+	private ConfirmationTokenRepository confirmationTokenRepository;
+
 	@Autowired
 	private UserRepository userRepository;
 	
@@ -59,7 +63,7 @@ public class UserServiceImpl implements UserService {
 			System.out.println(user.getFullName());
 
 			user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-			user.setRole(roleRepository.findOne(user.getRoleId()));
+			user.setRole(roleRepository.findOne(1L));
 //			user.setRole(roleRepository.findOne(2L));
 			jsonObject.put("status", "success");
 			jsonObject.put("title", message+" Confirmation");
@@ -86,6 +90,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<Role> roleList() {
 		return roleRepository.findAll();
+	}
+
+	@Override
+	public User findByEmailIgnoreCase(String email) {
+		return userRepository.findByEmailIgnoreCase(email);
 	}
 
 	@Override

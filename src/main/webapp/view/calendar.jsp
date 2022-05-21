@@ -1,34 +1,25 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html;"
+         pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
+<html lang="en" >
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
-<html lang="en">
-
 <head>
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusyMan - Calendar</title>
 
-
-
-    <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-        <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-        <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css"
-              th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>
-        <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.print.css"
-              th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.print.css}" rel="stylesheet" media="print"></link>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.2/main.min.css'>
+    <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.2/main.min.css'>
     <link rel="stylesheet" href="/todolist/css/style.css">
 </head>
 
-<body class="calendar__body">
+<body class="calendar__body" translate="no" >
 <div class="wrapper">
     <header class="header">
         <div class="container">
@@ -84,37 +75,47 @@
         </div>
     </footer>
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"
-        th:src="@{/webjars/momentjs/2.9.0/min/moment.min.js}" type="text/javascript"></script>
-<script src="http://cdn.jsdelivr.net/webjars/jquery/3.4.1/jquery.min.js"
-        th:src="@{/webjars/jquery/3.4.1/jquery.min.js}" type="text/javascript"></script>
-<script src="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js"
-        th:src="@{/webjars/fullcalendar/2.2.5/fullcalendar.min.js}" type="text/javascript"></script>
+<script src="https://cpwebassets.codepen.io/assets/common/stopExecutionOnTimeout-1b93190375e9ccc259df3a57c1abc0e64599724ae30d7ea4c6877eb615f89387.js"></script>
 
-<%--    <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>--%>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-   <script>
-      var tasks = ${ events };
-      var today = new Date();
-      let events = tasks.map(x => {return {title:x.title, start: new Date(x.start),
-          end: new Date(x.end)}})
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.4.2/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.4.2/main.min.js'></script>
+<script src='https://unpkg.com/popper.js/dist/umd/popper.min.js'></script>
+<script src='https://unpkg.com/tooltip.js/dist/umd/tooltip.min.js'></script>
+<script id="rendered-js" >
+    var tasks = ${ events };
+    var today = new Date();
+    let events = tasks.map(x => {return {title:x.title, start: new Date(x.start),
+        end: new Date(x.end),
+        description: x.description}})
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
 
-      $(document).ready(function () {
-         $('#calendar').fullCalendar({
-            header: {
-               left: 'prev,next today',
-               center: 'title',
-               right: 'month,agendaWeek,agendaDay'
-            },
-             format:'YYYY-MM-DDTHH:mm',
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: ['dayGrid'],
             defaultDate: today,
-            editable: true,
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,dayGridWeek,dayGridDay'
+            },
+            selectable: true,
             eventLimit: true,
-            events: events,
-         });
-      });
+            eventRender: function (info) {
+                var tooltip = new Tooltip(info.el, {
+                    title: info.event.extendedProps.description,
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body' });
 
-   </script>
+            },
+
+            events: events
+        });
+        calendar.render();
+    });
+    //# sourceURL=pen.js
+</script>
+
 <script src="./js/burger.js"></script>
 <script src="./js/sider.js"></script>
 

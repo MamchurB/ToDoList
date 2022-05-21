@@ -125,7 +125,7 @@
             <c:if test="${task.parentTaskId == null}">
               <c:if test="${task.getTaskExecuted() == 0}">
             <ul class="element__list">
-              <div class="project__element project__parent element">
+              <div class="project__element project__parent element" data-title = "${task.getDescription()}" aria-haspopup="true">
                 <span class="element__triangle"></span>
                 <label class="element__checkbox checkbox-2">
                   <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
@@ -157,7 +157,7 @@
               </c:if>
               <c:if test="${task.getTaskExecuted() == 1}">
               <ul class="element__list">
-                <div class="project__element project__parent element">
+                <div class="project__element project__parent element" data-title = "${task.getDescription()}" aria-haspopup="true">
                   <span class="element__triangle"></span>
                   <label class="element__checkbox checkbox-2">
                     <input onclick="executedTask('task', '${task.taskId}');" checked class="checkbox" type="checkbox">
@@ -190,7 +190,7 @@
 
                 <c:if test="${subTask.getTaskExecuted() == 0}">
               <li>
-                <div class="project__element element">
+                <div class="project__element element" data-title = "${subTask.getDescription()}" aria-haspopup="true">
                   <span class="element__triangle"></span>
                   <label class="element__checkbox checkbox-2">
                     <input onclick="executedTask('task', '${subTask.taskId}');" class="checkbox" type="checkbox">
@@ -217,7 +217,7 @@
               </c:if>
                 <c:if test="${subTask.getTaskExecuted() == 1}">
                   <li>
-                    <div class="project__element element">
+                    <div class="project__element element" data-title = "${subTask.getDescription()}" aria-haspopup="true">
                       <span class="element__triangle"></span>
                       <label class="element__checkbox checkbox-2">
                         <input onclick="executedTask('task', '${subTask.taskId}');" checked class="checkbox" type="checkbox">

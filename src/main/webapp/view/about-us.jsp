@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html;"
          pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -101,7 +100,7 @@
                         </div>
                         <div class="about-us__main">
                             <div class="about-us__img">
-                                <img src="../images/bodya.jpg" alt="Bodya">
+                                <img src="../images/bohdan.jpg" alt="Bodya">
                             </div>
                             <div class="about-us__info">
                                 <div class="about-us__text">

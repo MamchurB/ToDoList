@@ -5,7 +5,6 @@ import com.todolist.model.Role;
 import com.todolist.model.Task;
 import com.todolist.model.User;
 import com.todolist.repository.RoleRepository;
-import com.todolist.service.EventService;
 import com.todolist.service.UserService;
 import com.todolist.utils.MethodUtils;
 import com.todolist.service.MenuService;
@@ -52,15 +51,12 @@ public class WelcomeController {
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
 
-		List<Role> role = new ArrayList<>();
-		role.add(roleRepository.findOne(1L));
-		role.add(roleRepository.findOne(2L));
 		MethodUtils.taskEditPage = "welcome";
-		model.addAttribute("taskForm", new Task());
-		model.addAttribute("roles", role);
+
+
 		model.addAttribute("taskToday", taskService.findTasksByStart(date, userService.findByUsernam(username).getUserId()));
 		model.addAttribute("today", dateNow);
-         model.addAttribute("idUser", 0);
+
 		model.addAttribute("bc",taskService.getBestCategory());
 		return "welcome";
 	}

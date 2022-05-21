@@ -3,8 +3,6 @@ package com.todolist.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.todolist.model.Event;
-import com.todolist.repository.EventJpaRepository;
 import com.todolist.service.TaskService;
 import com.todolist.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +21,6 @@ import java.util.List;
 @Controller
 class CalendarController {
 
-    @Autowired
-    private EventJpaRepository eventRepository;
 
     @Autowired
     private TaskService taskService;
@@ -36,8 +32,10 @@ class CalendarController {
     public String calendar(Model model) throws JsonProcessingException {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
+
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+
         model.addAttribute("events", objectMapper.writeValueAsString(taskService.findTasksByUserId(userService.findByUsernam(username).getUserId())));
         return "calendar";
     }

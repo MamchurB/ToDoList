@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html;"
+         pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -58,6 +60,7 @@
                 <form:form method="post" class="form-horizontal" action="${path}/task/edit" commandName="taskForm" >
                     <form:hidden path="taskId"/>
                     <form:hidden path="taskExecuted"/>
+                    <form:hidden path="parentTaskId"/>
                     <div class="creator__body">
                         <div class="creator__text">Task Name:</div>
                         <div class="creator__input input">

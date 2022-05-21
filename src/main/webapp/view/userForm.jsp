@@ -68,10 +68,7 @@
 							<form:input class="input" path="userName" placeholder="Enter User Name" required="true"/>
 						</div>
 
-						<div class="creator__text">Password:</div>
-						<div class="creator__input input">
-							<form:input type = "text" class="input" path="password" placeholder="Enter password" required="true"/>
-						</div>
+							<form:input type = "hidden" path="password" value = "password"/>
 
 						<div class="creator__text">Email:</div>
 						<div class="creator__input input">
@@ -91,9 +88,11 @@
 							</select>
 						</div>
 
-						<form:button value="Save" >
-							<div class="creator__button_wrapper"><button onclick="location.href='/todolist/user/list'"  class="creator__button button">Change</button></div>
-						</form:button>
+							<div class="creator__button_wrapper">
+								<form:button value="Save" >
+								<button onclick="location.href='/todolist/user/list'"  class="creator__button button">Change</button>
+								</form:button>
+							</div>
 							</div>
 
 				</form:form>

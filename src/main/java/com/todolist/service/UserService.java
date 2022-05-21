@@ -22,6 +22,8 @@ public interface UserService {
 	String deleteUser(Long id);
 	
 	List<Role> roleList();
-	
+
+	User findByEmailIgnoreCase(String email);
+
 	void refreshCache();
 }

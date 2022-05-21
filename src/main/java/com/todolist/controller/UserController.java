@@ -4,13 +4,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import com.todolist.model.ConfirmationToken;
 import com.todolist.model.Role;
 import com.todolist.model.Task;
+import com.todolist.repository.ConfirmationTokenRepository;
 import com.todolist.repository.RoleRepository;
+import com.todolist.service.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +35,12 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 	private UserService userService;
+
+	@Autowired
+	private ConfirmationTokenRepository confirmationTokenRepository;
+
+	@Autowired
+	private EmailSenderService emailSenderService;
 
 	@Autowired
      private RoleRepository roleRepository;
@@ -94,11 +104,47 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "registration";
 		}
+ 			userService.addUser(userForm);
+			ConfirmationToken confirmationToken = new ConfirmationToken(userForm);
+			confirmationToken.setUser(userService.findByUsernam(userForm.getUserName()));
+			confirmationTokenRepository.save(confirmationToken);
+			System.out.println(userForm.getEmail());
+			SimpleMailMessage mailMessage = new SimpleMailMessage();
+			mailMessage.setTo(userForm.getEmail());
+			mailMessage.setSubject("Complete Registration!");
+			mailMessage.setFrom("chand312902@gmail.com");
+			mailMessage.setText("To confirm your account, please click here : "
+					+ "http://localhost:8080/todolist/user/confirm-account?token=" + confirmationToken.getConfirmationToken());
 
-		userService.addUser(userForm);
+			emailSenderService.sendEmail(mailMessage);
 
-		return "login";
+			model.addAttribute("email", userForm.getEmail());
+
+			return "email-confirm";
 	}
+
+	@RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
+	public String confirmUserAccount(Model model, @RequestParam("token")String confirmationToken)
+	{
+		System.out.println(confirmationToken);
+		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
+		if(token != null)
+		{
+			User user = userService.findByEmailIgnoreCase(token.getUser().getEmail());
+			System.out.println(user.getUserName());
+			System.out.println(user.getEmail());
+			System.out.println(user.getUserId());
+			userService.addUser(user);
+		}
+		else
+		{
+			return "email-error";
+		}
+
+		return "email-success";
+	}
+
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();

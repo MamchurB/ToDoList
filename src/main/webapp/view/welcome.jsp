@@ -11,9 +11,7 @@
     <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-<%--    <link rel="stylesheet" href="${path}/webjars/bootstrap/3.3.5/css/bootstrap.min.css">--%>
-<%--    <link rel="stylesheet" href="${path}/webjars/font-awesome/4.7.0/css/font-awesome.min.css">--%>
-    <link rel="stylesheet" href="/todolist/css/style.css">
+
 
     <link href="http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.css"
           th:href="@{/webjars/fullcalendar/2.2.5/fullcalendar.css}" rel="stylesheet"></link>
@@ -28,8 +26,7 @@
 
     <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-
+    <link rel="stylesheet" href="/todolist/css/style.css">
     <title>BusyMan - Home</title>
 </head>
 <body class="main__body">
@@ -62,7 +59,7 @@
                 <div class="creator__body">
                     <div class="creator__text">Name:</div>
                     <div class="creator__input input">
-                        <input name="title" type="text" placeholder="TASK NAME">
+                        <input name="title" type="text" placeholder="TASK NAME" required>
                     </div>
                     <div id="input__owner_text" class="creator__text creator__input_owner">Task owner:</div>
                     <div id="input__owner" class="creator__input input creator__input_owner">
@@ -125,22 +122,21 @@
                             </div>
                             <form action="${path}/task/executed"  class="main__elements elements">
                                 <c:forEach items="${taskToday}" var="task">
-                                    <div class="main__element element">
-
+                                    <div class="main__element element" data-title = "${task.getDescription()}" aria-haspopup="true">
 
                                         <c:if test="${task.getTaskExecuted() == 0}">
                                             <label class="element__checkbox checkbox-2">
                                                 <input onclick="executedTask('task', '${task.taskId}');" class="checkbox" type="checkbox">
                                                 <span></span>
                                             </label>
-                                            <div class="element__info">
-                                                <div class="element__task-name">
-                                                    <c:out value="${task.getTitle()}"/>
+                                                <div class="element__info">
+                                                    <div class="element__task-name">
+                                                        <c:out value="${task.getTitle()}"/>
+                                                    </div>
+                                                    <div class="element__date">
+                                                        <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
+                                                    </div>
                                                 </div>
-                                                <div class="element__date">
-                                                    <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
-                                                </div>
-                                            </div>
                                             <div class="element__settings">
                                                 <div class="element__gear">
                                                     <a href="${path}\task\edit\ ${task.taskId}"><img src="./images/settings.svg" alt="gear"></a>
@@ -156,14 +152,17 @@
                                                 <input onclick="executedTask('task', '${task.taskId}')" checked class="checkbox" type="checkbox">
                                                 <span></span>
                                             </label>
-                                            <div class="element__info">
-                                                <div class="element__task-name">
-                                                    <c:out value="${task.getTitle()}"/>
+
+                                                <div class="element__info">
+                                                    <div class="element__task-name" >
+                                                        <c:out value="${task.getTitle()}"/>
+                                                    </div>
                                                 </div>
                                                 <div class="element__date">
                                                     <c:out value=" ${task.getEnd().substring(11, 16)}"/>&nbsp <c:out value="${task.getEnd().substring(0, 10)}"/>
                                                 </div>
-                                            </div>
+
+
                                             <div class="element__settings">
                                                 <div class="element__gear">
                                                     <a href="${path}\task\edit\ ${task.taskId}" ><img src="./images/settings.svg" alt="gear"></a>
@@ -233,5 +232,7 @@
 <script type="text/javascript" src="./js/jquery.save.js"></script>
 
 <script>dateValidate();</script>
+
+
 </body>
 </html>
