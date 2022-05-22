@@ -1,14 +1,17 @@
-<%@ page language="java" contentType="text/html;"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="https://ignite.apache.org/images/java.png">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
 
@@ -27,7 +30,22 @@
     <script type="text/javascript" src="${path}/js/jquery.boot.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <link rel="stylesheet" href="/todolist/css/style.css">
-    <title>BusyMan - Home</title>
+    <title>Busy Man - Home</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var selItem = localStorage.getItem("locales");
+            $('#locales').val(selItem ? selItem : 'en');
+            $("#locales").change(function() {
+                var selectedOption = $('#locales').val();
+                if (selectedOption) {
+                    localStorage.setItem("locales", selectedOption);
+                    window.location.replace('?lang=' + selectedOption);
+
+                }
+            });
+        });
+    </script>
 </head>
 <body class="main__body">
 <div class="wrapper">
@@ -37,11 +55,23 @@
                 <a href="${path}" class="header__logo">Busy Man</a>
                 <nav class="header__menu">
                     <ul class="header__list">
-                        <li><a href="${path}" class="header__link">Home</a></li>
-                        <li><a href="${path}/user/about-us" class="header__link">About us</a></li>
-                        <li><a href="${path}/user/logout" class="header__link">Log out</a></li>
+                        <li><a href="${path}" class="header__link"><spring:message code="header.home" /></a></li>
+                        <li><a href="${path}/user/about-us" class="header__link"><spring:message code="header.about" /></a></li>
+                        <li><a href="${path}/user/logout" class="header__link"><spring:message code="header.logout" /></a></li>
                     </ul>
                 </nav>
+                <div style="width: 600px; margin: auto;">
+                    <fieldset>
+                        <p>
+                            <label><spring:message code="chooseLang" /></label> <select
+                                id="locales">
+                            <option value="en">English</option>
+                            <option value="uk">Українська</option>
+                        </select>
+                        </p>
+                    </fieldset>
+                    <div style="clear: both"></div>
+                </div>
                 <div class="header__burger">
                     <span></span>
                 </div>
@@ -53,55 +83,55 @@
         <div class="creator__wrapper">
             <form action="${path}/task/add" method="post" class="creator" id="submitAddTask" >
                 <div class="creator__header">
-                    Creating a new task:
+                    <spring:message code="create.task.header" />
                     <span class="creator__close"></span>
                 </div>
                 <div class="creator__body">
-                    <div class="creator__text">Name:</div>
+                    <div class="creator__text"><spring:message code="create.task.name" /></div>
                     <div class="creator__input input">
-                        <input name="title" type="text" placeholder="TASK NAME" required>
+                        <input name="title" type="text" placeholder="<spring:message code="create.task.holder.name" />" required>
                     </div>
-                    <div id="input__owner_text" class="creator__text creator__input_owner">Task owner:</div>
+                    <div id="input__owner_text" class="creator__text creator__input_owner"><spring:message code="create.task.owner" /></div>
                     <div id="input__owner" class="creator__input input creator__input_owner">
-                        <input name ="owner" class="input__owner" type="text" placeholder="TASK OWNER">
+                        <input name ="owner" class="input__owner" type="text" placeholder="<spring:message code="create.task.holder.owner" />">
                     </div>
-                    <div class="creator__text">Select type:</div>
+                    <div class="creator__text"><spring:message code="create.task.type" /></div>
                     <div class="creator__select">
                         <select name="taskType" id="creator__select">
-                            <option value="simple"> SIMPLE LIST</option>
-                            <option value="someday">SOMEDAY-MAYBE LIST</option>
-                            <option value="notes">NOTES</option>
-                            <option value="waiting-for">WAITING-FOR LIST</option>
+                            <option value="simple"> <spring:message code="sider.simple" /></option>
+                            <option value="someday"><spring:message code="sider.someday" /></option>
+                            <option value="notes"><spring:message code="sider.notes" /></option>
+                            <option value="waiting-for"><spring:message code="sider.waiting" /></option>
                         </select>
 
                     </div>
-                    <div class="creator__text dates__invisible">STARTING DATE:</div>
+                    <div class="creator__text dates__invisible"><spring:message code="create.task.start" /></div>
                     <div class="creator__input input dates__invisible">
                         <input id="startDate" name="start" type="datetime-local" placeholder="STARTING DATE">
                     </div>
-                    <div class="creator__text dates__invisible">ENDING DATE:</div>
+                    <div class="creator__text dates__invisible"><spring:message code="create.task.end" /></div>
                     <div class="creator__input input dates__invisible">
                         <input id="endDate" name="end" type="datetime-local" placeholder="ENDING DATE">
                     </div>
-                    <div class="creator__text">Description:</div>
+                    <div class="creator__text"><spring:message code="create.task.description" /></div>
                     <div class="creator__textarea">
-                        <textarea name="description" type="text" placeholder="ENTER DESCRIPTION"></textarea>
+                        <textarea name="description" type="text" placeholder="<spring:message code="create.task.holder.description" />"></textarea>
                     </div>
-                    <div class="creator__button_wrapper"><button class="creator__button button">Create</button></div>
+                    <div class="creator__button_wrapper"><button class="creator__button button"><spring:message code="create.task.button" /></button></div>
                 </div>
             </form>
         </div>
         <div class="sider">
             <ul class="sider__list">
-                <li><a class="sider__link"  href="/todolist/task/simple" >Simple List</a></li>
-                <li><a class="sider__link"  href="/todolist/task/project" >Projects</a></li>
-                <li><a class="sider__link"  href="/todolist/calendar"  >Calendar</a></li>
-                <li><a class="sider__link"  href="/todolist/task/someday_maybe" >SOmeday-Maybe List</a></li>
-                <li><a class="sider__link"  href="/todolist/task/notes" >NOtes</a></li>
-                <li><a class="sider__link"  href="/todolist/task/waiting_for" >Waiting-For List</a></li>
+                <li><a class="sider__link"  href="/todolist/task/simple" > <spring:message code="sider.simple" /></a></li>
+                <li><a class="sider__link"  href="/todolist/task/project" > <spring:message code="sider.project" /></a></li>
+                <li><a class="sider__link"  href="/todolist/calendar"  > <spring:message code="sider.calendar" /></a></li>
+                <li><a class="sider__link"  href="/todolist/task/someday_maybe" > <spring:message code="sider.someday" /></a></li>
+                <li><a class="sider__link"  href="/todolist/task/notes" > <spring:message code="sider.notes" /></a></li>
+                <li><a class="sider__link"  href="/todolist/task/waiting_for" > <spring:message code="sider.waiting" /></a></li>
 
                 <security:authorize access="hasRole('ROLE_ADMIN')">
-                    <li><a class="sider__link" href="/todolist/user/list" id = "userList"  >Users</a></li>
+                    <li><a class="sider__link" href="/todolist/user/list" id = "userList"  ><spring:message code="sider.users" /></a></li>
                 </security:authorize>
             </ul>
             <div class="sider__element"></div>
@@ -109,16 +139,16 @@
         <div class="container container__main">
             <div class="main">
                 <div class="main__hello">
-                    Hello,  ${pageContext.request.userPrincipal.name}!
+                    <spring:message code="greeting" /> ${pageContext.request.userPrincipal.name}!
                 </div>
                 <div class="main__date">
-                    today is<span> ${today} </span>
+                    <spring:message code="today" /><span> ${today} </span>
                 </div>
                 <div class="main__row">
                     <div class="main__column main__column_tasks">
                         <div class="main__tasks tasks">
                             <div class="tasks__header">
-                                Your upcoming deadlines:
+                                <spring:message code="dedline.task" />
                             </div>
                             <form action="${path}/task/executed"  class="main__elements elements">
                                 <c:forEach items="${taskToday}" var="task">
@@ -177,7 +207,7 @@
                                 <div class="task__add">
                                     <div class="task__add_inner">
                                         <span class="task__plus"></span>
-                                        <span class="task__add-text">Create A New Task</span>
+                                        <span class="task__add-text"><spring:message code="create.task.main" /></span>
                                     </div>
                                 </div>
                             </form>
@@ -186,7 +216,7 @@
                     <div class="main__column main__column_statistic">
                         <div class="main__statistic statistic">
                             <div class="statistic__header">
-                                Your statistic
+                                <spring:message code="statistic" />
                             </div>
                             <div class="statistic__textarea">
                                 <div>
@@ -214,7 +244,7 @@
                 </div>
             </div>
             <div class="footer__corp">
-                "Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
+                <spring:message code="footer" />
             </div>
         </div>
     </footer>
