@@ -6,7 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusyMan - Confirmation Success!</title>
+    <link id="theme" rel="stylesheet" href="/todolist/css/theme-1.css">
     <link rel="stylesheet" href="/todolist/css/style.css">
+
 </head>
 
 <body class="calendar__body">
@@ -26,7 +28,7 @@
                         <div class="about-us__text">
                             <span>Congratulations!</span> Your account has been activated and email is verified!
                             <div style="margin-top:30px">
-                                Click <a href="todolist/user/login" class="creator__button button"> here</a> to Sign Up!
+                                Click <a href="/todolist/user/login" class="creator__button button"> here</a> to Sign Up!
                             </div>
                         </div>
 
@@ -38,6 +40,7 @@
     </main>
 
 </div>
+<script src="/todolist/js/theme.js"></script>
 </body>
 
 </html>

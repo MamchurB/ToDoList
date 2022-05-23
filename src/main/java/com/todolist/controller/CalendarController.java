@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.todolist.service.TaskService;
 import com.todolist.service.UserService;
+import com.todolist.utils.MethodUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,7 +36,8 @@ class CalendarController {
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("events", objectMapper.writeValueAsString(taskService.findTasksByUserId(userService.findByUsernam(username).getUserId())));
         return "calendar";
     }

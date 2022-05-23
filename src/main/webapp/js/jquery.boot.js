@@ -63,6 +63,22 @@ function executedTask(type, id) {
 		}
 	});
 }
+
+// function languageChange() {
+// 	$.ajax({
+// 		type : "POST",
+// 		url : "/todolist/user/languages",
+// 		success : function(data) {
+// 			fetchList(type);
+// 			// toastr.success(data.message, "Notification", {
+// 			// 	closeButton:true
+// 			// });
+// 			window.location.reload(true);
+// 		}
+//
+// 	});
+// 	window.location.reload(true);
+// }
 function addingTask(type, id) {
 	console.log("/todolist/"+type+"/adding_sub_task/"+id);
 	$.ajax({

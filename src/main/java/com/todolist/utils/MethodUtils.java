@@ -4,7 +4,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.ui.Model;
 
 public class MethodUtils {
+
 	public static String taskEditPage;
+//	public static Boolean isNew = false;
+
 	public static void pageModel(Model model, Page<?> pages) {
 
 		int current = pages.getNumber() + 1;

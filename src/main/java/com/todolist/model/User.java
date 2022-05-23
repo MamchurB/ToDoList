@@ -46,6 +46,13 @@ public class User {
 	private String mobile;
 	private transient Long roleId;
 
+
+	@Column(name = "theme")
+	private String theme;
+
+	@Column(name = "lang")
+	private String lang;
+
 	@ManyToOne
 	@JoinColumn(name = "role_id")
 	private Role role;
@@ -78,6 +85,22 @@ public class User {
 		int hashCode = 17;
 		hashCode = hashCode + (null == this.getId() ? 0 : this.getId().hashCode() * 31);
 		return hashCode;
+	}
+
+	public String getTheme() {
+		return theme;
+	}
+
+	public void setTheme(String theme) {
+		this.theme = theme;
+	}
+
+	public String getLang() {
+		return lang;
+	}
+
+	public void setLang(String lang) {
+		this.lang = lang;
 	}
 
 	public Long getId() {

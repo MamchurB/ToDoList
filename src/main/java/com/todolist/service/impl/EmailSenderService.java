@@ -1,4 +1,4 @@
-package com.todolist.service;
+package com.todolist.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;

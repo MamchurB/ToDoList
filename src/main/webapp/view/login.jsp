@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html;"
 		 pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BusyMan - Sign In</title>
+	<link id="theme" rel="stylesheet" href="/todolist/css/theme-1.css">
 	<link rel="stylesheet" href="/todolist/css/style.css">
 </head>
 <body>
@@ -72,19 +73,20 @@
 		<div class="container container_footer">
 			<div class="footer__social-wrapper">
 				<div class="footer__social">
-					<div class="footer__facebook"><a href="#"><img src="${path}/images/facebook.svg" alt="facebook"></a></div>
-					<div class="footer__inst"><a href="#"><img src="${path}/images/inst.svg" alt="inst"></a> </div>
-					<div class="footer__youtube"><a href="#"><img src="${path}/images/youtube.svg" alt="youtube"></a></div>
-					<div class="footer__viber"><a href="#"><img src="${path}/images/viber.svg" alt="viber"></a></div>
-					<div class="footer__telegram"><a href="#"><img src="${path}/images/telega.svg" alt="telega"></a></div>
+					<div class="footer__facebook"><a href="#" class="icon-facebook"></a></div>
+					<div class=" footer__inst"><a href="#" class="icon-inst"> </a> </div>
+					<div class="footer__youtube"><a href="#" class="icon-youtube"></a></div>
+					<div class="footer__viber"><a href="#" class="icon-viber"></a></div>
+					<div class="footer__telegram"><a href="#" class="icon-telega"></a></div>
 				</div>
 			</div>
 			<div class="footer__corp">
-				"Busy Man", 2022. All rights reserved. CrEATEd by Mamchur, Zyzen and TYMCHENKO
+				"Busy Man", 2022. All rights reserved. CrEATEd by Mamchur and TYMCHENKO
 			</div>
 		</div>
 	</footer>
 </div>
 <script src="${path}/js/auto_margin.js"></script>
+<script src="${path}/js/theme.js"></script>
 </body>
 </html>

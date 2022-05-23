@@ -3,7 +3,6 @@ package com.todolist.controller;
 import com.todolist.model.Task;
 import com.todolist.service.TaskService;
 import com.todolist.service.UserService;
-import com.todolist.service.impl.UserServiceImpl;
 import com.todolist.utils.MethodUtils;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
@@ -18,15 +17,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -48,9 +44,8 @@ public class TaskController {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
         List<Task> tasks = taskService.findTaskByTaskTypeAndUserId("notes", userService.findByUsernam(username).getUserId());
-        for (Task item : tasks) {
-            System.out.println(item);
-        }
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("notes", userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "notes";
@@ -61,6 +56,8 @@ public class TaskController {
     public String simpleList(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("simple", userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "simple";
@@ -71,6 +68,8 @@ public class TaskController {
     public String somedayMaybeList(Model model) {
          Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
          String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("someday-maybe", userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "someday_maybe";
@@ -80,6 +79,9 @@ public class TaskController {
     public String waitingForList(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("waiting-for", userService.findByUsernam(username).getUserId()));
         MethodUtils.taskEditPage = "waiting_for";
@@ -90,6 +92,8 @@ public class TaskController {
     public String projectList(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("tasks",
                 taskService.findTaskByTaskTypeAndUserId("project",
                         userService.findByUsernam(username).getUserId()));
@@ -101,6 +105,8 @@ public class TaskController {
     public String taskForm(Model model) {
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("isNew", true);
         model.addAttribute("taskForm", new Task());
         return "form";
@@ -159,6 +165,10 @@ public class TaskController {
     public String taskOne(@PathVariable Long id, Model model) {
         model.addAttribute("isNew", false);
         Task task = taskService.findOne(id);
+        Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+        String username = loggedInUser.getName();
+        model.addAttribute("lang", userService.findByUsernam(username).getLang());
+        model.addAttribute("theme", userService.findByUsernam(username).getTheme());
         model.addAttribute("taskForm", task);
         return "form";
     }
@@ -217,14 +227,6 @@ public class TaskController {
     @GetMapping("/list")
     public String taskList(Model model, Pageable pageable, Principal principal) {
         Page<Task> pages = taskService.findTaskByUserId(pageable, principal.getName());
-        model.addAttribute("tasks", pages.getContent());
-        MethodUtils.pageModel(model, pages);
-        return "/task/list";
-    }
-
-    @GetMapping("/refresh")
-    public String refreshCache(Model model, Pageable pageable) {
-        Page<Task> pages = taskService.findAll(pageable);
         model.addAttribute("tasks", pages.getContent());
         MethodUtils.pageModel(model, pages);
         return "/task/list";

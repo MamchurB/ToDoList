@@ -13,7 +13,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BusyMan - Email Confirmation</title>
+    <link id="theme" rel="stylesheet" href="/todolist/css/theme-1.css">
     <link rel="stylesheet" href="/todolist/css/style.css">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var selItem = localStorage.getItem("locales");
+            $('#locales').val(selItem ? selItem : 'en');
+            $("#locales").change(function() {
+                var selectedOption = $('#locales').val();
+                if (selectedOption) {
+                    localStorage.setItem("locales", selectedOption);
+                    window.location.replace('?lang=' + selectedOption);
+
+                }
+            });
+        });
+    </script>
 </head>
 
 <body class="calendar__body">
@@ -42,6 +57,7 @@
     </main>
 
 </div>
+<script src="/todolist/js/theme.js"></script>
 </body>
 
 </html>

@@ -2,14 +2,11 @@ package com.todolist.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
 
 import com.todolist.model.ConfirmationToken;
-import com.todolist.model.Role;
-import com.todolist.model.Task;
 import com.todolist.repository.ConfirmationTokenRepository;
 import com.todolist.repository.RoleRepository;
-import com.todolist.service.EmailSenderService;
+import com.todolist.service.impl.EmailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +15,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +25,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.todolist.model.User;
 import com.todolist.service.UserService;
-import com.todolist.utils.ErrorUtils;
 import com.todolist.utils.MethodUtils;
 
 import java.util.List;
@@ -44,6 +42,7 @@ public class UserController {
 
 	@Autowired
      private RoleRepository roleRepository;
+
 
 	@Autowired
 	public UserController(UserService userService) {
@@ -70,6 +69,10 @@ public class UserController {
 	}
 	@GetMapping("/about-us")
 	public String aboutUs(Model model) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", userService.findByUsernam(username).getTheme());
 		return "about-us";
 	}
 
@@ -104,6 +107,7 @@ public class UserController {
 		if (bindingResult.hasErrors()) {
 			return "registration";
 		}
+		    userForm.setPassword(new BCryptPasswordEncoder().encode(userForm.getPassword()));
  			userService.addUser(userForm);
 			ConfirmationToken confirmationToken = new ConfirmationToken(userForm);
 			confirmationToken.setUser(userService.findByUsernam(userForm.getUserName()));
@@ -126,7 +130,6 @@ public class UserController {
 	@RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
 	public String confirmUserAccount(Model model, @RequestParam("token")String confirmationToken)
 	{
-		System.out.println(confirmationToken);
 		ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
 
 		if(token != null)
@@ -135,7 +138,7 @@ public class UserController {
 			System.out.println(user.getUserName());
 			System.out.println(user.getEmail());
 			System.out.println(user.getUserId());
-			userService.addUser(user);
+//			userService.addUser(user);
 		}
 		else
 		{
@@ -144,14 +147,65 @@ public class UserController {
 
 		return "email-success";
 	}
+	@GetMapping("/language")
+	public String langes(Model model) {
+		System.out.println("Language");
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+		User user = userService.findByUsernam(username);
+		if(user.getLang().equals("en")){
+			user.setLang("uk");
+		}
+		else{
+			user.setLang("en");
+		}
+		userService.addUser(user);
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", user.getTheme());
+		System.out.println( user.getTheme());
+		return "redirect:/";
 
+	}
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
 		if (auth != null){
 			new SecurityContextLogoutHandler().logout(request, response, auth);
 		}
 		return "redirect:/user/login";
+	}
+	@GetMapping("/theme")
+	public String theme(Model model) {
+		MethodUtils.taskEditPage = "welcome";
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+		User user = userService.findByUsernam(username);
+		if (user.getTheme().equals("/todolist/css/theme-1.css")) {
+			 user.setTheme("/todolist/css/theme-2.css");
+			System.out.println("theme2");
+		}
+		else if (user.getTheme().equals("/todolist/css/theme-2.css")) {
+			user.setTheme("/todolist/css/theme-3.css");
+			System.out.println("theme3");
+		}
+		else if (user.getTheme().equals(("/todolist/css/theme-3.css"))) {
+			user.setTheme("/todolist/css/theme-4.css");
+			System.out.println("theme4");
+		}
+		else if (user.getTheme().equals("/todolist/css/theme-4.css")) {
+			user.setTheme("/todolist/css/theme-5.css");
+			System.out.println("theme5");
+		}
+		else {
+			user.setTheme("/todolist/css/theme-1.css");
+			System.out.println("theme1");
+		}
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", user.getTheme());
+		System.out.println( user.getTheme());
+		userService.addUser(user);
+		return "redirect:/";
 	}
 
 
@@ -166,9 +220,14 @@ public class UserController {
 	@GetMapping("/edit/{id}")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userOne(@PathVariable Long id, Model model) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+
 		System.out.println("Edit User Зайшло");
 		model.addAttribute("isNew", false);
 		model.addAttribute("userForm", userService.findOne(id));
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", userService.findByUsernam(username).getTheme());
 		model.addAttribute("roles", userService.roleList());
 		return "/userForm";
 	}
@@ -188,7 +247,12 @@ public class UserController {
 	@PostMapping(value="/add")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userAdd(@RequestBody User user, Model model) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
 		userService.addUser(user);
+
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", userService.findByUsernam(username).getTheme());
 		model.addAttribute("users", userService.userList());
 		return "/user";
 	}
@@ -202,8 +266,13 @@ public class UserController {
 	@GetMapping("/list")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String userList(Model model) {
+		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
+		String username = loggedInUser.getName();
+
 		List<User> user = userService.userList();
 		model.addAttribute("users", user);
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", userService.findByUsernam(username).getTheme());
 		return "/user";
 	}
 	

@@ -53,7 +53,8 @@ public class WelcomeController {
 
 		MethodUtils.taskEditPage = "welcome";
 
-
+		model.addAttribute("lang", userService.findByUsernam(username).getLang());
+		model.addAttribute("theme", userService.findByUsernam(username).getTheme());
 		model.addAttribute("taskToday", taskService.findTasksByStart(date, userService.findByUsernam(username).getUserId()));
 		model.addAttribute("today", dateNow);
 

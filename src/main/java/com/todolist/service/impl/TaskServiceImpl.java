@@ -34,6 +34,8 @@ public class TaskServiceImpl implements TaskService {
     @Autowired
     private UserRepository userRepository;
 
+
+
     @Override
     public List<Task> taskList() {
         return taskRepository.taskList();
@@ -132,9 +134,7 @@ public class TaskServiceImpl implements TaskService {
         JSONObject jsonObject = new JSONObject();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
-
         task.setUserId(userRepository.findByUsername(currentPrincipalName).getUserId());
-
         if(task.getTaskExecuted() == null)
             task.setTaskExecuted(0);
         try {
