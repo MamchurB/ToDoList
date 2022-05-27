@@ -57,21 +57,13 @@
                     <li><a class="sider__link" href="/todolist/user/list" id = "userList"  > <fmt:message key="sider.users" /></a></li>
                 </security:authorize>
 
-<%--                <li>--%>
-<%--                    <div class="theme sider__link">--%>
-<%--                         <fmt:message key="sider.theme" />--%>
-<%--                    </div>--%>
-<%--                </li>--%>
-<%--                <li>--%>
-<%--                    <div class="sider__link">--%>
-<%--                         <fmt:message key="sider.language" />--%>
-<%--                    </div>--%>
-<%--                </li>--%>
             </ul>
             <div class="sider__element"></div>
         </div>
         <div class="container container__calendar">
-            <div id='calendar' th:id="calendar"></div>
+            <div class="calendar__wrapper">
+                <div id='calendar' th:id="calendar"></div>
+            </div>
         </div>
     </main>
     <footer class="footer">

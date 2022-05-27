@@ -73,7 +73,7 @@
 							<form:input class="input" path="userName" placeholder="Enter User Name" required="true"/>
 						</div>
 
-<%--						<form:input type = "hidden" path="password" value = "password"/>--%>
+						<form:input type = "hidden" path="password"/>
 
 						<div class="creator__text"> <fmt:message key="change.user.email" /></div>
 						<div class="creator__input input">
@@ -88,8 +88,8 @@
 
 						<div class="creator__select">
 							<select name="roleId" id="creator__select">
-								<option value = 1 >  <fmt:message key="change.user.role.admin" /> </option>
-								<option value = 2 >  <fmt:message key="change.user.role.user" /> </option>
+								<option value = "1" >  <fmt:message key="change.user.role.admin" /> </option>
+								<option value = "2" >  <fmt:message key="change.user.role.user" /> </option>
 							</select>
 						</div>
 

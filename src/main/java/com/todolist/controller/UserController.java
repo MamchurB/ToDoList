@@ -16,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -149,7 +148,6 @@ public class UserController {
 	}
 	@GetMapping("/language")
 	public String langes(Model model) {
-		System.out.println("Language");
 		Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
 		String username = loggedInUser.getName();
 		User user = userService.findByUsernam(username);
@@ -159,6 +157,8 @@ public class UserController {
 		else{
 			user.setLang("en");
 		}
+		user.setRoleId(user.getRole().getId());
+		user.setRole(user.getRole());
 		userService.addUser(user);
 		model.addAttribute("lang", userService.findByUsernam(username).getLang());
 		model.addAttribute("theme", user.getTheme());
@@ -203,7 +203,12 @@ public class UserController {
 		}
 		model.addAttribute("lang", userService.findByUsernam(username).getLang());
 		model.addAttribute("theme", user.getTheme());
-		System.out.println( user.getTheme());
+		user.setRoleId(user.getRole().getId());
+		user.setRole(user.getRole());
+
+		System.out.println("Role id: " + user.getRoleId());
+		System.out.println("Role: " + user.getRole());
+
 		userService.addUser(user);
 		return "redirect:/";
 	}

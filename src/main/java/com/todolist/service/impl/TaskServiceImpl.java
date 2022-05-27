@@ -2,7 +2,6 @@ package com.todolist.service.impl;
 
 import com.todolist.model.Task;
 import com.todolist.model.User;
-import com.todolist.repository.MenuRepository;
 import com.todolist.repository.TaskRepository;
 import com.todolist.repository.UserRepository;
 import com.todolist.service.TaskService;

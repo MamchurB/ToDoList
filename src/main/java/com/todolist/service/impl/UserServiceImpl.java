@@ -38,8 +38,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 
 	@Override
 	public List<User> userList() {
@@ -67,20 +65,16 @@ public class UserServiceImpl implements UserService {
 		JSONObject jsonObject = new JSONObject();
 
 		try {
-			System.out.println(user.getPassword());
-			System.out.println(user.getFullName());
-//			if(MethodUtils.isNew){
-//				user.setPassword(passwordEncoder.encode(user.getPassword()));
-//				MethodUtils.isNew = false;
-//			}
-
-
 			if(user.getTheme() == null){
 				user.setTheme("/todolist/css/theme-1.css");
 			}
 			if(user.getLang() == null){
 				user.setLang("en");
 			}
+
+			System.out.println("Password:" + user.getPassword());
+			System.out.println("RoleId:" + user.getRoleId());
+
 			user.setRole(roleRepository.findOne(user.getRoleId() == null ? 2L : user.getRoleId()));
 			jsonObject.put("status", "success");
 			jsonObject.put("title", message+" Confirmation");

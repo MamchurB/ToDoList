@@ -118,16 +118,6 @@
           <li><a class="sider__link" href="/todolist/user/list" id = "userList"  > <fmt:message key="sider.users" /></a></li>
         </security:authorize>
 
-<%--        <li>--%>
-<%--          <div class="theme sider__link">--%>
-<%--             <fmt:message key="sider.theme" />--%>
-<%--          </div>--%>
-<%--        </li>--%>
-<%--        <li>--%>
-<%--          <div class="sider__link">--%>
-<%--             <fmt:message key="sider.language" />--%>
-<%--          </div>--%>
-<%--        </li>--%>
       </ul>
       <div class="sider__element"></div>
     </div>
@@ -215,7 +205,7 @@
                       <c:out value="${subTask.title}"/>
                     </div>
                     <div class="element__date">
-                          <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
+                          <c:out value="${subTask.end.substring(11, 16)}"/>&nbsp <c:out value="${subTask.end.substring(0, 10)}"/>
                     </div>
                   </div>
 
@@ -243,7 +233,7 @@
                           <c:out value="${subTask.title}"/>
                         </div>
                         <div class="element__date">
-                          <c:out value="${task.end.substring(11, 16)}"/>&nbsp <c:out value="${task.end.substring(0, 10)}"/>
+                          <c:out value="${subTask.end.substring(11, 16)}"/>&nbsp <c:out value="${subTask.end.substring(0, 10)}"/>
                         </div>
                       </div>
                       <div class="element__settings">
